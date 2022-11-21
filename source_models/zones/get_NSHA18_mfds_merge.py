@@ -10,7 +10,7 @@ import shapefile
 import matplotlib.pyplot as plt
 from matplotlib import colors, colorbar, style
 from mpl_toolkits.basemap import Basemap
-from hmtk.parsers.catalogue.csv_catalogue_parser import CsvCatalogueParser
+#from hmtk.parsers.catalogue.csv_catalogue_parser import CsvCatalogueParser
 from tools.nsha_tools import toYearFraction, get_shapely_centroid
 from tools.mfd_tools import * # get_mfds, get_annualised_rates, fit_a_value, parse_hmtk_cat, parse_hmtk_cat
 #from mfd_tools import * # get_mfds, get_annualised_rates, fit_a_value, parse_hmtk_cat, parse_hmtk_cat
@@ -23,7 +23,7 @@ warnings.filterwarnings("ignore")
 # import non-standard functions
 #try:
 from catalogue_tools import weichert_algorithm, aki_maximum_likelihood, bval2beta
-from oq_tools import get_oq_incrementalMFD, beta2bval #, bval2beta
+from tools.oq_tools import get_oq_incrementalMFD, beta2bval #, bval2beta
 from mapping_tools import get_field_data, get_field_index, drawoneshapepoly, \
                           drawshapepoly, labelpolygon, get_WGS84_area
 #from catalogue.parsers import parse_ggcat
@@ -1962,6 +1962,7 @@ header = ','.join(simpleFields)
 
 csvtxt = header + '\n'
 for rec in records:
+    rec = [str(x) for x in rec]
     newline = ','.join(rec) + '\n'
     csvtxt += newline
 
