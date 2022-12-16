@@ -200,7 +200,7 @@ def append_earthquake_information_inc(output_xml, magnitude_scaling_relation,
                                                           char_mag=characteristic_mag, 
                                                           total_moment_rate=moment_rate,
                                                           bin_width=float(bin_width))
-    mags,rates=zip(*mfd.get_annual_occurrence_rates())
+    mags,rates=list(zip(*mfd.get_annual_occurrence_rates()))
     #print mags, rates
     # calcualate total moment rate and rescale rates if
     # necessary to meet total input rate
@@ -211,7 +211,7 @@ def append_earthquake_information_inc(output_xml, magnitude_scaling_relation,
         inc_moment_rate = moment*rates[i]
         total_moment_rate += inc_moment_rate
     moment_error = (total_moment_rate - moment_rate)/moment_rate
-    print 'Relative moment rate error', moment_error
+    print('Relative moment rate error', moment_error)
 
     # Rescale rates
 #    print rates
@@ -225,14 +225,14 @@ def append_earthquake_information_inc(output_xml, magnitude_scaling_relation,
         inc_moment_rate = moment*rates[i]
         total_moment_rate += inc_moment_rate
     moment_error = (total_moment_rate - moment_rate)/moment_rate
-    print 'Final moment rate error',  moment_error
+    print('Final moment rate error',  moment_error)
 
     # Now trim the distribution to just above min_mag
     #print mags, rates
     mags = np.array(mags)
     rates = rates[np.where(mags >= float(min_mag))]
     mags = mags[np.where(mags >= float(min_mag))]
-    print mags, rates
+    print(mags, rates)
 #    if float(min_mag) != mags[0]:
 #        print 'Modelled min magnitude %.2f not equal to '\
 #            'input minimum magnitude %s' % (mags[0], min_mag)
@@ -346,7 +346,7 @@ def nrml_from_shapefile(shapefile,
 #        print A
         # Calculate characteristic incremental occurrence rates from slip rate
         if sliprate[i] != '""':
-            print sliprate[i]
+            print(sliprate[i])
             # just to calculate the moment rate, need to fix this function
             a_value, moment_rate = fault_slip_rate_GR_conversion.slip2GR(sliprate[i], A,
                                                                          float(b_value[i]), 

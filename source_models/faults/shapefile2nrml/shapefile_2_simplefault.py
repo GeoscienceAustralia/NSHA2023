@@ -112,7 +112,7 @@ def parse_line_shapefile(shapefile,shapefile_faultname_attribute,
 def b_value_from_region(fault_traces, region_shapefile):
     """Get regional b-values for each fault
     """
-    print 'Getting b-value from Leonard2008...'
+    print('Getting b-value from Leonard2008...')
 
     driver = ogr.GetDriverByName("ESRI Shapefile")
     data_source = driver.Open(region_shapefile, 0)
@@ -150,7 +150,7 @@ def trt_from_domains(fault_traces, domains_shapefile):
     """Get tectonic region type from domains
     """
 
-    print 'Getting tectonic region type from Domains shapefile'
+    print('Getting tectonic region type from Domains shapefile')
     driver = ogr.GetDriverByName("ESRI Shapefile")
     data_source = driver.Open(domains_shapefile, 0)
     dsf = data_source.GetLayer()
@@ -179,7 +179,7 @@ def trt_from_domains(fault_traces, domains_shapefile):
             ind=np.argmax(counts)
             trt_list.append(values[ind])
         except ValueError:
-            print 'Warning: setting fault TRT to default value'
+            print('Warning: setting fault TRT to default value')
             trt_list.append('Non_cratonic') # Default value for points outside Domains model
    # print b_values                                                
     return trt_list

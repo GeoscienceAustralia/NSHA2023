@@ -47,7 +47,7 @@ def check_aki_richards_convention(edges):
         )
 
     if (angle_ul > 90) or (angle_ur > 90):
-        print 'Contours do not conform to Aki-Richards convention, re-ordering'
+        print('Contours do not conform to Aki-Richards convention, re-ordering')
         new_contours = []
         for contour in edges:
             new_contours.append(contour[::-1])
@@ -93,7 +93,7 @@ def parse_line_shapefile(shapefile, shapefile_depth_attribute,
             start_dist = sqrt((start_lon-lons[0])**2 + (start_lat-lats[0])**2)
             end_dist = sqrt((start_lon-lons[-1])**2 + (start_lat-lats[-1])**2)
             if end_dist < start_dist:
-                print 'reordering points to make contours go in same direction'
+                print('reordering points to make contours go in same direction')
                 lons = lons[::-1]
                 lats = lats[::-1]
         # Check Aki-Richards convention
@@ -180,7 +180,7 @@ def append_gml_Linestring(output_xml, fc, dps=10):
                     '{:.{prec}f}'.format(fc[i][1], prec=dps) + ' ' +\
                     str(fc[i][2]))
         except ValueError:
-            print 'Needs python 2.7 or higher for string formatting'
+            print('Needs python 2.7 or higher for string formatting')
             sys.exit()
     # Footer
     output_xml.append('            </gml:posList>')
