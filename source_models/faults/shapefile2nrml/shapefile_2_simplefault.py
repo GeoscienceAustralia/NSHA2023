@@ -17,12 +17,12 @@ Jonathan Griffin, Geoscience Australia, June 2016
 
 import os
 import argparse
-import ogr
+from osgeo import ogr #, gdal, osr
 import shapefile
 from geopy import distance
 from shapely.geometry import Point, Polygon
 import numpy as np
-from NSHA2018.mfd import fault_slip_rate_GR_conversion
+from NSHA2023.mfd import fault_slip_rate_GR_conversion
 from openquake.hazardlib.scalerel.leonard2014 import Leonard2014_SCR
 
 def parse_line_shapefile(shapefile,shapefile_faultname_attribute,
@@ -45,7 +45,7 @@ def parse_line_shapefile(shapefile,shapefile_faultname_attribute,
     dips = []
     sliprates = []
     fault_lengths = []
-    distance.VincentyDistance.ELLIPSOID = 'WGS_84'
+    distance.geodesic.ELLIPSOID = 'WGS_84'
     d = distance.distance
     for feature in layer:
         line = feature.GetGeometryRef().GetPoints()
@@ -112,7 +112,7 @@ def parse_line_shapefile(shapefile,shapefile_faultname_attribute,
 def b_value_from_region(fault_traces, region_shapefile):
     """Get regional b-values for each fault
     """
-    print 'Getting b-value from Leonard2008...'
+    print('Getting b-value from Leonard2008...')
 
     driver = ogr.GetDriverByName("ESRI Shapefile")
     data_source = driver.Open(region_shapefile, 0)
@@ -150,7 +150,7 @@ def trt_from_domains(fault_traces, domains_shapefile):
     """Get tectonic region type from domains
     """
 
-    print 'Getting tectonic region type from Domains shapefile'
+    print('Getting tectonic region type from Domains shapefile')
     driver = ogr.GetDriverByName("ESRI Shapefile")
     data_source = driver.Open(domains_shapefile, 0)
     dsf = data_source.GetLayer()
@@ -179,7 +179,7 @@ def trt_from_domains(fault_traces, domains_shapefile):
             ind=np.argmax(counts)
             trt_list.append(values[ind])
         except ValueError:
-            print 'Warning: setting fault TRT to default value'
+            print('Warning: setting fault TRT to default value')
             trt_list.append('Non_cratonic') # Default value for points outside Domains model
    # print b_values                                                
     return trt_list

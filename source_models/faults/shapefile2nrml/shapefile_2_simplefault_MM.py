@@ -17,13 +17,13 @@ Jonathan Griffin, Geoscience Australia, June 2016, January 2017
 """
 
 import os
-import ogr
+from osgeo import ogr
 import argparse
 import numpy as np
 from geopy import distance
-from NSHA2018.mfd import fault_slip_rate_GR_conversion
+from NSHA2023.mfd import fault_slip_rate_GR_conversion
 from openquake.hazardlib.scalerel.leonard2014 import Leonard2014_SCR
-from NSHA2018.source_models.faults.shapefile2nrml.shapefile_2_simplefault \
+from NSHA2023.source_models.faults.shapefile2nrml.shapefile_2_simplefault \
     import b_value_from_region, trt_from_domains
 
 def parse_line_shapefile(shapefile,shapefile_faultname_attribute,
@@ -46,7 +46,7 @@ def parse_line_shapefile(shapefile,shapefile_faultname_attribute,
     dips = []
     sliprates = []
     fault_lengths = []
-    distance.VincentyDistance.ELLIPSOID = 'WGS_84'
+    distance.geodesic.ELLIPSOID = 'WGS_84'
     d = distance.distance
     for feature in layer:
         line = feature.GetGeometryRef().GetPoints()
@@ -194,10 +194,10 @@ def append_earthquake_information_inc(output_xml, magnitude_scaling_relation,
 
     char_mag = np.around(characteristic_mag, 2)
     mags = np.arange(char_mag , char_mag + 0.5, bin_width)
-    print 'mag_values', mags
+    print('mag_values', mags)
     moment_values = np.power(10, (1.5*mags+16.05))/1e7
     rate = moment_rate/np.sum(moment_values)
-    print 'rate', rate
+    print('rate', rate)
     
     # check rates sum as expected
     total_moment_rate = 0
@@ -207,11 +207,11 @@ def append_earthquake_information_inc(output_xml, magnitude_scaling_relation,
         inc_moment_rate = moment*rate
         total_moment_rate += inc_moment_rate
     moment_error = (total_moment_rate - moment_rate)/moment_rate
-    print 'Final moment rate error',  moment_error
-    print moment_rate, total_moment_rate
+    print('Final moment rate error',  moment_error)
+    print(moment_rate, total_moment_rate)
     rates = np.ones(len(mags))*rate
-    print 'Total_rate', sum(rates)
-    print mags, rates
+    print('Total_rate', sum(rates))
+    print(mags, rates)
     min_mag = mags[0]
 
     output_xml.append('      <magScaleRel>' +
@@ -291,7 +291,7 @@ def nrml_from_shapefile(shapefile,
 #        print A
         # Calculate characteristic incremental occurrence rates from slip rate
         if sliprate[i] != '""':
-            print sliprate[i]
+            print(sliprate[i])
             # just to calculate the moment rate, need to fix this function
             a_value, moment_rate = fault_slip_rate_GR_conversion.slip2GR(sliprate[i], A,
                                                                          float(b_value[i]), 
