@@ -17,12 +17,12 @@ Jonathan Griffin, Geoscience Australia, June 2016
 
 import os
 import argparse
-import ogr
+from osgeo import ogr #, gdal, osr
 import shapefile
 from geopy import distance
 from shapely.geometry import Point, Polygon
 import numpy as np
-from NSHA2018.mfd import fault_slip_rate_GR_conversion
+from NSHA2023.mfd import fault_slip_rate_GR_conversion
 from openquake.hazardlib.scalerel.leonard2014 import Leonard2014_SCR
 
 def parse_line_shapefile(shapefile,shapefile_faultname_attribute,

@@ -12,7 +12,7 @@ Gareth Davies, Geoscience Australia, 2014
 """
 
 import os
-import ogr
+from osgeo import ogr
 import argparse
 from numpy import sqrt
 import numpy

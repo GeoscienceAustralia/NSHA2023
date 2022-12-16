@@ -17,13 +17,13 @@ Jonathan Griffin, Geoscience Australia, June 2016, January 2017
 """
 
 import os
-import ogr
+from osgeo import ogr
 import argparse
 import numpy as np
 from geopy import distance
-from NSHA2018.mfd import fault_slip_rate_GR_conversion
+from NSHA2023.mfd import fault_slip_rate_GR_conversion
 from openquake.hazardlib.scalerel.leonard2014 import Leonard2014_SCR
-from NSHA2018.source_models.faults.shapefile2nrml.shapefile_2_simplefault \
+from NSHA2023.source_models.faults.shapefile2nrml.shapefile_2_simplefault \
     import b_value_from_region, trt_from_domains
 
 def parse_line_shapefile(shapefile,shapefile_faultname_attribute,

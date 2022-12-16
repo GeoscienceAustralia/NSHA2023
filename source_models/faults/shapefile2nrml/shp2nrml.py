@@ -4,12 +4,12 @@ shapefiles into one place
 
 import os
 import argparse
-import ogr
+from osgeo import ogr
 import shapefile
 from geopy import distance
 from shapely.geometry import Point, Polygon
 import numpy as np
-from NSHA2018.mfd import fault_slip_rate_GR_conversion
+from NSHA2023.mfd import fault_slip_rate_GR_conversion
 from openquake.hazardlib.scalerel.leonard2014 import Leonard2014_SCR
 from openquake.hazardlib.mfd import YoungsCoppersmith1985MFD, TruncatedGRMFD
 
@@ -91,7 +91,7 @@ def parse_line_shapefile(shapefile,shapefile_faultname_attribute,
 def b_value_from_region(fault_traces, region_shapefile, default_b = 1.0):
     """Get regional b-values for each fault
     """
-    print 'Getting b-value from zones in %s' % region_shapefile
+    print('Getting b-value from zones in %s' % region_shapefile)
     driver = ogr.GetDriverByName("ESRI Shapefile")
     data_source = driver.Open(region_shapefile, 0)
     lsf = data_source.GetLayer()
@@ -124,7 +124,7 @@ def trt_from_domains(fault_traces, domains_shapefile,
                      default_trt = 'Non_cratonic'):
     """Get tectonic region type from domains
     """
-    print 'Getting tectonic region type from %s' % domains_shapefile
+    print('Getting tectonic region type from %s' % domains_shapefile)
     driver = ogr.GetDriverByName("ESRI Shapefile")
     data_source = driver.Open(domains_shapefile, 0)
     dsf = data_source.GetLayer()
@@ -149,7 +149,7 @@ def trt_from_domains(fault_traces, domains_shapefile,
             ind=np.argmax(counts)
             trt_list.append(values[ind])
         except ValueError:
-            print 'Warning: setting fault TRT to default value'
+            print('Warning: setting fault TRT to default value')
             trt_list.append(default_trt) # Default value 
     return trt_list
 
@@ -240,7 +240,7 @@ def sliprate2GR_incremental(sliprate, fault_area, b_value,
                                                                  M_min=min_mag)
 
     mfd = TruncatedGRMFD(min_mag, max_mag, bin_width, a_value, b_value)
-    mags,rates=zip(*mfd.get_annual_occurrence_rates())
+    mags,rates=list(zip(*mfd.get_annual_occurrence_rates()))
     mags = np.array(mags)
     rates = np.array(rates)
     return mags, rates, moment_rate
@@ -259,7 +259,7 @@ def momentrate2YC_incremental(characteristic_mag, b_value,
                                                           total_moment_rate=moment_rate,
                                                           bin_width=float(bin_width))
     
-    mags,rates=zip(*mfd.get_annual_occurrence_rates())
+    mags,rates=list(zip(*mfd.get_annual_occurrence_rates()))
     # calcualate total moment rate and rescale rates if
     # necessary to meet total input rate
     total_moment_rate = 0
@@ -269,7 +269,7 @@ def momentrate2YC_incremental(characteristic_mag, b_value,
         inc_moment_rate = moment*rates[i]
         total_moment_rate += inc_moment_rate
     moment_error = (total_moment_rate - moment_rate)/moment_rate
-    print 'Relative moment rate error', moment_error
+    print('Relative moment rate error', moment_error)
     # Rescale rates
     rates = rates/(1+moment_error)
     # Check rates sum as expected
@@ -280,7 +280,7 @@ def momentrate2YC_incremental(characteristic_mag, b_value,
         inc_moment_rate = moment*rates[i]
         total_moment_rate += inc_moment_rate
     moment_error = (total_moment_rate - moment_rate)/moment_rate
-    print 'Final moment rate error',  moment_error
+    print('Final moment rate error',  moment_error)
 
     # Now trim the distribution to just above min_mag
     mags = np.array(mags)
@@ -295,10 +295,10 @@ def momentrate2MM_incremental(max_mag, moment_rate, bin_width):
     """
    max_mag = np.around(max_mag, 2)
    mags = np.arange(max_mag - 0.5, max_mag, bin_width)
-   print 'mag_values', mags
+   print('mag_values', mags)
    moment_values = np.power(10, (1.5*mags+16.05))/1e7
    rate = moment_rate/np.sum(moment_values)
-   print 'rate', rate
+   print('rate', rate)
    
    # check rates sum as expected
    total_moment_rate = 0
@@ -308,8 +308,8 @@ def momentrate2MM_incremental(max_mag, moment_rate, bin_width):
        inc_moment_rate = moment*rate
        total_moment_rate += inc_moment_rate
    moment_error = (total_moment_rate - moment_rate)/moment_rate
-   print 'Final moment rate error',  moment_error
-   print moment_rate, total_moment_rate
+   print('Final moment rate error',  moment_error)
+   print(moment_rate, total_moment_rate)
    rates = np.ones(len(mags))*rate
-   print 'Total_rate', sum(rates)
+   print('Total_rate', sum(rates))
    return mags, rates

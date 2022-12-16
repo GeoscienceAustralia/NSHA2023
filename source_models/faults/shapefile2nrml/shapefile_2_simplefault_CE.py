@@ -18,14 +18,14 @@ Jonathan Griffin, Geoscience Australia, June 2016
 
 import os
 import argparse
-import ogr
+from osgeo import ogr
 import shapefile
 from geopy import distance
 from shapely.geometry import Point, Polygon
 import numpy as np
-from NSHA2018.mfd import fault_slip_rate_GR_conversion
+from NSHA2023.mfd import fault_slip_rate_GR_conversion
 from openquake.hazardlib.scalerel.leonard2014 import Leonard2014_SCR
-from NSHA2018.source_models.faults.shapefile2nrml.shapefile_2_simplefault \
+from NSHA2023.source_models.faults.shapefile2nrml.shapefile_2_simplefault \
     import b_value_from_region, trt_from_domains
 from openquake.hazardlib.mfd import YoungsCoppersmith1985MFD
 
