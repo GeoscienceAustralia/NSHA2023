@@ -9,10 +9,10 @@ Created on Wed Feb 07 16:11:14 2018
 def decluster_GK74(catalogue, filename):
     from os import remove
     from copy import deepcopy
-    from hmtk.seismicity.declusterer.dec_gardner_knopoff import GardnerKnopoffType1
-    from hmtk.seismicity.declusterer.distance_time_windows import GardnerKnopoffWindow
-    from hmtk.parsers.catalogue.csv_catalogue_parser import CsvCatalogueWriter
-    from writers import htmk2shp_isc
+    from openquake.hmtk.seismicity.declusterer.dec_gardner_knopoff import GardnerKnopoffType1
+    from openquake.hmtk.seismicity.declusterer.distance_time_windows import GardnerKnopoffWindow
+    from openquake.hmtk.parsers.catalogue.csv_catalogue_parser import CsvCatalogueWriter
+    #from writers import htmk2shp_isc
     from os import path
     
     decluster_config = {'time_distance_window': GardnerKnopoffWindow(),
@@ -22,7 +22,7 @@ def decluster_GK74(catalogue, filename):
     # decluster here
     #####################################################
     
-    print 'Running GK declustering...'
+    print('Running GK declustering...')
     decluster_method = GardnerKnopoffType1()
     
     #---------------------------------------------
@@ -44,7 +44,7 @@ def decluster_GK74(catalogue, filename):
     
     catalogue_gk.purge_catalogue(cluster_flags_gk == 0) # cluster_flags == 0: mainshocks
     
-    print 'Gardner-Knopoff\tbefore: ', catalogue.get_number_events(), " after: ", catalogue_gk.get_number_events()
+    print('Gardner-Knopoff\tbefore: ', catalogue.get_number_events(), " after: ", catalogue_gk.get_number_events())
     
     #####################################################
     # write declustered catalogue
@@ -58,7 +58,7 @@ def decluster_GK74(catalogue, filename):
     try:
         remove(declustered_catalog_file)
     except:
-        print declustered_catalog_file, 'does not exist'
+        print(declustered_catalog_file, 'does not exist')
     
     # set-up writer
     writer = CsvCatalogueWriter(declustered_catalog_file) 
@@ -67,13 +67,13 @@ def decluster_GK74(catalogue, filename):
     writer.write_file(catalogue_gk)
     
     # write shapefile
-    htmk2shp_isc(catalogue_gk, path.join('shapefiles', 'ISC-GEM_V5_hmtk_GK74_declustered.shp'))
+    #htmk2shp_isc(catalogue_gk, path.join('shapefiles', 'ISC-GEM_V9.1_hmtk_GK74_declustered.shp'))
     
-    print 'Declustered catalogue: ok\n'
+    print('Declustered catalogue: ok\n')
 
-# decluster ISC-GEM catalogue using Gardner & Knopoff method
+# decluster ISC-GEM catalogue using Gardner & Knopoff method - call this one!
 def decluster_iscgem_gk74(hmtk_csv):
-    from hmtk.parsers.catalogue.csv_catalogue_parser import CsvCatalogueParser
+    from openquake.hmtk.parsers.catalogue.csv_catalogue_parser import CsvCatalogueParser
     from writers import htmk2shp_isc
     from os import path
     
@@ -82,7 +82,7 @@ def decluster_iscgem_gk74(hmtk_csv):
     cat = parser.read_file()
     
     # write shapefile
-    htmk2shp_isc(cat, path.join('shapefiles', 'ISC-GEM_V4_hmtk_full.shp'))
+    #htmk2shp_isc(cat, path.join('shapefiles', 'ISC-GEM_V9.1_hmtk_full.shp'))
     
     decluster_GK74(cat, hmtk_csv)
 
@@ -97,7 +97,7 @@ def convert_iscgem2hmtk(iscgemcsv):
     iscgemDict = parse_iscgem(iscgemcsv)
     
     # convert to hmtk
-    iscgem2hmtk_csv(iscgemDict, path.join('data', 'ISC-GEM_V5_hmtk_full.csv'))
+    iscgem2hmtk_csv(iscgemDict, path.join('data', 'ISC-GEM_V9.1_hmtk_full.csv'))
     
 # clip declustered global GEM-ISC catalogue to local region
 def clip_iscgem_hmtk(hmtkcsv):
@@ -117,15 +117,17 @@ def clip_iscgem_hmtk(hmtkcsv):
     
     # now loop through lines and ckeck if events inside
     for line in lines[1:]:
-        evlo = float(line.strip().split(',')[9])
-        evla = float(line.strip().split(',')[10])
+        evlo = float(line.strip().split(',')[7])
+        evla = float(line.strip().split(',')[8])
+        #print(evlo, evla)
         
         if evlo >= minlon and evlo <= maxlon \
            and evla >= minlat and evla <= maxlat:
             newtxt += line
+            #print(line)
             
     # write output file
-    f = open(path.join(getcwd(),hmtkcsv[:-4]+'_clip.csv'), 'wb')
+    f = open(path.join(getcwd(),hmtkcsv[:-9]+'_clip.csv'), 'w')
     f.write(newtxt)
     f.close()
     
