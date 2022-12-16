@@ -46,7 +46,7 @@ def parse_line_shapefile(shapefile,shapefile_faultname_attribute,
     dips = []
     sliprates = []
     fault_lengths = []
-    distance.VincentyDistance.ELLIPSOID = 'WGS_84'
+    distance.geodesic.ELLIPSOID = 'WGS_84'
     d = distance.distance
     for feature in layer:
         line = feature.GetGeometryRef().GetPoints()
