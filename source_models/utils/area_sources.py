@@ -63,7 +63,7 @@ def weighted_pt_source(pt_sources, weights, name,
             a_val = np.log10(np.power(10, pt.mfd.a_val)*weight)
             new_pt.mfd.modify_set_ab(a_val, b_val)
         elif mfd_type == 'EvenlyDiscretizedMFD':
-            mag_bins, rates = zip(*pt.mfd.get_annual_occurrence_rates())
+            mag_bins, rates = list(zip(*pt.mfd.get_annual_occurrence_rates()))
             mag_bins = np.array(mag_bins)
             rates = np.array(rates)
             new_rates = rates*weight
@@ -76,7 +76,7 @@ def weighted_pt_source(pt_sources, weights, name,
     # Now write out
     if filename is not None:
         source_model_file = filename 
-        print 'Writing to source model file %s' % source_model_file 
+        print('Writing to source model file %s' % source_model_file) 
         if nrml_version == '04':
 #            source_list = []
 #            for source in weighted_point_sources:
@@ -97,7 +97,7 @@ def weighted_pt_source(pt_sources, weights, name,
 #            write_source_model(nrml_pt_file, source_group_list,
 #                               name = name)
         else:
-            print 'Warning: nrml version not specfied, xml not created'
+            print('Warning: nrml version not specfied, xml not created')
     return weighted_point_sources
 
 def area2pt_source(area_source_file, sources = None, investigation_time=50, 
@@ -149,14 +149,14 @@ def area2pt_source(area_source_file, sources = None, investigation_time=50,
     nrml_pt_file = area_source_file[:-4] + '_pts.xml'
     source_group_list = []
     id = 0
-    for trt, sources in new_pt_sources.iteritems():
+    for trt, sources in new_pt_sources.items():
         source_group = SourceGroup(trt, sources = sources, id=id)
         id +=1
         source_group_list.append(source_group)
     if filename is not None:
         if nrml_version == '04':
             source_list = []
-            for trt, sources in new_pt_sources.iteritems():
+            for trt, sources in new_pt_sources.items():
                 for source in sources:
                     source_list.append(source)
             nodes = list(map(obj_to_node, sorted(source_list)))
@@ -168,7 +168,7 @@ def area2pt_source(area_source_file, sources = None, investigation_time=50,
             write_source_model(nrml_pt_file, source_group_list,
                                name = filename)
         else:
-            print 'Warning: nrml version not specfied, xml not created'
+            print('Warning: nrml version not specfied, xml not created')
     if return_faults:
         if len(exclude_ids) > 0:
             return source_group_list, faults, excluded_area_sources

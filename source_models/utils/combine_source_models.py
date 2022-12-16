@@ -32,7 +32,7 @@ for source_model in source_model_list:
         name = source_model.name + '_' + source.name + '_' + str(source_model_index) + \
                '_' + str(source_index)
         source.name = name
-        print 'Adding source model ', source.name
+        print('Adding source model ', source.name)
         source_list.append(source)
         source_index += 1
     source_model_index += 1

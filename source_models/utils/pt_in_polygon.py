@@ -42,7 +42,7 @@ def read_area_source(area_source_file, discretisation=200.):
     converter = SourceConverter(50, 10, width_of_mfd_bin=0.1,
                                 area_source_discretization=discretisation)
     parser = SourceModelParser(converter)
-    print [method for method in dir(parser)]# if callable(getattr(parser, method))]
+    print([method for method in dir(parser)])# if callable(getattr(parser, method))]
     try:
         sources = parser.parse_sources(area_source_file)
     except AttributeError: # Handle version 2.1 and above
@@ -52,7 +52,7 @@ def read_area_source(area_source_file, discretisation=200.):
             for source in group:
                 sources.append(source)
     for source in sources:
-        print source.polygon
+        print(source.polygon)
     return sources
 
 def edit_pt_in_polygon(pt_source, polygon, attribute):

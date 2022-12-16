@@ -22,7 +22,7 @@ def nrml2shp(nrml_source_file):
     source_model = parser.read(nrml_source_file)
     shp_parser = ShapefileParser()
     shp_file_name = nrml_source_file[:-4] + '_shape'
-    print shp_file_name
+    print(shp_file_name)
     shp_parser.write(shp_file_name, source_model) 
 #    filebase = shp_parser.destination
 #    print filebase
@@ -31,6 +31,6 @@ if __name__ == "__main__":
     try:
         nrml_source_file = sys.argv[1]
     except:
-        print 'Usage: python nrml2shp.py <source_model_nrml_file.xml>'
+        print('Usage: python nrml2shp.py <source_model_nrml_file.xml>')
         sys.exit()
     nrml2shp(nrml_source_file)

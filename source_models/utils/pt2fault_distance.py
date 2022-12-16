@@ -49,10 +49,10 @@ def merge_rates(pt, added_pt, method='Add'):
     if method == 'Add':
         mfd_type = type(pt.mfd).__name__
         if mfd_type == 'EvenlyDiscretizedMFD':
-            mag_bins, rates = zip(*pt.mfd.get_annual_occurrence_rates())
+            mag_bins, rates = list(zip(*pt.mfd.get_annual_occurrence_rates()))
             mag_bins = np.array(mag_bins)
             rates = np.array(rates)
-            added_pt_mag_bins, added_pt_rates = zip(*added_pt.mfd.get_annual_occurrence_rates()) 
+            added_pt_mag_bins, added_pt_rates = list(zip(*added_pt.mfd.get_annual_occurrence_rates())) 
             added_pt_mag_bins = np.array(added_pt_mag_bins)
             added_pt_rates = np.array(added_pt_rates)
             new_rates = []
@@ -124,13 +124,13 @@ def write_combined_faults_points(point_sources, fault_sources,
     :param point_sources:
        list without trt or dict with trt key of point sources
     """
-    print 'Writing to source model file %s' % filename
+    print('Writing to source model file %s' % filename)
     ps_id_index = 1
     fs_id_index = 1
     if nrml_version == '04':
         if type(point_sources) == dict:
             source_list = []
-            for trt, sources in point_sources.iteritems():
+            for trt, sources in point_sources.items():
                 for source in sources:
                     source.source_id = 'PS_%i' % ps_id_index
                     source_list.append(source)
@@ -159,10 +159,10 @@ def write_combined_faults_points(point_sources, fault_sources,
         if type(point_sources) == dict:
             source_group_list = []
             id = 0
-            for trt, sources in point_sources.iteritems():
+            for trt, sources in point_sources.items():
                 for source in sources:
                     id_index = max(id_index, source.source_id)
-            for trt, sources in point_sources.iteritems():
+            for trt, sources in point_sources.items():
                 for fault_source in fault_sources:
                     if fault_source.tectonic_region_type == trt:
                         id_index += 1
@@ -181,7 +181,7 @@ def write_combined_faults_points(point_sources, fault_sources,
             msg = 'Method not yet implemented for nrml version 0.5'
             raise(msg)
     else:
-        print 'Warning: nrml version not specfied, xml not created'
+        print('Warning: nrml version not specfied, xml not created')
 
 def read_simplefault_source(simplefault_source_file, rupture_mesh_spacing = 10):
     """Read nrml source model into simpmle fault objects
@@ -262,7 +262,7 @@ def pt2fault_distance(pt_sources, fault_sources, min_distance = 5.0,
     revised_point_sources = {'Cratonic': [], 'Non_cratonic': [], 
                              'Extended': [], 'Subduction': []}
     for pt in pt_sources:
-        print 'Looping over point sources'
+        print('Looping over point sources')
         # For speeding things up filter based on initial distances
         # to find points very far from or very close to a fault
         mfd_type = type(pt.mfd).__name__
@@ -287,7 +287,7 @@ def pt2fault_distance(pt_sources, fault_sources, min_distance = 5.0,
             continue
         if (min(centroid_distances)) < min_distance:
             # Discard point sources as too close to a fault
-            print 'Discarding point source, too close to a fault'
+            print('Discarding point source, too close to a fault')
             continue
         rupture_mags = []
         rupture_lons = []
@@ -311,16 +311,16 @@ def pt2fault_distance(pt_sources, fault_sources, min_distance = 5.0,
         rupture_lons = np.array(rupture_lons).flatten()
         rupture_lats = np.array(rupture_lats).flatten()
         rupture_depths = np.array(rupture_depths).flatten()
-        print 'Doing meshgrid'
+        print('Doing meshgrid')
         lons1,lons2 = np.meshgrid(fault_lons, rupture_lons)
         lats1,lats2 = np.meshgrid(fault_lats, rupture_lats)
         depths1, depths2 = np.meshgrid(fault_depths, rupture_depths)
 
         # Calculate distance from pt to all fault
-        print 'Distance calculations'
+        print('Distance calculations')
         distances = distance(lons1, lats1, depths1, lons2, lats2, depths2)
         closest_distance_to_faults = np.min(distances)
-        print 'Shortest pt to fault distance is', closest_distance_to_faults
+        print('Shortest pt to fault distance is', closest_distance_to_faults)
         minimum_distance_list.append(closest_distance_to_faults)
 
         # Find where the distance is less than the threshold min_distance
@@ -360,7 +360,7 @@ def pt2fault_distance(pt_sources, fault_sources, min_distance = 5.0,
                     a_val = np.log10(np.power(10, pt.mfd.a_val)*prob)#*area_src_weight))
                     new_pt.mfd.modify_set_ab(a_val, b_val)
                 elif mfd_type == 'EvenlyDiscretizedMFD':
-                    mag_bins, rates = zip(*pt.mfd.get_annual_occurrence_rates())
+                    mag_bins, rates = list(zip(*pt.mfd.get_annual_occurrence_rates()))
                     mag_bins = np.array(mag_bins)
                     rates = np.array(rates)
                     new_rates = rates*prob#*area_src_weight)
@@ -384,14 +384,14 @@ def pt2fault_distance(pt_sources, fault_sources, min_distance = 5.0,
                         if mfd_type == 'EvenlyDiscretizedMFD':
                             trimmed_rates = new_rates[np.where(mag_bins <= new_mmax)]
                     else:
-                        print 'Minimum magnitude intersects fault, discarding source'
+                        print('Minimum magnitude intersects fault, discarding source')
                         continue
                             
                 else:
                     pass
                 # Append revised source for given nodal plane distribution to 
                 # list of revised sources
-                print 'Appending revised source'
+                print('Appending revised source')
                 revised_point_sources[pt.tectonic_region_type].append(new_pt)
         else:
             id_index += 1
@@ -399,14 +399,14 @@ def pt2fault_distance(pt_sources, fault_sources, min_distance = 5.0,
             'Appending original source'
             revised_point_sources[pt.tectonic_region_type].append(pt)
     if len(minimum_distance_list) > 0:
-        print 'Overall minimum distance (km):', min(minimum_distance_list)
+        print('Overall minimum distance (km):', min(minimum_distance_list))
 
     # Write pts to source model on their own
     source_model_file = filename 
-    print 'Writing to source model file %s' % source_model_file 
+    print('Writing to source model file %s' % source_model_file) 
     if nrml_version == '04':
         source_list = []
-        for trt, sources in revised_point_sources.iteritems():
+        for trt, sources in revised_point_sources.items():
             for source in sources:
                 source_list.append(source)
         nodes = list(map(obj_to_node, sorted(source_list)))
@@ -416,14 +416,14 @@ def pt2fault_distance(pt_sources, fault_sources, min_distance = 5.0,
     elif nrml_version == '05':
         source_group_list = []
         id = 0
-        for trt, sources in revised_point_sources.iteritems():
+        for trt, sources in revised_point_sources.items():
             source_group = SourceGroup(trt, sources = sources, id=id)
             id +=1
             source_group_list.append(source_group)
         write_source_model(source_model_file, source_group_list,
                            name = name)
     else:
-        print 'Warning: nrml version not specfied, xml not created'
+        print('Warning: nrml version not specfied, xml not created')
 
     # Write pts to source model with faults
     source_model_file = filename[:-4] +'_inc_faults.xml'
