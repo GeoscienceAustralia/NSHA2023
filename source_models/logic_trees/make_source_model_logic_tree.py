@@ -6,7 +6,7 @@ Created on Thu May 11 17:41:07 2017
 """
 from os import path, getcwd, walk
 from tools.make_nsha_oq_inputs import make_logic_tree
-from logic_tree import LogicTree
+from .logic_tree import LogicTree
 from source_models.utils.utils import largest_remainder
 from numpy import array, hstack, unique
 from shutil import copyfile
@@ -120,7 +120,7 @@ xmllist.append(path.split(targetXML)[-1])
 
 # copy GA adaptive
 if weighted_smoothing == True:
-    print 'not relevant'
+    print('not relevant')
 
 # Use four smoothed models
 else:
@@ -155,7 +155,7 @@ else:
 
 # copy GA adaptive
 if weighted_smoothing == True:
-    print 'not relevant'
+    print('not relevant')
 
 # Use four smoothed models with faults
 else:
@@ -202,7 +202,7 @@ meta = {'modelPath': modelPath, 'modelFile':'nsha18_source_model_logic_tree.xml'
 src_type, src_wts = lt.get_weights('Source_model', 'Source_type')
 
 # temporarily set smoothed seis weights to smoothed+faults
-print '\!!!!REMEMBER TO DELETE SETTING REGIONAL WEIGHT TO SEISMOTECTONIC WEIGHT!!!!\n'
+print('\!!!!REMEMBER TO DELETE SETTING REGIONAL WEIGHT TO SEISMOTECTONIC WEIGHT!!!!\n')
 #src_wts[0] += src_wts[1]
 
 ###############################################################################
@@ -226,7 +226,7 @@ mod_dict = []
 
 # loop throgh source model types
 for st, sw in zip(src_type, src_wts):
-    print '\n'+st
+    print('\n'+st)
     src_type_wts = []
     
     orig_st = st
@@ -239,8 +239,8 @@ for st, sw in zip(src_type, src_wts):
     '''    
     # get weights within source type
     models, mod_wts = lt.get_weights('Source_model', st)
-    print models
-    print mod_wts
+    print(models)
+    print(mod_wts)
     
     # now loop through models within source type
     for mod, mw in zip(models, mod_wts):
@@ -253,56 +253,56 @@ for st, sw in zip(src_type, src_wts):
                 # do a couple of checks
                 #print mod, xl, mw
                 if mod == 'NSHA13' and xl.upper().startswith('NSHA13_BACKGROUND'):
-                    print 'Not adding '+xl+' to '+orig_st+' set'
+                    print('Not adding '+xl+' to '+orig_st+' set')
                 
                 elif mod == 'NSHA13' and orig_st == 'Seismotectonic' and xl.endswith('collapsed.xml'):
-                    print 'Not adding '+xl+' to '+orig_st+' set'
+                    print('Not adding '+xl+' to '+orig_st+' set')
                     
                 elif mod == 'DIMAUS' and orig_st == 'Seismotectonic' and xl.endswith('collapsed.xml'):
-                    print 'Not adding '+xl+' to '+orig_st+' set'
+                    print('Not adding '+xl+' to '+orig_st+' set')
                     
                 elif mod == 'DIMAUS' and orig_st == 'Regional' and xl.endswith('NFSM.xml'):
-                    print 'Not adding '+xl+' to '+orig_st+' set'
+                    print('Not adding '+xl+' to '+orig_st+' set')
                     
                 elif mod == 'AUS6' and orig_st == 'Seismotectonic' and xl.endswith('collapsed.xml'):
-                    print 'Not adding '+xl+' to '+orig_st+' set'
+                    print('Not adding '+xl+' to '+orig_st+' set')
                     
                 elif mod == 'AUS6' and orig_st == 'Regional' and xl.endswith('NFSM.xml'):
-                    print 'Not adding '+xl+' to '+orig_st+' set'
+                    print('Not adding '+xl+' to '+orig_st+' set')
                     
                 elif mod == 'NSHA13' and orig_st == 'Regional' and xl.endswith('NFSM.xml'):
-                    print 'Not adding '+xl+' to '+orig_st+' set'
+                    print('Not adding '+xl+' to '+orig_st+' set')
                     
                 elif mod == 'GA_NFSM_adaptive' and orig_st == 'Smoothed_seismicity' and xl.endswith('nfsm.xml'):
-                    print 'Not adding '+xl+' to '+orig_st+' set'
+                    print('Not adding '+xl+' to '+orig_st+' set')
                     
                 elif mod == 'GA_adaptive' and orig_st == 'Smoothed_faults' and xl.endswith('banda.xml'):
-                    print 'Not adding '+xl+' to '+orig_st+' set'
+                    print('Not adding '+xl+' to '+orig_st+' set')
                     
                 elif mod == 'GA_NFSM_fixed' and orig_st == 'Smoothed_seismicity' and xl.endswith('nfsm.xml'):
-                    print 'Not adding '+xl+' to '+orig_st+' set'
+                    print('Not adding '+xl+' to '+orig_st+' set')
                     
                 elif mod == 'GA_fixed' and orig_st == 'Smoothed_faults':
-                    print 'Not adding '+xl+' to '+orig_st+' set'
+                    print('Not adding '+xl+' to '+orig_st+' set')
                     
                 elif mod == 'Cuthbertson' and orig_st == 'Smoothed_seismicity' and xl.endswith('nfsm.xml'):
-                    print 'Not adding '+xl+' to '+orig_st+' set'
+                    print('Not adding '+xl+' to '+orig_st+' set')
                 
                 elif mod == 'Cuthbertson' and orig_st == 'Smoothed_faults' and xl.endswith('banda.xml'):
-                    print 'Not adding '+xl+' to '+orig_st+' set'
+                    print('Not adding '+xl+' to '+orig_st+' set')
                     
                 elif mod == 'Hall' and orig_st == 'Smoothed_seismicity' and xl.endswith('nfsm.xml'):
-                    print 'Not adding '+xl+' to '+orig_st+' set'
+                    print('Not adding '+xl+' to '+orig_st+' set')
                 
                 elif mod == 'Hall' and orig_st == 'Smoothed_faults' and xl.endswith('banda.xml'):
-                    print 'Not adding '+xl+' to '+orig_st+' set'
+                    print('Not adding '+xl+' to '+orig_st+' set')
                 
                 # else, add file to list
                 else:
                     # multiply ARUP models by 0.5
                     if mod.startswith('ARUP'):
                        mod_wt = 0.5
-                       print '    Modifying ARUP model weight'
+                       print('    Modifying ARUP model weight')
                     else:
                        mod_wt = 1.0
                     
@@ -327,12 +327,12 @@ for st, sw in zip(src_type, src_wts):
 
 # check weights sum to one!
 if not sum(branch_wts) == 1.0:
-    print '\nWeights do not sum to 1.0!:',sum(branch_wts)
+    print('\nWeights do not sum to 1.0!:',sum(branch_wts))
     
     # assume testing, so rescale weights
     if sum(branch_wts) < 0.95:
-        print branch_wts
-        print '\nAre you testing?  Rescaling weights!!!\n'
+        print(branch_wts)
+        print('\nAre you testing?  Rescaling weights!!!\n')
         #branch_wts = branch_wts / sum(branch_wts)
         
        

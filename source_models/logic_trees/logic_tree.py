@@ -76,7 +76,7 @@ class LogicTree(object):
         and class"""
         branch_values = []
         branch_weights = []
-        for branch, lt_b in self.sets[set_name].set_classes[class_name].branches.iteritems():
+        for branch, lt_b in self.sets[set_name].set_classes[class_name].branches.items():
             if branch_value is not None:
                 if lt_b.value == branch_value:
                      branch_values.append(lt_b.value)
@@ -89,32 +89,32 @@ class LogicTree(object):
     def list_sets(self):
         """Print all set names
         """
-        for set_name, obj in self.sets.iteritems():
-            print set_name
+        for set_name, obj in self.sets.items():
+            print(set_name)
             
     def list_classes(self, set_name=None):
         """Print class names of given set, or
         all if set_name is not specified"""
         if set_name is not None:
-            print 'Set name:', set_name
-            for class_name, obj in self.sets[set_name].set_classes.iteritems():
-                print class_name
+            print('Set name:', set_name)
+            for class_name, obj in self.sets[set_name].set_classes.items():
+                print(class_name)
         else:
-            for set_name, obj in self.sets.iteritems():
-                 print 'Set name:', set_name
-                 for class_name, obj in self.sets[set_name].set_classes.iteritems():
-                     print class_name
+            for set_name, obj in self.sets.items():
+                 print('Set name:', set_name)
+                 for class_name, obj in self.sets[set_name].set_classes.items():
+                     print(class_name)
             
 if __name__ == "__main__":
     lt = LogicTree('../../shared/seismic_source_model_weights_rounded_p0.4.csv')
     lt.list_sets()
     lt.list_classes('FSM_MFD')
     branch_values, branch_weights = lt.get_weights('Mmax', 'Proterozoic')
-    print branch_values
-    print branch_weights
+    print(branch_values)
+    print(branch_weights)
     branch_values, branch_weights = lt.get_weights('Mmax', 'Proterozoic', '7.3')
-    print branch_values
-    print branch_weights
+    print(branch_values)
+    print(branch_weights)
     branch_values, branch_weights = lt.get_weights('FSM_MFD', 'Cratonic')
-    print branch_values
-    print branch_weights
+    print(branch_values)
+    print(branch_weights)

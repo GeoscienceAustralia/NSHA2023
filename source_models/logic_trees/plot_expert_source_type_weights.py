@@ -35,21 +35,21 @@ for i in range(num_ssc_experts):
         S2 = ids[35:40]
 
     # Read expert responses
-    print 'Reading response from expert', i+1
+    print('Reading response from expert', i+1)
     try:
         data = np.genfromtxt(filepath, delimiter = ',', skip_header = 1, usecols = (1,2,3))#, filling_values = 0, missing_values = 0)
     except IOError:
-        print 'Missing file from expert %i!!!' % (i+1)
+        print('Missing file from expert %i!!!' % (i+1))
         continue
     # Check for missing responses
     if np.isnan(data).any():
-        print 'Missing values for expert  %i!!!' % (i+1)
-        print 'Currently setting all nan to zero'
+        print('Missing values for expert  %i!!!' % (i+1))
+        print('Currently setting all nan to zero')
         data = np.nan_to_num(data)
    # print data[:,1]
-    print 'Sum of weights for expert %i is %.3f' % (i+1, sum(data[:,1]))
+    print('Sum of weights for expert %i is %.3f' % (i+1, sum(data[:,1])))
     S2_sum = sum(data[35:40,1])
-    print data[35]
+    print(data[35])
     SS_weights.append(data[35])
     BG_weights.append(data[36])
     Reg_weights.append(data[37])
@@ -61,11 +61,11 @@ BG_weights = np.array(BG_weights)
 Reg_weights = np.array(Reg_weights)
 Seismo_weights = np.array(Seismo_weights)
 SS_flt_weights = np.array(SS_flt_weights)
-print SS_weights
-print BG_weights
-print Reg_weights
-print Seismo_weights
-print SS_flt_weights
+print(SS_weights)
+print(BG_weights)
+print(Reg_weights)
+print(Seismo_weights)
+print(SS_flt_weights)
 weight_list = [SS_weights, BG_weights, Reg_weights, Seismo_weights,
                SS_flt_weights]
 fig = plt.figure(figsize = (3,10))
