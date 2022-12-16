@@ -2,12 +2,13 @@
 
 Jonathan Griffin
 Geoscience Australia, February 2016
+Updated: December 2022
 """
 
 import os, sys
-from NSHA2018.source_models.faults.shapefile2nrml import shapefile_2_simplefault, \
+from NSHA2023.source_models.faults.shapefile2nrml import shapefile_2_simplefault, \
     shapefile_2_simplefault_CE, shapefile_2_simplefault_MM
-from hmtk.parsers.source_model.nrml04_parser import nrmlSourceModelParser
+from openquake.hmtk.parsers.source_model.nrml04_parser import nrmlSourceModelParser
 from subprocess import call
 shapefile = 'FSM/FSD_simple_faults.shp'
 shapefile_faultname_attribute = 'Name'
@@ -32,7 +33,7 @@ combined_output_dir = 'National_Seismotectonic_Source_Model_2018'
 #print cmd
 ###################
 # GR fault model
-print 'Building Gutenberg-Richter earthquake fault source model'
+print('Building Gutenberg-Richter earthquake fault source model')
 output_xml_text=shapefile_2_simplefault.nrml_from_shapefile(shapefile,
                                                             shapefile_faultname_attribute,
                                                             shapefile_dip_attribute,
@@ -65,7 +66,7 @@ f.close()
 
 ###########################
 #CE fault source model
-print 'Building Characteristic earthquake fault source model'
+print('Building Characteristic earthquake fault source model')
 output_xml_text=shapefile_2_simplefault_CE.nrml_from_shapefile(shapefile,
                                                             shapefile_faultname_attribute,
                                                             shapefile_dip_attribute,
@@ -102,7 +103,7 @@ f.close()
 
 ######################################                                                                     
 #Maximum magnitude fault source model                                                                      
-print 'Building maximum magnitude fault source model'
+print('Building maximum magnitude fault source model')
 output_xml_text=shapefile_2_simplefault_MM.nrml_from_shapefile(shapefile,
                                                             shapefile_faultname_attribute,
                                                             shapefile_dip_attribute,
@@ -140,7 +141,7 @@ weights = [0.33, 0.34, 0.33]
                 
 # Now write the source model logic tree file 
 #####################################                                                                                   
-print 'Writing logic tree file'
+print('Writing logic tree file')
 newxml = '<?xml version="1.0" encoding="UTF-8"?>\n'
 newxml += '<nrml xmlns:gml="http://www.opengis.net/gml"\n'
 newxml += '      xmlns="http://openquake.org/xmlns/nrml/0.4">\n\n'
@@ -191,7 +192,7 @@ source_model_index = 0
 for source_model in source_model_list:
     source_index = 0
     for source in source_model.sources:
-        print 'Adding source model ', source.name
+        print('Adding source model ', source.name)
         source_list.append(source)
         source_index += 1
     source_model_index += 1
@@ -217,7 +218,7 @@ source_model_index = 0
 for source_model in source_model_list:
     source_index = 0
     for source in source_model.sources:
-        print 'Adding source model ', source.name
+        print('Adding source model ', source.name)
         source_list.append(source)
         source_index += 1
     source_model_index += 1
@@ -240,7 +241,7 @@ source_model_index = 0
 for source_model in source_model_list:
     source_index = 0
     for source in source_model.sources:
-        print 'Adding source model ', source.name
+        print('Adding source model ', source.name)
         source_list.append(source)
         source_index += 1
     source_model_index += 1
@@ -256,7 +257,7 @@ weights = [0.5, 0.5]
 ######################################                                                                                     
 # Now write the source model logic tree file 
 #####################################                                                                                   
-print 'Writing logic tree file'
+print('Writing logic tree file')
 newxml = '<?xml version="1.0" encoding="UTF-8"?>\n'
 newxml += '<nrml xmlns:gml="http://www.opengis.net/gml"\n'
 newxml += '      xmlns="http://openquake.org/xmlns/nrml/0.4">\n\n'
