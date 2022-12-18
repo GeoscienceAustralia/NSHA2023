@@ -23,7 +23,7 @@ for j in range(0, num_files, 1):
         '_%03d.xml' % j 
     tmp_pt_source_filename_list.append(tmp_pt_filename)
 for tmp_pt_source_file in tmp_pt_source_filename_list:
-    print 'Reading %s' % tmp_pt_source_file
+    print('Reading %s' % tmp_pt_source_file)
     tmp_pt_source = read_pt_source(tmp_pt_source_file)
     tmp_pt_source_list.append(tmp_pt_source)
 merged_filename = geom_pt_sources_filename.rstrip('.xml') + '_merged_parallel.xml'

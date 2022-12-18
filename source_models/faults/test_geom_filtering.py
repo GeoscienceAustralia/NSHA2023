@@ -18,7 +18,7 @@ rupture_mesh_spacing = 2 #10 # Area source mesh
 area_source_discretisation = 10 #20
 
 # Read in the area source model
-print 'Reading area source model %s' % area_source_model
+print('Reading area source model %s' % area_source_model)
 area_pt_filename = area_source_model[:-4] + '_pts.xml'
 area_sources = nrml2sourcelist(area_source_model, 
                                investigation_time=investigation_time, 
@@ -26,7 +26,7 @@ area_sources = nrml2sourcelist(area_source_model,
                                width_of_mfd_bin=bin_width,
                                area_source_discretisation=area_source_discretisation)
 # Convert area sources to point sources for filtering
-print 'Converting to point sources'
+print('Converting to point sources')
 name = area_source_model.split('/')[-1][:-4] + '_pts' 
 point_sources = area2pt_source(area_source_model, sources=area_sources,
                                filename=area_pt_filename,
@@ -36,7 +36,7 @@ for source_group in point_sources:
      for source in source_group:
           pt_source_list.append(source)
 
-print 'Applying geometrical filtering'
+print('Applying geometrical filtering')
 name = area_source_model.split('/')[-1][:-4] + '_pts_geom_filter' 
 fault_sources = read_simplefault_source(fsm, rupture_mesh_spacing = fault_mesh_spacing)
 revised_point_sources = area_source_model[:-4] + '_pts_geom_filtered.xml'

@@ -11,18 +11,18 @@ April 2017
 
 import os, sys
 import numpy as np
-from NSHA2018.source_models.faults.shapefile2nrml import shapefile_2_simplefault, \
+from NSHA2023.source_models.faults.shapefile2nrml import shapefile_2_simplefault, \
     shapefile_2_simplefault_CE, shapefile_2_simplefault_MM, shp2nrml
-from NSHA2018.source_models.logic_trees import logic_tree
-from NSHA2018.source_models.utils.utils import largest_remainder
-from NSHA2018.source_models.utils.area_sources import nrml2sourcelist, \
+from NSHA2023.source_models.logic_trees import logic_tree
+from NSHA2023.source_models.utils.utils import largest_remainder
+from NSHA2023.source_models.utils.area_sources import nrml2sourcelist, \
     area2pt_source, weighted_pt_source
-from NSHA2018.source_models.utils.pt2fault_distance import read_simplefault_source, \
+from NSHA2023.source_models.utils.pt2fault_distance import read_simplefault_source, \
     pt2fault_distance, write_combined_faults_points, combine_pt_sources, read_pt_source
 #from hmtk.parsers.source_model.nrml04_parser import nrmlSourceModelParser
 from openquake.hazardlib.sourcewriter import write_source_model
 from openquake.hazardlib.scalerel.leonard2014 import Leonard2014_SCR
-from NSHA2018.source_models.utils.scaling import Leonard2014_SCR_extension
+from NSHA2023.source_models.utils.scaling import Leonard2014_SCR_extension
 from subprocess import call
 
 from openquake.hazardlib.sourceconverter import SourceConverter, \
@@ -93,7 +93,7 @@ fault_traces, faultnames, dips, sliprates, fault_lengths = \
 trts = shp2nrml.trt_from_domains(fault_traces, domains_shapefile,
                                 default_trt = 'Non_cratonic')
 trt_list = list(set(trts)) # unique trt values
-print trt_list
+print(trt_list)
 b_values = shp2nrml.b_value_from_region(fault_traces, 
                                         b_region_shapefile, 
                                         default_b = 1.0)
@@ -133,21 +133,21 @@ for i, fault_trace in enumerate(fault_traces):
      width = width_m/1000. # convert back to km
      # Limit width to seismogenic zone
      max_down_dip_width = (default_lower_depth-upper_depth)/np.sin(np.radians(dip))
-     print width, max_down_dip_width
+     print(width, max_down_dip_width)
      if width > max_down_dip_width:
           width = max_down_dip_width
           lower_depth = default_lower_depth
      elif width < max_down_dip_width:
           lower_depth = width*np.sin(np.radians(dip)) + upper_depth
-     print fault_lengths[i], width, dip
-     print 'lower_depth', lower_depth
+     print(fault_lengths[i], width, dip)
+     print('lower_depth', lower_depth)
      fault_area = fault_lengths[i]*width #km^2
      #fault_area = fault_lengths[i]*(float(lower_depth)-float(upper_depth))
      sliprate = sliprates[i]
      trt = trts[i]
      faultname = faultnames[i]
      b_value = b_values[i]
-     print 'Calculating rates for %s in domain %s' % (faultname, trt)
+     print('Calculating rates for %s in domain %s' % (faultname, trt))
      # Calculate M_max from scaling relations
      #scalrel = Leonard2014_SCR()
      max_mag = scalerel.get_median_mag(fault_area, float(rake))
@@ -158,9 +158,9 @@ for i, fault_trace in enumerate(fault_traces):
           min_mag = max_mag - bin_width
      else:
           min_mag = default_min_mag
-     print 'Maximum magnitude is %.3f' % max_mag
+     print('Maximum magnitude is %.3f' % max_mag)
      if min_mag < minimum_allowed_min_mag:
-          print 'Skipping fault %s as not big enough for minimum allowed min_mag of 4.4' % faultname
+          print('Skipping fault %s as not big enough for minimum allowed min_mag of 4.4' % faultname)
           continue
 
      # Append geometry information
@@ -192,7 +192,7 @@ for i, fault_trace in enumerate(fault_traces):
 
      # Get Youngs and Coppersmith 1985 Characteristic rates
      char_mag = gr_mags[-1] - 0.25 + 0.05 # Adding 0.05 avoids round issues
-     print char_mag, b_value, min_mag, max_mag, moment_rate, bin_width
+     print(char_mag, b_value, min_mag, max_mag, moment_rate, bin_width)
      ce_mags, ce_rates = shp2nrml.momentrate2YC_incremental(char_mag, b_value,
                                                             min_mag, max_mag,
                                                             moment_rate, bin_width)
@@ -229,15 +229,15 @@ for i, fault_trace in enumerate(fault_traces):
           pois_weight = pois_weight[0]
           cl_weight = cl_weight[0]
           bimod_weight = bimod_weight[0]
-          print td_weight
-          print cl_weight
+          print(td_weight)
+          print(cl_weight)
           td_weight = td_weight*cl_weight
           pois_weight = pois_weight + cl_weight*bimod_weight
-          print 'td_weight', td_weight
-          print 'pois_weight', pois_weight
+          print('td_weight', td_weight)
+          print('pois_weight', pois_weight)
           cl_mags = mm_mags
           cl_rates = np.ones(len(cl_mags))*(clustered_fault_rate_dict[faultname]/len(cl_mags))
-          print cl_rates
+          print(cl_rates)
           #cl_rates = cl_rates * td_weight
     
      # Calculate collapsed weights
@@ -337,14 +337,14 @@ del output_xml_all_methods
 del output_xml_all_methods_inc_cluster
 
 # Now read in the area source model
-print 'Reading area source model %s' % area_source_model
+print('Reading area source model %s' % area_source_model)
 area_sources = nrml2sourcelist(area_source_model, 
                           investigation_time=investigation_time, 
                           rupture_mesh_spacing=rupture_mesh_spacing, 
                           width_of_mfd_bin=bin_width,
                           area_source_discretisation=area_source_discretisation)
 # Convert area sources to point sources for filtering
-print 'Converting to point sources'
+print('Converting to point sources')
 area_pt_filename = area_source_model[:-4] + '_pts.xml'
 #name = area_source_model.split('/')[-1][:-4] + '_pts'
 point_sources, banda_fault_sources, subduction_area_sources = area2pt_source(area_source_model, sources=area_sources,
@@ -378,42 +378,42 @@ for trt in trt_list:
      total_mb_weight[trt] = gr_mb_weight[0] + ce_mb_weight[0] + mm_mb_weight[0]
      total_geom_weight[trt] = gr_geom_weight[0] + ce_geom_weight[0] + mm_geom_weight[0]
 #####################
-print 'Not including moment balanced approach for now!'
+print('Not including moment balanced approach for now!')
 for trt in trt_list:
-     print 'Renormalising weights for other methods'
+     print('Renormalising weights for other methods')
      partial_weight_sum = total_add_weight[trt]+total_geom_weight[trt]
      total_add_weight[trt] = total_add_weight[trt]*(1/partial_weight_sum)
      total_geom_weight[trt] = total_geom_weight[trt]*(1/partial_weight_sum)
      total_add_weight[trt], total_geom_weight[trt] = largest_remainder([total_add_weight[trt],
                                                                         total_geom_weight[trt]],
                                                                        expected_sum=1,precision=3)
-print 'Making weights for subduction regions the same as Non_cratonic'
+print('Making weights for subduction regions the same as Non_cratonic')
 total_add_weight['Subduction'] = total_add_weight['Non_cratonic']
 total_geom_weight['Subduction'] = total_geom_weight['Non_cratonic']
 total_mb_weight['Subduction'] = total_mb_weight['Non_cratonic']
 ##################
 additive_pt_sources_filename =  area_source_model[:-4] + '_pts_add_weighted.xml'
 model_name = area_source_model.split('/')[-1].rstrip('.xml') + '_additive'
-print 'Writing %s' % model_name
+print('Writing %s' % model_name)
 additive_pt_sources = weighted_pt_source(pt_source_list, total_add_weight,
                                          model_name, additive_pt_sources_filename, 
                                          nrml_version='04')
 mb_pt_sources_filename =  area_source_model[:-4] + '_pts_mb_weighted.xml'
 model_name = area_source_model.split('/')[-1].rstrip('.xml') + '_mb'
-print 'Writing %s' % model_name
+print('Writing %s' % model_name)
 mb_pt_sources = weighted_pt_source(pt_source_list, total_mb_weight,
                                    model_name, mb_pt_sources_filename, 
                                    nrml_version='04')
 geom_pt_sources_filename =  area_source_model[:-4] + '_pts_geom_weighted.xml'
 model_name = area_source_model.split('/')[-1].rstrip('.xml') + '_geom_filter'
-print 'Writing %s' % model_name
+print('Writing %s' % model_name)
 geom_pt_sources = weighted_pt_source(pt_source_list, total_geom_weight,
                                      model_name, geom_pt_sources_filename, 
                                      nrml_version='04')
 #print 'Exiting here'
 #sys.exit()
 # Apply geometrical filtering
-print 'Applying geometrical filtering - this should be pre-calculated using run_geom_filter.sh!'
+print('Applying geometrical filtering - this should be pre-calculated using run_geom_filter.sh!')
 #pt2fault_distance(geom_pt_sources, fault_sources, min_distance=5.0,
 #                  filename=geom_filtered_pt_source_file,
 #                  buffer_distance = 100.,
@@ -436,7 +436,7 @@ write_combined_faults_points(geom_filtered_pt_sources, fault_sources,
                              nrml_version = '04')
 
 # Apply additive approach                                                                                     
-print 'Writing full additive model'
+print('Writing full additive model')
 fsm = os.path.join(source_model_name, source_model_name + '_additive.xml')
 model_name = source_model_name + '_additive'
 outfile =  os.path.join(source_model_name, source_model_name + '_additive_zone.xml')
@@ -455,7 +455,7 @@ combined_pt_sources = combine_pt_sources([additive_pt_sources, geom_filtered_pt_
                                          id_location_flag='location')
 
 # Combine merged point sources with merged fault source model
-print 'Writing collapsed logic tree seismotectonic model'
+print('Writing collapsed logic tree seismotectonic model')
 fsm = os.path.join(source_model_name, source_model_name + '_all_methods_collapsed_inc_cluster.xml')
 model_name = source_model_name + '_' + area_source_model_name + '_collapsed_inc_cluster'
 outfile = os.path.join(source_model_name, source_model_name + '_' + \
