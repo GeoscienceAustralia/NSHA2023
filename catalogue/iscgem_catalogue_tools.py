@@ -12,7 +12,7 @@ def decluster_GK74(catalogue, filename):
     from openquake.hmtk.seismicity.declusterer.dec_gardner_knopoff import GardnerKnopoffType1
     from openquake.hmtk.seismicity.declusterer.distance_time_windows import GardnerKnopoffWindow
     from openquake.hmtk.parsers.catalogue.csv_catalogue_parser import CsvCatalogueWriter
-    #from writers import htmk2shp_isc
+    from writers import htmk2shp_isc
     from os import path
     
     decluster_config = {'time_distance_window': GardnerKnopoffWindow(),
@@ -67,7 +67,7 @@ def decluster_GK74(catalogue, filename):
     writer.write_file(catalogue_gk)
     
     # write shapefile
-    #htmk2shp_isc(catalogue_gk, path.join('shapefiles', 'ISC-GEM_V9.1_hmtk_GK74_declustered.shp'))
+    htmk2shp_isc(catalogue_gk, path.join('shapefiles', 'ISC-GEM_V9_1_hmtk_GK74_declustered.shp'))
     
     print('Declustered catalogue: ok\n')
 
@@ -82,7 +82,7 @@ def decluster_iscgem_gk74(hmtk_csv):
     cat = parser.read_file()
     
     # write shapefile
-    #htmk2shp_isc(cat, path.join('shapefiles', 'ISC-GEM_V9.1_hmtk_full.shp'))
+    htmk2shp_isc(cat, path.join('shapefiles', 'ISC-GEM_V9_1_hmtk_full.shp'))
     
     decluster_GK74(cat, hmtk_csv)
 
@@ -117,8 +117,8 @@ def clip_iscgem_hmtk(hmtkcsv):
     
     # now loop through lines and ckeck if events inside
     for line in lines[1:]:
-        evlo = float(line.strip().split(',')[7])
-        evla = float(line.strip().split(',')[8])
+        evlo = float(line.strip().split(',')[9])
+        evla = float(line.strip().split(',')[10])
         #print(evlo, evla)
         
         if evlo >= minlon and evlo <= maxlon \

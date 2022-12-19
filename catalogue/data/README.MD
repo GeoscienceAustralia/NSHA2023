@@ -29,11 +29,13 @@ List of catalogues used to determine MFDs for the 2023 NSHA:
 	- Catalogue to be used for adjacent offshore sources
 	- Refomated from original catalogue format as described in Storchak et al. ([2015](https://www.sciencedirect.com/science/article/pii/S003192011400154X))
 	- Version 9.1 released on 2022-06-27 for the period of 1904-2018
+	- Appends GA catalogue from 2019-2022 for magnitude MW >= 5.5 (run io_catalogues.ga_query2htmk)
+		- mb(ISC) converted to Mw using conversion equations developed by Ghasemi et al. ([2020](https://link.springer.com/article/10.1007/s10518-020-00966-1)) for Papua New Guinea region
 
 * ISC-GEM_V9.1_hmtk_clip.csv: full [International Seismological Centre-Global Earthquake Model (ISC-GEM) earthquake catalogue](http://www.isc.ac.uk/iscgem/overview.php) in HMTK format:
 	- Catalogue to be used for adjacent offshore sources
 	- Refomated from original catalogue format as described in Storchak et al. ([2015](https://www.sciencedirect.com/science/article/pii/S003192011400154X))
 	- Version 9.1 released on 2022-06-27 for the period of 1904-2018
-	- Appends GA catalogue from 2019-2022 for magnitude MW >= 6.0 (run io_catalogues.ga_query2htmk)
+	- Appends GA catalogue from 2019-2022 for magnitude MW >= 5.5
 	
 * GIS files for catalogues are provided [here](https://github.com/GeoscienceAustralia/NSHA2023/tree/master/catalogue/shapefiles)
