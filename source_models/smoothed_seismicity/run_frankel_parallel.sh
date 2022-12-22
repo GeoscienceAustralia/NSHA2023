@@ -11,9 +11,11 @@ module load geos/3.8.0
 #module load hdf5/1.8.10
 module load hdf5/1.10.7
 module load openmpi/4.1.4
-module load gdal
-module unload python3
+#module unload python3
+#module unload python
 module load python3/3.9.2
+# Load gdal after python to avoid conflict
+module load gdal/3.5.0 
 #module load python/2.7.11-matplotlib
 
 # To get rtree to run
