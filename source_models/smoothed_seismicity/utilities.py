@@ -1,7 +1,7 @@
 """Utilities functions for smoothed seismicity models
 """
 
-import ogr
+from osgeo import ogr
 import shapefile
 from shapely.geometry import Point, Polygon
 import numpy as np
@@ -9,7 +9,7 @@ import numpy as np
 def params_from_shp(shapefile, trt_ignore=[]):
     """Get parameters from shapefile attribute table
     """
-    print 'Getting completeness and b-values from %s' % shapefile
+    print('Getting completeness and b-values from %s' % shapefile)
     driver = ogr.GetDriverByName("ESRI Shapefile")
     data_source = driver.Open(shapefile, 0)
     dsf = data_source.GetLayer()

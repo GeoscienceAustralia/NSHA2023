@@ -13,7 +13,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt  # Matplotlib - Python's plotting library
 from copy import deepcopy   # Python module for copying objects
-import ogr
+from osgeo import ogr
 import shapefile
 from shapely.geometry import Point, Polygon
 
@@ -21,73 +21,73 @@ from shapely.geometry import Point, Polygon
 import time
 from time import localtime, strftime, gmtime
 import string
-import pypar
+#import pypar
+from mpi4py import MPI
 
 # Other smoothed seismicity functions
 from utilities import params_from_shp
 
 # Input and Output Tools
 # Catalogue and sources 
-from hmtk.parsers.catalogue import CsvCatalogueParser   # Reads an earthquake catalogue from CSV
-from hmtk.parsers.catalogue.csv_catalogue_parser import CsvCatalogueWriter  # Writes an earthquake catalogue to CSV
-from hmtk.parsers.source_model.nrml04_parser import nrmlSourceModelParser  # Imports a source model from XML
-from openquake.hazardlib.nrml import SourceModelParser, write, NAMESPACE
+from openquake.hmtk.parsers.catalogue import CsvCatalogueParser   # Reads an earthquake catalogue from CSV
+from openquake.hmtk.parsers.catalogue.csv_catalogue_parser import CsvCatalogueWriter  # Writes an earthquake catalogue to CSV
+from openquake.hmtk.parsers.source_model.nrml04_parser import nrmlSourceModelParser  # Imports a source model from XML
+from openquake.hazardlib.nrml import write, NAMESPACE
 from openquake.baselib.node import Node
 from openquake.hazardlib import nrml
 from openquake.hazardlib.sourcewriter import obj_to_node
 # Plotting tools
-from hmtk.plotting.mapping import HMTKBaseMap
-from hmtk.plotting.seismicity.completeness import plot_stepp_1972
-from hmtk.plotting.seismicity.catalogue_plots import plot_magnitude_time_scatter
-from hmtk.plotting.seismicity.catalogue_plots import plot_depth_histogram
-from hmtk.plotting.seismicity.catalogue_plots import plot_magnitude_time_density
-from hmtk.plotting.seismicity.max_magnitude.cumulative_moment import plot_cumulative_moment 
-from hmtk.plotting.seismicity.catalogue_plots import (plot_observed_recurrence, 
+#from openquake.hmtk.plotting.mapping import HMTKBaseMap
+from openquake.hmtk.plotting.seismicity.completeness import plot_stepp_1972
+from openquake.hmtk.plotting.seismicity.catalogue_plots import plot_magnitude_time_scatter
+from openquake.hmtk.plotting.seismicity.catalogue_plots import plot_depth_histogram
+from openquake.hmtk.plotting.seismicity.catalogue_plots import plot_magnitude_time_density
+from openquake.hmtk.plotting.seismicity.max_magnitude.cumulative_moment import plot_cumulative_moment 
+from openquake.hmtk.plotting.seismicity.catalogue_plots import (plot_observed_recurrence, 
                                                       get_completeness_adjusted_table,
                                                       _get_catalogue_bin_limits)
 
 # Seismicity tools: Events and declustering methods
-from hmtk.seismicity.selector import CatalogueSelector
-from hmtk.seismicity.declusterer.dec_afteran import Afteran 
-from hmtk.seismicity.declusterer.dec_gardner_knopoff import GardnerKnopoffType1 
-from hmtk.seismicity.declusterer.distance_time_windows import (GardnerKnopoffWindow, 
+from openquake.hmtk.seismicity.selector import CatalogueSelector
+from openquake.hmtk.seismicity.declusterer.dec_afteran import Afteran 
+from openquake.hmtk.seismicity.declusterer.dec_gardner_knopoff import GardnerKnopoffType1 
+from openquake.hmtk.seismicity.declusterer.distance_time_windows import (GardnerKnopoffWindow, 
                                                                GruenthalWindow, 
                                                                UhrhammerWindow)
 
 # Completeness tools
-from hmtk.seismicity.completeness.comp_stepp_1971 import Stepp1971
+from openquake.hmtk.seismicity.completeness.comp_stepp_1971 import Stepp1971
 
 # Seismicity tools: Recurrence methods
-from hmtk.seismicity.occurrence.aki_maximum_likelihood import AkiMaxLikelihood
-from hmtk.seismicity.occurrence.b_maximum_likelihood import BMaxLikelihood
-from hmtk.seismicity.occurrence.kijko_smit import KijkoSmit
-from hmtk.seismicity.occurrence.weichert import Weichert
+from openquake.hmtk.seismicity.occurrence.aki_maximum_likelihood import AkiMaxLikelihood
+from openquake.hmtk.seismicity.occurrence.b_maximum_likelihood import BMaxLikelihood
+from openquake.hmtk.seismicity.occurrence.kijko_smit import KijkoSmit
+from openquake.hmtk.seismicity.occurrence.weichert import Weichert
 
 # Seismicity tools: Recurrence methods
-from hmtk.seismicity.max_magnitude.kijko_sellevol_fixed_b import KijkoSellevolFixedb
-from hmtk.seismicity.max_magnitude.kijko_sellevol_bayes import KijkoSellevolBayes
-from hmtk.seismicity.max_magnitude.kijko_nonparametric_gaussian import KijkoNonParametricGaussian
-from hmtk.seismicity.max_magnitude.cumulative_moment_release import CumulativeMoment 
+from openquake.hmtk.seismicity.max_magnitude.kijko_sellevol_fixed_b import KijkoSellevolFixedb
+from openquake.hmtk.seismicity.max_magnitude.kijko_sellevol_bayes import KijkoSellevolBayes
+from openquake.hmtk.seismicity.max_magnitude.kijko_nonparametric_gaussian import KijkoNonParametricGaussian
+from openquake.hmtk.seismicity.max_magnitude.cumulative_moment_release import CumulativeMoment 
 
 # Seismicity tools: Smoothed seismicity
-from hmtk.seismicity.smoothing.smoothed_seismicity import SmoothedSeismicity 
-from hmtk.seismicity.smoothing.kernels.isotropic_gaussian import IsotropicGaussian 
+from openquake.hmtk.seismicity.smoothing.smoothed_seismicity import SmoothedSeismicity 
+from openquake.hmtk.seismicity.smoothing.kernels.isotropic_gaussian import IsotropicGaussian 
 
 # To build source model
-from hmtk.sources.source_model import mtkSourceModel
-from hmtk.sources.point_source import mtkPointSource
+from openquake.hmtk.sources.source_model import mtkSourceModel
+from openquake.hmtk.sources.point_source import mtkPointSource
 from openquake.hazardlib.scalerel.leonard2014 import Leonard2014_SCR
 from openquake.hazardlib.source.point import PointSource
 from openquake.hazardlib.tom import PoissonTOM
 from openquake.hazardlib.sourcewriter import obj_to_node
 from openquake.baselib.node import Node
 from openquake.hazardlib import nrml
-from openquake.hazardlib.nrml import SourceModelParser, write, NAMESPACE
 from openquake.hazardlib.geo.point import Point
 from openquake.hazardlib.mfd import TruncatedGRMFD
 from openquake.hazardlib.geo.nodalplane import NodalPlane
 from openquake.hazardlib.pmf import PMF
-print "Everything Imported OK!"
+print("Everything Imported OK!")
 
 domains_shp = '../zones/2018_mw/Domains_single_mc/shapefiles/Domains_NSHA18_MFD.shp'
 #Importing catalogue
@@ -120,16 +120,14 @@ def run_smoothing(grid_lims, smoothing_config, catalogue, completeness_table, ma
                                                                     bvalue, completeness_table[0][1], completeness_string)
     filename = smoother_filename[:-4] + '.xml'
     if os.path.exists(filename) and not overwrite:
-        print '%s already created, not overwriting!' % filename
+        print('%s already created, not overwriting!' % filename)
         return
     smoother = SmoothedSeismicity([105.,160.,0.1,-47.,-5,0.1,0.,20., 20.], bvalue = smoothing_config['bvalue'])
-    print 'Running smoothing'
+    print('Running smoothing')
     smoothed_grid = smoother.run_analysis(catalogue_comp, smoothing_config, completeness_table=completeness_table)
 
     smoother.write_to_csv(smoother_filename)
-
-
-    from openquake.hazardlib.nrml import SourceModelParser, write, NAMESPACE
+    
     from openquake.baselib.node import Node
     from openquake.hazardlib import nrml
     from openquake.hazardlib.sourcewriter import obj_to_node
@@ -144,7 +142,7 @@ def run_smoothing(grid_lims, smoothing_config, catalogue, completeness_table, ma
     try:
         data = np.genfromtxt(smoother_filename, delimiter = ',', skip_header = 1)
     except ValueError:
-        print 'Something wrong with file %s' % smoother_filename
+        print('Something wrong with file %s' % smoother_filename)
         sys.exit()
     tom = PoissonTOM(50) # Dummy temporal occurence model for building pt sources
     msr = Leonard2014_SCR()
@@ -193,11 +191,14 @@ def run_smoothing(grid_lims, smoothing_config, catalogue, completeness_table, ma
     plt.savefig(figname)
 
 # Set up paralell
-proc = pypar.size()                # Number of processors as specified by mpirun                     
-myid = pypar.rank()                # Id of of this process (myid in [0, proc-1])                     
-node = pypar.get_processor_name()  # Host name on which current process is running                   
-print 'I am proc %d of %d on node %s' % (myid, proc, node)
-t0 = pypar.time()
+comm = MPI.COMM_WORLD
+proc = comm.Get_size()                # Number of processors as specified by mpirun                     
+myid = comm.Get_rank()                # Id of of this process (myid in [0, proc-1])                     
+#node = pypar.get_processor_name()  # Host name on which current process is running                   
+#print('I am proc %d of %d on node %s' % (myid, proc, node))
+if myid == 0:
+    t0 = MPI.Wtime()
+    print("Start time" + str(t0))
 
 parser = CsvCatalogueParser(catalogue_filename) # From .csv to hmtk
 
@@ -205,11 +206,11 @@ parser = CsvCatalogueParser(catalogue_filename) # From .csv to hmtk
 catalogue = parser.read_file(start_year=1965, end_year=2016)
 
 # How many events in the catalogue?
-print "The catalogue contains %g events" % catalogue.get_number_events()
+print("The catalogue contains %g events" % catalogue.get_number_events())
 
 # What is the geographical extent of the catalogue?
 bbox = catalogue.get_bounding_box()
-print "Catalogue ranges from %.4f E to %.4f E Longitude and %.4f N to %.4f N Latitude\n" % bbox
+print("Catalogue ranges from %.4f E to %.4f E Longitude and %.4f N to %.4f N Latitude\n" % bbox)
 
 catalogue.sort_catalogue_chronologically()
 catalogue.data['magnitude']
@@ -247,7 +248,7 @@ for i in range(0, len(config_params), 1):
     completeness_table = config_params[i]['COMPLETENESS']
 #    print completeness_table
     config_combo = [completeness_table, config_params[i]['BVAL_BEST']]
-    print config_combo
+    print(config_combo)
     if not any(np.array_equal(l[0], config_combo[0]) and l[1]==config_combo[1] for l in config_combinations):
         config_combinations.append(config_combo)
     config_combo = [completeness_table, config_params[i]['BVAL_UPPER']]
@@ -256,16 +257,16 @@ for i in range(0, len(config_params), 1):
     config_combo = [completeness_table, config_params[i]['BVAL_LOWER']]
     if not any(np.array_equal(l[0], config_combo[0]) and l[1]==config_combo[1] for l in config_combinations):
         config_combinations.append(config_combo)
-print 'config_combinations'
-print config_combinations
-print len(config_combinations)
+print('config_combinations')
+print(config_combinations)
+print(len(config_combinations))
 
 for i in range(0, len(config_combinations), 1):
     if i % proc == myid:
         run = "%03d" % i
-        print 'Run %s' % run
+        print('Run %s' % run)
         completeness_table = np.array(config_combinations[i][0])
-        print 'Only using full period of catalogue'
+        print('Only using full period of catalogue')
         completeness_table = np.array([completeness_table[0]])
         bvalue = config_combinations[i][1]
 #        if i % 3 == 0:
@@ -275,7 +276,7 @@ for i in range(0, len(config_combinations), 1):
 #        if i % 3 == 2:
 #            bvalue = config_params[i/3]['BVAL_LOWER']
         mmin = completeness_table[0][1]
-        print 'mmin', mmin
+        print('mmin', mmin)
         config = {"BandWidth": 50.,
                   "Length_Limit": 3.,
                   "increment": False,
@@ -285,20 +286,20 @@ for i in range(0, len(config_combinations), 1):
         run_smoothing(grid_lims, config, catalogue_depth_clean, completeness_table, map_config, run, overwrite)
             
 
-pypar.barrier()
+#pypar.barrier()
 
 if myid == 0:
     ss = int(pypar.time() - t0)
     h = ss / 3600
     m = (ss % 3600) / 60
     s = (ss % 3600) % 60
-    print "--------------------------------------------------------"
-    print 'P0: Total time (%i seconds): %s:%s:%s (hh:mm:ss)' % (ss,
+    print("--------------------------------------------------------")
+    print('P0: Total time (%i seconds): %s:%s:%s (hh:mm:ss)' % (ss,
                                                                 string.zfill(h, 2),
                                                                 string.zfill(m, 2),
-                                                                string.zfill(s,2))
-    print "--------------------------------------------------------"
-pypar.finalize()
+                                                                string.zfill(s,2)))
+    print("--------------------------------------------------------")
+#pypar.finalize()
 
 
 

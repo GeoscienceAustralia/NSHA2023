@@ -14,73 +14,77 @@ from copy import deepcopy   # Python module for copying objects
 
 # Input and Output Tools
 # Catalogue and sources 
-from hmtk.parsers.catalogue import CsvCatalogueParser   # Reads an earthquake catalogue from CSV
-from hmtk.parsers.catalogue.csv_catalogue_parser import CsvCatalogueWriter  # Writes an earthquake catalogue to CSV
-from hmtk.parsers.source_model.nrml04_parser import nrmlSourceModelParser  # Imports a source model from XML
+from openquake.hmtk.parsers.catalogue import CsvCatalogueParser   # Reads an earthquake catalogue from CSV
+from openquake.hmtk.parsers.catalogue.csv_catalogue_parser import CsvCatalogueWriter  # Writes an earthquake catalogue to CSV
+
+from openquake.hmtk.parsers.source_model.nrml04_parser import nrmlSourceModelParser  # Imports a source model from XML
 
 # Plotting tools
 #from hmtk.plotting.mapping import HMTKBaseMap
-from hmtk.plotting.seismicity.completeness import plot_stepp_1972
-from hmtk.plotting.seismicity.catalogue_plots import plot_magnitude_time_scatter
-from hmtk.plotting.seismicity.catalogue_plots import plot_depth_histogram
-from hmtk.plotting.seismicity.catalogue_plots import plot_magnitude_time_density
-from hmtk.plotting.seismicity.max_magnitude.cumulative_moment import plot_cumulative_moment 
-from hmtk.plotting.seismicity.catalogue_plots import (plot_observed_recurrence, 
+from openquake.hmtk.plotting.seismicity.completeness import plot_stepp_1972
+from openquake.hmtk.plotting.seismicity.catalogue_plots import plot_magnitude_time_scatter
+from openquake.hmtk.plotting.seismicity.catalogue_plots import plot_depth_histogram
+from openquake.hmtk.plotting.seismicity.catalogue_plots import plot_magnitude_time_density
+from openquake.hmtk.plotting.seismicity.max_magnitude.cumulative_moment import plot_cumulative_moment 
+from openquake.hmtk.plotting.seismicity.catalogue_plots import (plot_observed_recurrence, 
                                                       get_completeness_adjusted_table,
                                                       _get_catalogue_bin_limits)
 
 # Seismicity tools: Events and declustering methods
-from hmtk.seismicity.selector import CatalogueSelector
-from hmtk.seismicity.declusterer.dec_afteran import Afteran 
-from hmtk.seismicity.declusterer.dec_gardner_knopoff import GardnerKnopoffType1 
-from hmtk.seismicity.declusterer.distance_time_windows import (GardnerKnopoffWindow, 
+from openquake.hmtk.seismicity.selector import CatalogueSelector
+from openquake.hmtk.seismicity.declusterer.dec_afteran import Afteran 
+from openquake.hmtk.seismicity.declusterer.dec_gardner_knopoff import GardnerKnopoffType1 
+from openquake.hmtk.seismicity.declusterer.distance_time_windows import (GardnerKnopoffWindow, 
                                                                GruenthalWindow, 
                                                                UhrhammerWindow)
 
 # Completeness tools
-from hmtk.seismicity.completeness.comp_stepp_1971 import Stepp1971
+from openquake.hmtk.seismicity.completeness.comp_stepp_1971 import Stepp1971
 
 # Seismicity tools: Recurrence methods
-from hmtk.seismicity.occurrence.aki_maximum_likelihood import AkiMaxLikelihood
-from hmtk.seismicity.occurrence.b_maximum_likelihood import BMaxLikelihood
-from hmtk.seismicity.occurrence.kijko_smit import KijkoSmit
-from hmtk.seismicity.occurrence.weichert import Weichert
+from openquake.hmtk.seismicity.occurrence.aki_maximum_likelihood import AkiMaxLikelihood
+from openquake.hmtk.seismicity.occurrence.b_maximum_likelihood import BMaxLikelihood
+from openquake.hmtk.seismicity.occurrence.kijko_smit import KijkoSmit
+from openquake.hmtk.seismicity.occurrence.weichert import Weichert
 
 # Seismicity tools: Recurrence methods
-from hmtk.seismicity.max_magnitude.kijko_sellevol_fixed_b import KijkoSellevolFixedb
-from hmtk.seismicity.max_magnitude.kijko_sellevol_bayes import KijkoSellevolBayes
-from hmtk.seismicity.max_magnitude.kijko_nonparametric_gaussian import KijkoNonParametricGaussian
-from hmtk.seismicity.max_magnitude.cumulative_moment_release import CumulativeMoment 
+from openquake.hmtk.seismicity.max_magnitude.kijko_sellevol_fixed_b import KijkoSellevolFixedb
+from openquake.hmtk.seismicity.max_magnitude.kijko_sellevol_bayes import KijkoSellevolBayes
+from openquake.hmtk.seismicity.max_magnitude.kijko_nonparametric_gaussian import KijkoNonParametricGaussian
+from openquake.hmtk.seismicity.max_magnitude.cumulative_moment_release import CumulativeMoment 
 
 # Seismicity tools: Smoothed seismicity
-from hmtk.seismicity.smoothing.smoothed_seismicity import SmoothedSeismicity 
-from hmtk.seismicity.smoothing.kernels.isotropic_gaussian import IsotropicGaussian 
+from openquake.hmtk.seismicity.smoothing.smoothed_seismicity import SmoothedSeismicity 
+from openquake.hmtk.seismicity.smoothing.kernels.isotropic_gaussian import IsotropicGaussian 
 
 # To build source model
-from hmtk.sources.source_model import mtkSourceModel
-from hmtk.sources.point_source import mtkPointSource
+from openquake.hmtk.sources.source_model import mtkSourceModel
+from openquake.hmtk.sources.point_source import mtkPointSource
 from openquake.hazardlib.scalerel.leonard2014 import Leonard2014_SCR
 from openquake.hazardlib.source.point import PointSource
 from openquake.hazardlib.tom import PoissonTOM
 from openquake.hazardlib.sourcewriter import obj_to_node
 from openquake.baselib.node import Node
 from openquake.hazardlib import nrml
-from openquake.hazardlib.nrml import SourceModelParser, write, NAMESPACE
+from openquake.hazardlib.nrml import write, NAMESPACE
 from openquake.hazardlib.geo.point import Point
 from openquake.hazardlib.mfd import TruncatedGRMFD
 from openquake.hazardlib.geo.nodalplane import NodalPlane
 from openquake.hazardlib.pmf import PMF
 #from nrml.models import HypocentralDepth
 #nrml.models import HypocentralDepth
-print "Everything Imported OK!"
+print("Everything Imported OK!")
 
 
 # In[25]:
 bvalue = float(sys.argv[1])
-print 'b value', bvalue
+print('b value', bvalue)
 
 #Importing catalogue
-catalogue_filename = "../../catalogue/data/AUSTCAT_V0.12_hmtk_declustered.csv"
+domains_shp = '../zones/2018_mw/Domains_single_mc/shapefiles/Domains_NSHA18_MFD.shp'
+#Importing catalogue                                                              
+catalogue_filename = "../../catalogue/data/NSHA18CAT_V0.1_hmtk_declustered.csv"
+#\\talogue_filename = "../../catalogue/data/AUSTCAT_V0.12_hmtk_declustered.csv"
 #catalogue_filename = "../../catalogue/data/AUSTCAT_V0.12_hmtk_mx_orig.csv"
 parser = CsvCatalogueParser(catalogue_filename) # From .csv to hmtk
 
@@ -88,11 +92,11 @@ parser = CsvCatalogueParser(catalogue_filename) # From .csv to hmtk
 catalogue = parser.read_file(start_year=1965, end_year=2010)
 
 # How many events in the catalogue?
-print "The catalogue contains %g events" % catalogue.get_number_events()
+print("The catalogue contains %g events" % catalogue.get_number_events())
 
 # What is the geographical extent of the catalogue?
 bbox = catalogue.get_bounding_box()
-print "Catalogue ranges from %.4f E to %.4f E Longitude and %.4f N to %.4f N Latitude\n" % bbox
+print("Catalogue ranges from %.4f E to %.4f E Longitude and %.4f N to %.4f N Latitude\n" % bbox)
 
 
 # In[26]:
@@ -168,7 +172,7 @@ for source in source_model.sources:
     source.select_catalogue(selector1)
     
     llon, ulon, llat, ulat = source.catalogue.get_bounding_box()
-    print llon, ulon, llat, ulat
+    print(llon, ulon, llat, ulat)
     # Map the Source
     #src_basemap = HMTKBaseMap(map_config, "Source: {:s}".format(source.name))
     #print "Source ID: %s  Source Name: %s   Number of Events: %g" % (source.id, source.name,
@@ -248,7 +252,7 @@ completeness_table_a = np.array([[1965., 4.0]])
 
 # In[ ]:
 
-from hmtk.seismicity.smoothing.smoothed_seismicity import SmoothedSeismicity
+#from openquake.hmtk.seismicity.smoothing.smoothed_seismicity import SmoothedSeismicity
 smoothing_config = {"BandWidth": 50.,
                     "Length_Limit": 3.,
                     "increment": 0.1}
@@ -264,7 +268,7 @@ smoothing_config = {"BandWidth": 50.,
 #bvalue = 1.355
 smoother = SmoothedSeismicity([100.,160.,0.1,-45.,-5,0.1,0.,20., 20.], bvalue = bvalue)
 #smoothed_grid = smoother.run_analysis(source_model.sources[0].catalogue, smoothing_config, completeness_table=completeness_table_a)
-print 'Running smoothing'
+print('Running smoothing')
 smoothed_grid = smoother.run_analysis(source.catalogue, smoothing_config, completeness_table=completeness_table_a)
 smoother_filename = 'smoothed_%i_%i_mmin_%.1f_%.3f_0.1.csv' % (smoothing_config["BandWidth"], smoothing_config["Length_Limit"],
                                                                completeness_table_a[0][-1], bvalue)
@@ -281,7 +285,7 @@ smoother.write_to_csv(smoother_filename)
 
 # In[ ]:
 
-from openquake.hazardlib.nrml import SourceModelParser, write, NAMESPACE
+#from openquake.hazardlib.nrml import SourceModelPar write, NAMESPACE
 from openquake.baselib.node import Node
 from openquake.hazardlib import nrml
 from openquake.hazardlib.sourcewriter import obj_to_node
