@@ -245,7 +245,9 @@ def htmk2shp_isc(cat, outshp):
     from numpy import isnan
     
     print('Making shapefile...')
-    w = shapefile.Writer(shapefile.POINT)
+    #outshp = outshp.replace('.', '_') # remove full stop from filename
+    w = shapefile.Writer(outshp, shapeType=shapefile.POINT)
+    
     w.field('EVID','C','15')
     w.field('AGENCY','C','15')
     w.field('YEAR','F', 4, 0)
@@ -278,7 +280,8 @@ def htmk2shp_isc(cat, outshp):
                  cat.data['depth'][i], cat.data['magnitude'][i])
     
     print('Writing shapefile...')
-    w.save(outshp)
+    #w.save(outshp)
+    w.close()
     
     # write projection file
     prjfile = outshp.strip().split('.shp')[0]+'.prj'

@@ -41,6 +41,12 @@ def flag_dependent_events(catalogue, flagvector, doAftershocks, method):
     if method == 'Leonard08':
         max_time_foreshock = 10**((catalogue.data['magnitude']-1.85)*0.69)
         max_time_aftershock = 10**((catalogue.data['magnitude']-2.70)*1.1) + 4.0
+        
+        # set max time to ~5.5 yrs (2000 days) max foreshock to 3 yrs
+        if max_time_ceil == True:
+           max_time_aftershock = min(max_time_aftershock, 2000)
+           max_time_foreshock = min(max_time_foreshock, 1000)
+        
     elif method == 'Stien08':
         max_time_foreshock = 10**((catalogue.data['magnitude']-2.70)*1.1) + 4.0
         max_time_aftershock = 10**((catalogue.data['magnitude']-2.70)*1.1) + 4.0
@@ -67,11 +73,11 @@ def flag_dependent_events(catalogue, flagvector, doAftershocks, method):
         max_dist = 10**((catalogue.data['magnitude'][i]-4.317)*0.6) \
                          + 17.0/np.sqrt(catalogue.data['magnitude'][i])
         
-        # set time-dependent distance cut-off
+        # set time-dependent distance cut-off - this was reversed in NSHA18
         if (evdate[i] <= test_day_1 ):
-            max_dist = max_dist + 5.0
-        elif (evdate[i] <= test_day_2 ):
             max_dist = max_dist + 10.0
+        elif (evdate[i] <= test_day_2 ):
+            max_dist = max_dist + 5.0
         
         #########################################################################
         # flag aftershocks
@@ -277,6 +283,7 @@ def decluster_GK74(catalogue):
 
 leonard = True
 deblastOnly = False # remove blasts and coal events - if True, does not decluster
+max_time_ceil = True # set max aftershock window to ~5.5 yrs (2000 days) & max foreshock to 3 yrs
 
 #########################################################################
 # parse calalogue & convert to HMTK
