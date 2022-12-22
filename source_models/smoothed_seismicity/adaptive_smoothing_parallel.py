@@ -12,7 +12,7 @@ from copy import deepcopy   # Python module for copying objects
 import ogr
 import shapefile
 from shapely.geometry import Point, Polygon
-from utilities import params_from_shp
+from .utilities import params_from_shp
 
 # For running in parallel
 import time
@@ -65,7 +65,7 @@ from hmtk.seismicity.smoothing.smoothed_seismicity import SmoothedSeismicity
 from hmtk.seismicity.smoothing.kernels.isotropic_gaussian import IsotropicGaussian 
 
 #from hmtk.parsers.catalogue.csv_catalogue_parser import CsvCatalogueWriter
-import helmstetter_werner_2012 as h_w
+from . import helmstetter_werner_2012 as h_w
 # To build source model
 from hmtk.sources.source_model import mtkSourceModel
 from hmtk.sources.point_source import mtkPointSource
@@ -80,7 +80,7 @@ from openquake.hazardlib.mfd import TruncatedGRMFD
 from openquake.hazardlib.geo.nodalplane import NodalPlane
 from openquake.hazardlib.nrml import SourceModelParser, write, NAMESPACE
 from openquake.hazardlib.pmf import PMF
-print "Everything Imported OK!"
+print("Everything Imported OK!")
 
 #bvalue = float(sys.argv[1])
 #print 'b value', bvalue
@@ -113,7 +113,7 @@ def run_smoothing(grid_lims, config, catalogue, completeness_table,map_config, r
 
     filename = smoother_filename[:-4] + '.xml'
     if os.path.exists(filename) and not overwrite:
-        print '%s already created, not overwriting!' % filename
+        print('%s already created, not overwriting!' % filename)
         return
 
     smoother = h_w.HelmstetterEtAl2007(grid_lims, config, catalogue, 
@@ -125,7 +125,7 @@ def run_smoothing(grid_lims, config, catalogue, completeness_table,map_config, r
     exhaustive = False
     if exhaustive == True:
         params, poiss_llh = smoother.exhaustive_smoothing(np.arange(2,10,1), np.arange(1.0e-6,1.0e-5,2.0e-6))
-        print params, poiss_llh
+        print(params, poiss_llh)
         smoother.config["k"] = params[0]
         smoother.config["r_min"] = params[1]
     #print 'Exiting now, re-run using optimised parameters'
@@ -217,24 +217,24 @@ def run_smoothing(grid_lims, config, catalogue, completeness_table,map_config, r
 proc = pypar.size()                # Number of processors as specified by mpirun                     
 myid = pypar.rank()                # Id of of this process (myid in [0, proc-1])                     
 node = pypar.get_processor_name()  # Host name on which current process is running                   
-print 'I am proc %d of %d on node %s' % (myid, proc, node)
+print('I am proc %d of %d on node %s' % (myid, proc, node))
 t0 = pypar.time()
 
 config_params = params_from_shp(domains_shp, trt_ignore=['Interface', 'Active', 'Oceanic', 'Intraslab'])
 for config in config_params:
-    print config
+    print(config)
 
 #sys.exit()
 # Read and clean the catalogue
 parser = CsvCatalogueParser(ifile)
 catalogue = parser.read_file(start_year=1900, end_year=2016)
 # How many events in the catalogue?
-print "The catalogue contains %g events" % catalogue.get_number_events()
+print("The catalogue contains %g events" % catalogue.get_number_events())
 neq = len(catalogue.data['magnitude'])
-print "The catalogue contains %g events" % neq
+print("The catalogue contains %g events" % neq)
 # What is the geographical extent of the catalogue?
 bbox = catalogue.get_bounding_box()
-print "Catalogue ranges from %.4f E to %.4f E Longitude and %.4f N to %.4f N Latitude\n" % bbox
+print("Catalogue ranges from %.4f E to %.4f E Longitude and %.4f N to %.4f N Latitude\n" % bbox)
 catalogue.sort_catalogue_chronologically()
 index = np.logical_and(catalogue.data["magnitude"] > 1.5, catalogue.data["depth"] >= 0.0) 
 #index = np.logical_and(catalogue.data["magnitude"] > 1.5, catalogue.data["magnitude"] < 4.0)
@@ -271,7 +271,7 @@ grid_lims = [105., 160.0, 0.1, -47.0, -5.0, 0.1, 0., 20., 20.]
 for i in range(0, len(config_params)*3, 1):
     if i % proc == myid:
         run = "%03d" % i
-        print 'Run %s' % run
+        print('Run %s' % run)
         completeness_table = config_params[i/3]['COMPLETENESS']
         if i % 3 == 0:
             bvalue = config_params[i/3]['BVAL_BEST']
@@ -284,7 +284,7 @@ for i in range(0, len(config_params)*3, 1):
         except OSError:
             pass
         mmin = completeness_table[0][1]
-        print 'mmin', mmin
+        print('mmin', mmin)
         config = {"k": 3,
                   "r_min": 1.0E-6, 
                   "bvalue": bvalue, "mmin": mmin,
@@ -304,10 +304,10 @@ if myid == 0:
     h = ss / 3600
     m = (ss % 3600) / 60
     s = (ss % 3600) % 60
-    print "--------------------------------------------------------"
-    print 'P0: Total time (%i seconds): %s:%s:%s (hh:mm:ss)' % (ss,
+    print("--------------------------------------------------------")
+    print('P0: Total time (%i seconds): %s:%s:%s (hh:mm:ss)' % (ss,
                                                                 string.zfill(h, 2),
                                                                 string.zfill(m, 2),
-                                                                string.zfill(s,2))
-    print "--------------------------------------------------------"
+                                                                string.zfill(s,2)))
+    print("--------------------------------------------------------")
 pypar.finalize()

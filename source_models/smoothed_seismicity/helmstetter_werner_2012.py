@@ -22,7 +22,7 @@ from scipy.stats import norm, truncnorm
 from scipy.misc import factorial
 from math import fabs, floor, log10, sqrt, atan2, pi, degrees, radians
 from hmtk.parsers.catalogue.csv_catalogue_parser import CsvCatalogueParser
-from smoothed_seismicity_utils import (ProgressCounter, Grid, 
+from .smoothed_seismicity_utils import (ProgressCounter, Grid, 
                                        get_catalogue_bounding_polygon)
 
 SAM_COMP_TABLE = np.array([[1995.0, 3.5],
@@ -308,7 +308,7 @@ class HelmstetterWerner2012(object):
         lonlat = np.column_stack([
             self.learning_catalogue.data["longitude"],
             self.learning_catalogue.data["latitude"]])
-        for key in cfle.keys():
+        for key in list(cfle.keys()):
             outline = Path(cfle["/".join([key, "Outline"])][:])
             completeness_table = cfle["/".join([key, "Completeness"])][:]
             cyear = np.hstack([np.inf, completeness_table[:, 0]])
@@ -333,7 +333,7 @@ class HelmstetterWerner2012(object):
         lonlat = np.column_stack([
             self.target_catalogue.data["longitude"],
             self.target_catalogue.data["latitude"]])
-        for key in cfle.keys():
+        for key in list(cfle.keys()):
             outline = Path(cfle["/".join([key, "Outline"])][:])
             completeness_table = cfle["/".join([key, "Completeness"])][:]
             cyear = np.hstack([np.inf, completeness_table[:, 0]])
@@ -359,7 +359,7 @@ class HelmstetterWerner2012(object):
         events to target sites
         """
         neq = self.learning_catalogue.get_number_events()
-        print "Building Time arrays"
+        print("Building Time arrays")
         time_dset = self.fle.create_dataset("time", (neq, neq), dtype="f")
         #nearest_tset = self.fle.create_dataset("nearest_time", (neq, neq),
         #                                       dtype="i")
@@ -373,7 +373,7 @@ class HelmstetterWerner2012(object):
             time_dset[i, :] = time_kernel
             #nearest_tset[i, :] = np.argsort(time_kernel)
 
-        print "Building Distance Arrays"
+        print("Building Distance Arrays")
         distance_dset = self.fle.create_dataset("distance",
                                                 (neq, neq),
                                                 dtype="f")
@@ -398,17 +398,17 @@ class HelmstetterWerner2012(object):
         """
         d_t = SECONDS_PER_DAY * float(self.config["ndays"]) / SECONDS_PER_YEAR
         neq = self.learning_catalogue.get_number_events()
-        print "Building event to grid distance arrays"
-        print str(datetime.now())
+        print("Building event to grid distance arrays")
+        print(str(datetime.now()))
         gdist_dset = self.fle.create_dataset("grid_distance",
             (self.ngpts, 4, neq), chunks=(self.ngpts, 4, 1), dtype="f")
-        print "Building event to grid time arrays"
-        print str(datetime.now())
+        print("Building event to grid time arrays")
+        print(str(datetime.now()))
         target_times = np.arange(etime, etime + (11.0 * d_t), d_t)
         tdist_dset = self.fle.create_dataset("grid_time",
             (neq, len(target_times)),
             dtype="f")
-        print "Processing ..."
+        print("Processing ...")
         counter1 = ProgressCounter(neq, 5.0, timer=True)
         for i in range(neq):
             counter1.update(i)
@@ -430,7 +430,7 @@ class HelmstetterWerner2012(object):
             #print "Write time %s" % str(datetime.now())
             tdist_dset[i, :] = dtime
         counter1.reset()
-        print "done!"
+        print("done!")
 
     def optimise_bandwidths(self, maxiter=50):
         """
@@ -449,7 +449,7 @@ class HelmstetterWerner2012(object):
         not_converged = True
 
         while not_converged:
-            print "Optimising bandwidth - iteration %g" % (iter_count + 1)
+            print("Optimising bandwidth - iteration %g" % (iter_count + 1))
             rates = self.config["r_min"] + np.zeros(neq)
 
             counter1 = ProgressCounter(neq, 5.0, timer=True)
@@ -463,7 +463,7 @@ class HelmstetterWerner2012(object):
                     )
             counter1.reset()
             new_lr = np.sum(np.log(rates))
-            print "Iteration %g - Likelihood %.8f" % (iter_count, new_lr)
+            print("Iteration %g - Likelihood %.8f" % (iter_count, new_lr))
             if new_lr > cur_lr:
                 cur_lr = np.copy(new_lr)
                 # Get the geometric mean of the rates
@@ -476,7 +476,7 @@ class HelmstetterWerner2012(object):
             else:
                 not_converged = False
             if iter_count > maxiter:
-                print "Failed to converge!"
+                print("Failed to converge!")
                 not_converged = False
         return h_i, d_i
 
@@ -571,16 +571,16 @@ class HelmstetterNearestNeighbour(HelmstetterWerner2012):
         self.config["a"] = int(params[1])
         self.config["r_min"] = params[2]
         self.opt_counter += 1
-        print "Iteration %s" % str(self.opt_counter)
-        print "Model: K = %s,  a = %s  r_min = %.6E" % (str(self.config["k"]),
+        print("Iteration %s" % str(self.opt_counter))
+        print("Model: K = %s,  a = %s  r_min = %.6E" % (str(self.config["k"]),
                                                         str(self.config["a"]),
-                                                        self.config["r_min"])
+                                                        self.config["r_min"]))
         # Optimise bandwidths
         h_i, d_i = self.optimise_bandwidths()
         # Run smoothing
         self.run_smoothing(self.config["r_min"], h_i, d_i)
-        print "Total Rates: %.6f  (min = %.8f, max = %.8f)" % (
-            np.sum(self.rates), np.min(self.rates), np.max(self.rates))
+        print("Total Rates: %.6f  (min = %.8f, max = %.8f)" % (
+            np.sum(self.rates), np.min(self.rates), np.max(self.rates)))
         # Analyse comparison with target catalogue
         probs = GridProbabilities(self.target_catalogue, self)
         # Count observed earthquakes
@@ -589,8 +589,8 @@ class HelmstetterNearestNeighbour(HelmstetterWerner2012):
         poiss_llh = probs.poisson_loglikelihood()
         kagan_i0 = probs.get_i0()
         kagan_i1 = probs.get_i1()
-        print "Poisson LLH = %.6f,  I0 = %.6f,   I1 = %.6f,   I' = %.6f" %(
-            poiss_llh, kagan_i0, kagan_i1, kagan_i0 - kagan_i1)
+        print("Poisson LLH = %.6f,  I0 = %.6f,   I1 = %.6f,   I' = %.6f" %(
+            poiss_llh, kagan_i0, kagan_i1, kagan_i0 - kagan_i1))
         return -poiss_llh#, kagan_i0, kagan_i1
 
 class HelmstetterEtAl2007(HelmstetterNearestNeighbour):
@@ -627,11 +627,11 @@ class HelmstetterEtAl2007(HelmstetterNearestNeighbour):
         dx1, dx2, dy1, dy2
         """
         neq = self.learning_catalogue.get_number_events()
-        print "Building event to grid distance arrays"
-        print str(datetime.now())
+        print("Building event to grid distance arrays")
+        print(str(datetime.now()))
         gdist_dset = self.fle.create_dataset("grid_distance",
             (self.ngpts, 4, neq), chunks=(self.ngpts, 4, 1), dtype="f")
-        print "Processing ..."
+        print("Processing ...")
         counter1 = ProgressCounter(neq, 5.0, timer=True)
         for i in range(neq):
             counter1.update(i)
@@ -645,7 +645,7 @@ class HelmstetterEtAl2007(HelmstetterNearestNeighbour):
                 self.grid_limits["yspc"])
             gdist_dset[:, :, i] = np.column_stack([dx1, dx2, dy1, dy2])
         counter1.reset()
-        print "done!"
+        print("done!")
 
     def optimise_bandwidths(self):
         """
@@ -705,15 +705,15 @@ class HelmstetterEtAl2007(HelmstetterNearestNeighbour):
         self.config["k"] = int(params[0])
         self.config["r_min"] = params[2]
         self.opt_counter += 1
-        print "Iteration %s" % str(self.opt_counter)
-        print "Model: K = %s,  r_min = %.6E" % (str(self.config["k"]),
-                                                    self.config["r_min"])
+        print("Iteration %s" % str(self.opt_counter))
+        print("Model: K = %s,  r_min = %.6E" % (str(self.config["k"]),
+                                                    self.config["r_min"]))
         # Optimise bandwidths
         d_i = self.optimise_bandwidths()
         # Run smoothing
         self.run_smoothing(self.config["r_min"], d_i)
-        print "Total Rates: %.6f  (min = %.8f, max = %.8f)" % (
-            np.sum(self.rates), np.min(self.rates), np.max(self.rates))
+        print("Total Rates: %.6f  (min = %.8f, max = %.8f)" % (
+            np.sum(self.rates), np.min(self.rates), np.max(self.rates)))
         # Analyse comparison with target catalogue
         probs = GridProbabilities(self.target_catalogue, self,
                                   self.target_weights)
@@ -752,14 +752,14 @@ class HelmstetterEtAl2007(HelmstetterNearestNeighbour):
             for rval in r_min_range:
                 self.config["k"] = kval
                 self.config["r_min"] = rval
-                print "Model: K = %s,  r_min = %.6E" % (str(self.config["k"]),
-                                                        self.config["r_min"])
+                print("Model: K = %s,  r_min = %.6E" % (str(self.config["k"]),
+                                                        self.config["r_min"]))
                 # Optimise bandwidths
                 d_i = self.optimise_bandwidths()
                 # Run smoothing
                 self.run_smoothing(self.config["r_min"], d_i)
-                print "Total Rates: %.6f  (min = %.8f, max = %.8f)" % (
-                    np.sum(self.rates), np.min(self.rates), np.max(self.rates))
+                print("Total Rates: %.6f  (min = %.8f, max = %.8f)" % (
+                    np.sum(self.rates), np.min(self.rates), np.max(self.rates)))
                 # Analyse comparison with target catalogue
                 probs = GridProbabilities(self.target_catalogue, self,
                                           self.target_weights)
@@ -769,7 +769,7 @@ class HelmstetterEtAl2007(HelmstetterNearestNeighbour):
                 poiss_llh = probs.poisson_loglikelihood()
                 kagan_i0 = probs.get_i0()
                 kagan_i1 = probs.get_i1()
-                print "Poisson LLH = %.6f" % poiss_llh #,  I0 = %.6f,   I1 = %.6f,   I' = %.6f" %(
+                print("Poisson LLH = %.6f" % poiss_llh) #,  I0 = %.6f,   I1 = %.6f,   I' = %.6f" %(
 #                    poiss_llh, kagan_i0, kagan_i1, kagan_i0 - kagan_i1)
                 if poiss_llh > max_poiss_llh:
                     max_llh_params = [kval, rval]
@@ -823,13 +823,13 @@ class FixedWidthSmoothing(HelmstetterEtAl2007):
         self.config["bandwidth"] = int(params[0])
         self.config["r_min"] = params[2]
         self.opt_counter += 1
-        print "Iteration %s" % str(self.opt_counter)
-        print "Model: K = %s,  r_min = %.6E" % (str(self.config["bandwidth"]),
-                                                    self.config["r_min"])
+        print("Iteration %s" % str(self.opt_counter))
+        print("Model: K = %s,  r_min = %.6E" % (str(self.config["bandwidth"]),
+                                                    self.config["r_min"]))
         # Run smoothing
         self.run_smoothing(self.config["r_min"], self.config["bandwidth"])
-        print "Total Rates: %.6f  (min = %.8f, max = %.8f)" % (
-            np.sum(self.rates), np.min(self.rates), np.max(self.rates))
+        print("Total Rates: %.6f  (min = %.8f, max = %.8f)" % (
+            np.sum(self.rates), np.min(self.rates), np.max(self.rates)))
         # Analyse comparison with target catalogue
         probs = GridProbabilities(self.target_catalogue, self,
                                   self.target_weights)
@@ -841,8 +841,8 @@ class FixedWidthSmoothing(HelmstetterEtAl2007):
         prob_gain = probs.probability_gain()
         kagan_i0 = probs.get_i0()
         kagan_i1 = probs.get_i1()
-        print "Poisson LLH = %.6f,  I0 = %.6f,   I1 = %.6f,   I' = %.6f" %(
-            poiss_llh, kagan_i0, kagan_i1, kagan_i0 - kagan_i1)
+        print("Poisson LLH = %.6f,  I0 = %.6f,   I1 = %.6f,   I' = %.6f" %(
+            poiss_llh, kagan_i0, kagan_i1, kagan_i0 - kagan_i1))
         return -poiss_llh
 
     def exhaustive_smoothing(self, krange, r_min_range):
@@ -853,13 +853,13 @@ class FixedWidthSmoothing(HelmstetterEtAl2007):
             for rval in r_min_range:
                 self.config["bandwidth"] = kval
                 self.config["r_min"] = rval
-                print "Model: Bandwitdh = %s km,  r_min = %.6E" % (
-                    str(self.config["bandwidth"]), self.config["r_min"])
+                print("Model: Bandwitdh = %s km,  r_min = %.6E" % (
+                    str(self.config["bandwidth"]), self.config["r_min"]))
                 # Run smoothing
                 self.run_smoothing(self.config["r_min"],
                                    self.config["bandwidth"])
-                print "Total Rates: %.6f  (min = %.8f, max = %.8f)" % (
-                    np.sum(self.rates), np.min(self.rates), np.max(self.rates))
+                print("Total Rates: %.6f  (min = %.8f, max = %.8f)" % (
+                    np.sum(self.rates), np.min(self.rates), np.max(self.rates)))
                 # Analyse comparison with target catalogue
                 probs = GridProbabilities(self.target_catalogue, self,
                                           self.target_weights)
@@ -869,8 +869,8 @@ class FixedWidthSmoothing(HelmstetterEtAl2007):
                 poiss_llh = probs.poisson_loglikelihood()
                 kagan_i0 = probs.get_i0()
                 kagan_i1 = probs.get_i1()
-                print "Poisson LLH = %.6f,  I0 = %.6f,   I1 = %.6f,   I' = %.6f" %(
-                    poiss_llh, kagan_i0, kagan_i1, kagan_i0 - kagan_i1)
+                print("Poisson LLH = %.6f,  I0 = %.6f,   I1 = %.6f,   I' = %.6f" %(
+                    poiss_llh, kagan_i0, kagan_i1, kagan_i0 - kagan_i1))
 
 
 
@@ -1006,8 +1006,8 @@ class GridProbabilities(object):
         if target_mmins == None:
             poiss_llh = self.poisson_loglikelihood()
             uniform_llh = self.uniform_spatial_poisson_loglikelihood()
-            print poiss_llh
-            print uniform_llh
+            print(poiss_llh)
+            print(uniform_llh)
             prob_gain = np.exp((poiss_llh - uniform_llh)/ \
                                    self.catalogue.get_number_events())
         else:
@@ -1023,13 +1023,13 @@ class GridProbabilities(object):
                                           (self.avals - (self.grid.config["bvalue"]*mmin)))
                 poiss_llh = self.poisson_loglikelihood(self.new_rates)
                 uniform_llh = self.uniform_spatial_poisson_loglikelihood(mmin)
-                print 'Mmin', mmin
-                print 'poiss_llh', poiss_llh
-                print 'uniform_llh', uniform_llh
-                print 'number of events', self.catalogue.get_number_events()
+                print('Mmin', mmin)
+                print('poiss_llh', poiss_llh)
+                print('uniform_llh', uniform_llh)
+                print('number of events', self.catalogue.get_number_events())
                 probability_gain = np.exp((poiss_llh - uniform_llh)/ \
                                               self.catalogue.get_number_events())
-                print 'probability_gain', probability_gain
+                print('probability_gain', probability_gain)
                 prob_gain[str(mmin)]=probability_gain
         return prob_gain
 
@@ -1044,9 +1044,9 @@ class GridProbabilities(object):
         idx = self.obs_rates > 0.
         forecast_rate = self.rates[idx] / self.area[idx]
         rate_per_km2 = total_rate / np.sum(self.area)
-        print 'total rate', total_rate
-        print 'rate_per_km2', rate_per_km2
-        print 'forecast rate', forecast_rate
+        print('total rate', total_rate)
+        print('rate_per_km2', rate_per_km2)
+        print('forecast rate', forecast_rate)
         return (1. / total_rate) * np.sum(np.log2(forecast_rate /
                                                   rate_per_km2))
 
@@ -1109,16 +1109,16 @@ def optimum_smoothing(params, model):
     model.config["k"] = params[0]
     model.config["a"] = params[1]
     model.config["r_min"] = params[2]
-    print "Model: K = %s,  a = %s  r_min = %.6E" % (str(model.config["k"]),
+    print("Model: K = %s,  a = %s  r_min = %.6E" % (str(model.config["k"]),
                                                     str(model.config["a"]),
-                                                    model.config["r_min"])
+                                                    model.config["r_min"]))
     # Optimise bandwidths
     h_i, d_i = model.optimise_bandwidths()
     # Run smoothing
     model.run_smoothing(model.config["r_min"], h_i, d_i)
-    print "Total Rates: %.6f  (min = %.8f, max = %.8f)" % (np.sum(model.rates),
+    print("Total Rates: %.6f  (min = %.8f, max = %.8f)" % (np.sum(model.rates),
                                                            np.min(model.rates),
-                                                           np.max(model.rates))
+                                                           np.max(model.rates)))
     # Analyse comparison with target catalogue
     probs = GridProbabilities(model.target_catalogue, model)
     # Count observed earthquakes
@@ -1127,8 +1127,8 @@ def optimum_smoothing(params, model):
     poiss_llh = probs.poisson_loglikelihood()
     kagan_i0 = probs.get_i0()
     kagan_i1 = probs.get_i1()
-    print "Poisson LLH = %.6f,  I0 = %.6f,   I1 = %.6f,   I' = %.6f" %(
-        poiss_llh, kagan_i0, kagan_i1, kagan_i0 - kagan_i1)
+    print("Poisson LLH = %.6f,  I0 = %.6f,   I1 = %.6f,   I' = %.6f" %(
+        poiss_llh, kagan_i0, kagan_i1, kagan_i0 - kagan_i1))
     return -poiss_llh
 
 def run_helmstetter_full(catalogue, bbox, config, completeness,
@@ -1142,7 +1142,7 @@ def run_helmstetter_full(catalogue, bbox, config, completeness,
                                          storage_file=tmp_file)
     # Set up catalogues
     model1._get_catalogue_completeness_weights(completeness)
-    print model1.learning_catalogue.get_number_events()
+    print(model1.learning_catalogue.get_number_events())
     # Build catalogue arrayree
     model1.build_time_distance_arrays()
     # Build grid array
@@ -1170,10 +1170,10 @@ def run_helmstetter_full(catalogue, bbox, config, completeness,
     #    raise ValueError("Algorithm Failed :'(!")
 
     config["k"], config["a"], config["r_min"] = results.xf
-    print "Best Results"
-    print "K = %s  a = %s  rmin = %.8e" % (str(config["k"]),
+    print("Best Results")
+    print("K = %s  a = %s  rmin = %.8e" % (str(config["k"]),
                                            str(config["a"]),
-                                           config["r_min"])
+                                           config["r_min"]))
     # Run algorithm with optimum parameters
     h_i, d_i = model1.optimise_bandwidths()
     model1.run_smoothing(config["r_min"], h_i, d_i)
@@ -1200,7 +1200,7 @@ def run_helmstetter_spatial(catalogue, bbox, config, completeness,
     # Set up catalogues
     #model1._get_catalogue_completeness_weights(completeness)
     model1._get_spatio_temporal_completeness_weights(comp_file)
-    print model1.learning_catalogue.get_number_events()
+    print(model1.learning_catalogue.get_number_events())
     # Build catalogue arrayree
     model1.build_distance_arrays()
     # Build grid array
@@ -1208,8 +1208,8 @@ def run_helmstetter_spatial(catalogue, bbox, config, completeness,
     # Optimise bandwitdhs
     d_i = model1.optimise_bandwidths()
     model1.run_smoothing(config["r_min"], d_i)
-    print "Total Rates: %.6f  (min = %.8f, max = %.8f)" % (
-        np.sum(model1.rates), np.min(model1.rates), np.max(model1.rates))
+    print("Total Rates: %.6f  (min = %.8f, max = %.8f)" % (
+        np.sum(model1.rates), np.min(model1.rates), np.max(model1.rates)))
 
     # Export grid and rates
     outputs = np.column_stack([model1.grid, model1.rates])
@@ -1220,8 +1220,8 @@ def run_helmstetter_spatial(catalogue, bbox, config, completeness,
     poiss_llh = probs.poisson_loglikelihood()
     kagan_i0 = probs.get_i0()
     kagan_i1 = probs.get_i1()
-    print "Poisson LLH = %.6f,  I0 = %.6f,   I1 = %.6f,   I' = %.6f" %(
-        poiss_llh, kagan_i0, kagan_i1, kagan_i0 - kagan_i1)
+    print("Poisson LLH = %.6f,  I0 = %.6f,   I1 = %.6f,   I' = %.6f" %(
+        poiss_llh, kagan_i0, kagan_i1, kagan_i0 - kagan_i1))
 
     #error_diag_name = output_file_stem + "Error_Diagram.png"
     #probs.error_diagram(filename=error_diag_name,
@@ -1239,7 +1239,7 @@ def run_fixed_width_spatial(catalogue, bbox, config, completeness,
     # Set up catalogues
     #model1._get_catalogue_completeness_weights(completeness)
     model1._get_spatio_temporal_completeness_weights(comp_file)
-    print model1.learning_catalogue.get_number_events()
+    print(model1.learning_catalogue.get_number_events())
     # Build catalogue arrayree
     model1.build_distance_arrays()
     # Build grid array
@@ -1247,8 +1247,8 @@ def run_fixed_width_spatial(catalogue, bbox, config, completeness,
     # Optimise bandwitdhs
     d_i = model1.optimise_bandwidths()
     model1.run_smoothing(config["r_min"], d_i)
-    print "Total Rates: %.6f  (min = %.8f, max = %.8f)" % (
-        np.sum(model1.rates), np.min(model1.rates), np.max(model1.rates))
+    print("Total Rates: %.6f  (min = %.8f, max = %.8f)" % (
+        np.sum(model1.rates), np.min(model1.rates), np.max(model1.rates)))
 
     # Export grid and rates
     outputs = np.column_stack([model1.grid, model1.rates])
@@ -1259,8 +1259,8 @@ def run_fixed_width_spatial(catalogue, bbox, config, completeness,
     poiss_llh = probs.poisson_loglikelihood()
     kagan_i0 = probs.get_i0()
     kagan_i1 = probs.get_i1()
-    print "Poisson LLH = %.6f,  I0 = %.6f,   I1 = %.6f,   I' = %.6f" %(
-        poiss_llh, kagan_i0, kagan_i1, kagan_i0 - kagan_i1)
+    print("Poisson LLH = %.6f,  I0 = %.6f,   I1 = %.6f,   I' = %.6f" %(
+        poiss_llh, kagan_i0, kagan_i1, kagan_i0 - kagan_i1))
 
 
 

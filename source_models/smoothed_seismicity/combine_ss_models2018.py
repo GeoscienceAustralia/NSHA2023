@@ -18,7 +18,7 @@ from openquake.hazardlib.geo.nodalplane import NodalPlane
 from openquake.hazardlib.pmf import PMF
 from openquake.hazardlib.mfd.evenly_discretized import EvenlyDiscretizedMFD
 
-from utilities import params_from_shp
+from .utilities import params_from_shp
 
 def gr2inc_mmax(mfd, mmaxs, weights, model_weight=1.):
     """Function to convert a GR distribution to incremental MFD and 
@@ -33,7 +33,7 @@ def gr2inc_mmax(mfd, mmaxs, weights, model_weight=1.):
         raise TypeError(msg)
     # Ensure we get rates for all mmax values
     mfd.max_mag = max(mmaxs)
-    mag_bins, rates = zip(*mfd.get_annual_occurrence_rates())
+    mag_bins, rates = list(zip(*mfd.get_annual_occurrence_rates()))
     mag_bins = np.array(mag_bins)
     rates = np.array(rates)
    # print 'mag_bins'
@@ -99,8 +99,8 @@ def combine_ss_models(filename_stem, domains_shp, params,lt, bval_key, output_di
     mmaxs = {}
     mmaxs_w = {}
     for dom in params:
-        print 'Processing source %s' % dom['CODE']
-        print dom['TRT']
+        print('Processing source %s' % dom['CODE'])
+        print(dom['TRT'])
         if dom['TRT'] == 'NCratonic':
             dom['TRT'] = 'Non_cratonic'
         # For the moment, only consider regions within AUstralia
@@ -108,7 +108,7 @@ def combine_ss_models(filename_stem, domains_shp, params,lt, bval_key, output_di
                 dom['TRT'] == 'Oceanic' or \
                 dom['TRT'] == 'Intraslab' or dom['CODE'] == 'NECS' or \
                 dom['CODE'] == 'NWO': 
-            print 'Source %s not on continental Australia, skipping' % dom['CODE']
+            print('Source %s not on continental Australia, skipping' % dom['CODE'])
             continue
         elif dom['TRT'] == 'Cratonic':
             if dom['DOMAIN'] == 1:
@@ -122,8 +122,8 @@ def combine_ss_models(filename_stem, domains_shp, params,lt, bval_key, output_di
             mmax_values, mmax_weights = lt.get_weights('Mmax', dom['TRT'])
         mmax_values = [float(i) for i in mmax_values]
         mmax_weights = [float(i) for i in mmax_weights]
-        print mmax_values
-        print mmax_weights
+        print(mmax_values)
+        print(mmax_weights)
         mmaxs[dom['CODE']] = mmax_values
         mmaxs_w[dom['CODE']] = mmax_weights
 
@@ -137,12 +137,12 @@ def combine_ss_models(filename_stem, domains_shp, params,lt, bval_key, output_di
         filename = "%s_b%.3f_mmin%.1f_%s.xml" % (
             filename_stem, dom[bval_key], mmin,
             completeness_string)
-        print 'Parsing %s' % filename
+        print('Parsing %s' % filename)
         
         # TA kluge - hardwire jdg547 path
         jdgpath = '/short/w84/NSHA18/sandpit/jdg547/NSHA2018/source_models/smoothed_seismicity/'
         
-        print filename
+        print(filename)
         
         # Only keep points within domain
         pts = read_pt_source(filename)
@@ -150,17 +150,17 @@ def combine_ss_models(filename_stem, domains_shp, params,lt, bval_key, output_di
 #        shapes = np.where(trt_types
         for shape in dsf.shapeRecords():
 #            print code_index
-            print shape.record[code_index]
+            print(shape.record[code_index])
             if shape.record[code_index] == dom['CODE']:
                 # Check for undefined depths (-999 values)
                 if dom['DEP_BEST'] < 0:
-                    print 'Setting best depth to 10 km'
+                    print('Setting best depth to 10 km')
                     dom['DEP_BEST']=10
                 if dom['DEP_UPPER'] < 0:
-                    print 'Setting upper depth to 5 km'
+                    print('Setting upper depth to 5 km')
                     dom['DEP_UPPER']=5
                 if dom['DEP_LOWER'] < 0:
-                    print 'Setting lower depth to 15 km'
+                    print('Setting lower depth to 15 km')
                     dom['DEP_LOWER']=15
                 hypo_depth_dist = PMF([(0.5, dom['DEP_BEST']),
                              (0.25, dom['DEP_LOWER']),
@@ -185,12 +185,12 @@ def combine_ss_models(filename_stem, domains_shp, params,lt, bval_key, output_di
                                        (0.08, NodalPlane(strikes[4], 30, 90)),
                                        (0.08, NodalPlane(strikes[5], 30, 90))])
                 if dom['CODE'] == 'WARM' or dom['CODE'] == 'WAPM':
-                    print 'Define special case for WARM'
+                    print('Define special case for WARM')
                     nodal_plan_dist = PMF([(0.75, NodalPlane(45, 90, 0)),
                                            (0.125, NodalPlane(strikes[0], 30, 90)),
                                            (0.125, NodalPlane(strikes[1], 30, 90))])
                 if dom['CODE'] == 'FMLR':
-                    print 'Define special case for FMLR, 0.5 thrust, 0.5 SS'
+                    print('Define special case for FMLR, 0.5 thrust, 0.5 SS')
                     nodal_plan_dist = PMF([(0.17, NodalPlane(strikes[0], 30, 90)),
                                            (0.17, NodalPlane(strikes[1], 30, 90)),
                                            (0.04, NodalPlane(strikes[2], 30, 90)),
@@ -215,8 +215,8 @@ def combine_ss_models(filename_stem, domains_shp, params,lt, bval_key, output_di
                         new_mfd = gr2inc_mmax(mfd, mmaxs[dom['CODE']], mmaxs_w[dom['CODE']], weight)
                         pt.mfd = new_mfd
                         if pt.source_id in pt_ids:
-                            print 'Point source %s already exists!' % pt.source_id
-                            print 'Skipping this source for trt %s' % zone_trt
+                            print('Point source %s already exists!' % pt.source_id)
+                            print('Skipping this source for trt %s' % zone_trt)
                         else:
                             merged_pts.append(pt)
                             pt_ids.append(pt.source_id)
@@ -260,7 +260,7 @@ if __name__ == "__main__":
     # read list of files
     pt_source_model_list =[]
     for point_source_model in point_source_list:
-        print 'Reading %s' % point_source_model
+        print('Reading %s' % point_source_model)
         pt_model = read_pt_source(point_source_model)
         pt_source_model_list.append(pt_model)
     combine_pt_sources(pt_source_model_list, filepath, name , nrml_version='04',

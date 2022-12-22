@@ -55,7 +55,7 @@ from hmtk.seismicity.smoothing.smoothed_seismicity import SmoothedSeismicity
 from hmtk.seismicity.smoothing.kernels.isotropic_gaussian import IsotropicGaussian 
 
 #from hmtk.parsers.catalogue.csv_catalogue_parser import CsvCatalogueWriter
-import helmstetter_werner_2012 as h_w
+from . import helmstetter_werner_2012 as h_w
 # To build source model
 from hmtk.sources.source_model import mtkSourceModel
 from hmtk.sources.point_source import mtkPointSource
@@ -70,10 +70,10 @@ from openquake.hazardlib.mfd import TruncatedGRMFD
 from openquake.hazardlib.geo.nodalplane import NodalPlane
 from openquake.hazardlib.nrml import SourceModelParser, write, NAMESPACE
 from openquake.hazardlib.pmf import PMF
-print "Everything Imported OK!"
+print("Everything Imported OK!")
 
 bvalue = float(sys.argv[1])
-print 'b value', bvalue
+print('b value', bvalue)
 domains_shp = '../zones/2018_mw/Domains_mc_ext/shapefiles/Domains_NSHA18_MFD.shp'
 ifile = "../../catalogue/data/NSHA18CAT_V0.1_hmtk_declustered.csv"
 #ifile = "../../catalogue/data/AUSTCAT_V0.12_hmtk_mx_orig.csv"
@@ -85,7 +85,7 @@ ifile = "../../catalogue/data/NSHA18CAT_V0.1_hmtk_declustered.csv"
 def params_from_shp(shapefile):
     """Get parameters from shapefile attribute table
     """
-    print 'Getting completeness and b-values from %s' % domains_shp
+    print('Getting completeness and b-values from %s' % domains_shp)
     driver = ogr.GetDriverByName("ESRI Shapefile")
     data_source = driver.Open(domains_shp, 0)
     dsf = data_source.GetLayer()
@@ -109,18 +109,18 @@ def params_from_shp(shapefile):
 
 config_params = params_from_shp(domains_shp)
 for config in config_params:
-    print config
+    print(config)
 sys.exit()
 # Read and clean the catalogue
 parser = CsvCatalogueParser(ifile)
 catalogue = parser.read_file(start_year=1900, end_year=2017)
 # How many events in the catalogue?
-print "The catalogue contains %g events" % catalogue.get_number_events()
+print("The catalogue contains %g events" % catalogue.get_number_events())
 neq = len(catalogue.data['magnitude'])
-print "The catalogue contains %g events" % neq
+print("The catalogue contains %g events" % neq)
 # What is the geographical extent of the catalogue?
 bbox = catalogue.get_bounding_box()
-print "Catalogue ranges from %.4f E to %.4f E Longitude and %.4f N to %.4f N Latitude\n" % bbox
+print("Catalogue ranges from %.4f E to %.4f E Longitude and %.4f N to %.4f N Latitude\n" % bbox)
 catalogue.sort_catalogue_chronologically()
 index = np.logical_and(catalogue.data["magnitude"] > 1.5, catalogue.data["depth"] >= 0.0) 
 catalogue.purge_catalogue(index)
@@ -172,7 +172,7 @@ try:
 except OSError:
     pass
 mmin = completeness_table_a[0][1]
-print 'mmin', mmin
+print('mmin', mmin)
 config = {"k": 3,
           "r_min": 1.0E-6, 
           "bvalue": bvalue, "mmin": mmin,
@@ -188,7 +188,7 @@ smoother.build_catalogue_2_grid_array()
 exhaustive = False
 if exhaustive == True:
     params, poiss_llh = smoother.exhaustive_smoothing(np.arange(2,10,1), np.arange(1.0e-6,1.0e-5,2.0e-6))
-    print params, poiss_llh
+    print(params, poiss_llh)
     smoother.config["k"] = params[0]
     smoother.config["r_min"] = params[1]
 #print 'Exiting now, re-run using optimised parameters'

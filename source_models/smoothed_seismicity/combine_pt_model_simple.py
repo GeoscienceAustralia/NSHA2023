@@ -47,7 +47,7 @@ if __name__ == "__main__":
     # read list of files
     pt_source_model_list =[]
     for point_source_model in point_source_list:
-        print 'Reading %s' % point_source_model
+        print('Reading %s' % point_source_model)
         pt_model = read_pt_source(point_source_model)
         pt_source_model_list.append(pt_model)
     combine_pt_sources(pt_source_model_list, filename, name , nrml_version='04',

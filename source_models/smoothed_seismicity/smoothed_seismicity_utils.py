@@ -32,10 +32,10 @@ class ProgressCounter(object):
         """
         if i == self.target:
             if self.timer:
-                print "%s %% - %s" % (self.idx[self.cntr],
-                                      str(datetime.now()))
+                print("%s %% - %s" % (self.idx[self.cntr],
+                                      str(datetime.now())))
             else:
-                print "%s %%" % self.idx[self.cntr]
+                print("%s %%" % self.idx[self.cntr])
             self.cntr += 1
             if self.cntr < len(self.vals):
                 self.target = self.vals[self.cntr]
@@ -152,11 +152,11 @@ def build_spatio_temporal_completeness_vectors(catalogue, sources,
     comp_fle = h5py.File(completeness_file)
     for src in sources:
         # Add the completeness table to the sources
-        if src["id"] in comp_file.keys():
+        if src["id"] in list(comp_file.keys()):
             src_comp_table = comp_file[src["id"]][:]
             src["completeness"] = src_comp_table
         else:
-            print "No completeness table for source %s" % src["id"]
+            print("No completeness table for source %s" % src["id"])
     # Now process the catalogue to associate each event with a source
     event_sources = [None for i in range(catalogue.get_number_events())]
     weights = np.zeros(catalogue.get_number_events())
@@ -169,7 +169,7 @@ def build_spatio_temporal_completeness_vectors(catalogue, sources,
         if len(inpoly):
             for idx in inpoly:
                 event_sources[idx] = src["id"]
-            if "completeness" in src.keys():
+            if "completeness" in list(src.keys()):
                 # Get completeness vectors
                 cyear = np.hstack([np.inf, src["completeness"][:, 0]])
                 cmag = src["completeness"][:, 1]
@@ -182,7 +182,7 @@ def build_spatio_temporal_completeness_vectors(catalogue, sources,
                         idx,
                         catalogue.data["magnitude"] >= cmag[i]
                         )
-                    if "b_val" in src.keys():
+                    if "b_val" in list(src.keys()):
                         bval = src["b_val"]
                     else:
                         bval = default_bval

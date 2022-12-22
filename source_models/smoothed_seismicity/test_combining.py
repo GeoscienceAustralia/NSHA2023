@@ -57,10 +57,10 @@ name = filename.rstrip('.xml')
 # read list of files                                                                           
 pt_source_model_list =[]
 for point_source_model in point_source_list:
-    print 'Reading %s' % point_source_model
+    print('Reading %s' % point_source_model)
     pt_model = read_pt_source(point_source_model)
     pt_source_model_list.append(pt_model)
 combine_pt_sources(pt_source_model_list, filepath, name , nrml_version='04',
                    id_location_flag = 'location')
 merge_pts = read_pt_source(filepath)
-print 'Final files has %i points' % (len(merge_pts))
+print('Final files has %i points' % (len(merge_pts)))

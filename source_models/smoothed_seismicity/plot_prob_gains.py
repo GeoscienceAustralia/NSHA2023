@@ -258,8 +258,8 @@ for i,infiles in enumerate(infiles_list):
 	try:
 	    learning_period_start = filename.split('_')[5].lstrip('learning')
 	    learning_period_end = filename.split('_')[6]
-	    print (float(learning_period_end) - float(learning_period_start))
-	    print (float(learning_period_end) - (float(learning_period_end) - float(learning_period_start)))
+	    print((float(learning_period_end) - float(learning_period_start)))
+	    print((float(learning_period_end) - (float(learning_period_end) - float(learning_period_start))))
             learning_width.append((float(learning_period_end) - float(learning_period_start))/2)
 	    learning_dates.append(float(learning_period_end) - ((float(learning_period_end) - \
 								     float(learning_period_start))/2))
@@ -274,8 +274,8 @@ for i,infiles in enumerate(infiles_list):
 	except ValueError:
 	    learning_period_start = filename.split('_')[6].lstrip('learning')
 	    learning_period_end = filename.split('_')[7]
-	    print (float(learning_period_end) - float(learning_period_start))
-	    print (float(learning_period_end) - (float(learning_period_end) - float(learning_period_start)))
+	    print((float(learning_period_end) - float(learning_period_start)))
+	    print((float(learning_period_end) - (float(learning_period_end) - float(learning_period_start))))
             learning_width.append(((float(learning_period_end) - float(learning_period_start))+1)/2)
 	    learning_dates.append(float(learning_period_end) - ((float(learning_period_end) - \
 								     float(learning_period_start))/2))
@@ -293,16 +293,16 @@ for i,infiles in enumerate(infiles_list):
 	tmp_data = np.genfromtxt(filepath, delimiter=',')
 	data.append(tmp_data)
     data = np.array(data)
-    print data
-    print data[:,4]
+    print(data)
+    print(data[:,4])
     if xaxis=='learning':
 	xs = learning_dates
         xerr = learning_width
     elif xaxis=='target':
 	xs = target_dates
         xerr = target_width
-    print xs
-    print xerr
+    print(xs)
+    print(xerr)
 
     #plt.plot(xs, -1*data[:,0])
    # plt.scatter(xs, -1*data[:,0],marker=markers[i], c= colours[i], s=60)
