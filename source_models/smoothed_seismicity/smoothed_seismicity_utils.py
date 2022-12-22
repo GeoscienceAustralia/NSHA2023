@@ -9,7 +9,7 @@ import numpy as np
 import collections
 import matplotlib.pyplot as plt
 from datetime import datetime
-from hmtk.parsers.catalogue.csv_catalogue_parser import CsvCatalogueParser
+from openquake.hmtk.parsers.catalogue.csv_catalogue_parser import CsvCatalogueParser
 
 class ProgressCounter(object):
     """

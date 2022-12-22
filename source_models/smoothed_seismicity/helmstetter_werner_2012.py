@@ -19,10 +19,10 @@ from openquake.hazardlib.geo import Point, Line, Polygon
 from scipy.special import erf
 from scipy.optimize import minimize
 from scipy.stats import norm, truncnorm
-from scipy.misc import factorial
+from scipy.special import factorial
 from math import fabs, floor, log10, sqrt, atan2, pi, degrees, radians
-from hmtk.parsers.catalogue.csv_catalogue_parser import CsvCatalogueParser
-from .smoothed_seismicity_utils import (ProgressCounter, Grid, 
+from openquake.hmtk.parsers.catalogue.csv_catalogue_parser import CsvCatalogueParser
+from smoothed_seismicity_utils import (ProgressCounter, Grid, 
                                        get_catalogue_bounding_polygon)
 
 SAM_COMP_TABLE = np.array([[1995.0, 3.5],

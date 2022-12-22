@@ -289,7 +289,7 @@ for i in range(0, len(config_combinations), 1):
 #pypar.barrier()
 
 if myid == 0:
-    ss = int(pypar.time() - t0)
+    ss = int(MPI.Wtime() - t0)
     h = ss / 3600
     m = (ss % 3600) / 60
     s = (ss % 3600) % 60
