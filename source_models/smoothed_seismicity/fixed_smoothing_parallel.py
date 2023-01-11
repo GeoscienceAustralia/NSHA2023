@@ -168,7 +168,7 @@ def run_smoothing(grid_lims, smoothing_config, catalogue, completeness_table, ma
                                    nodal_plane_dist, hypo_depth_dist)
         source_list.append(point_source)
 
-    nodes = list(map(obj_to_node, sorted(source_list)))
+    nodes = list(map(obj_to_node, source_list))
     source_model = Node("sourceModel", {"name": name}, nodes=nodes)
     with open(filename, 'wb') as f:
         nrml.write([source_model], f, '%s', xmlns = NAMESPACE)
