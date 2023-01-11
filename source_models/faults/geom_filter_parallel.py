@@ -7,7 +7,7 @@ from time import localtime, strftime, gmtime
 import string
 import numpy as np
 import pypar
-from NSHA2018.source_models.utils.pt2fault_distance import read_pt_source, \
+from NSHA2023.source_models.utils.pt2fault_distance import read_pt_source, \
     read_simplefault_source, pt2fault_distance, combine_pt_sources
 
 # Set up paralell

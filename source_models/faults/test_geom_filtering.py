@@ -3,8 +3,8 @@
 
 import os, sys
 import numpy as np
-from NSHA2018.source_models.utils.area_sources import nrml2sourcelist, area2pt_source
-from NSHA2018.source_models.utils.pt2fault_distance import read_simplefault_source, \
+from NSHA2023.source_models.utils.area_sources import nrml2sourcelist, area2pt_source
+from NSHA2023.source_models.utils.pt2fault_distance import read_simplefault_source, \
     pt2fault_distance
 
 # Basic parameters 
