@@ -142,37 +142,37 @@ def run_smoothing(grid_lims, config, catalogue, completeness_table,map_config, r
                )
                                        
     # Creating a basemap - input a cconfiguration and (if desired) a title
-    title = 'Smoothed seismicity rate for learning \nperiod %i %i, K=%i, Mmin=%.1f' % (
-        config['learning_start'], config['learning_end'], smoother.config['k'], smoother.config['mmin'])
-    basemap1 = HMTKBaseMap(map_config, title)
-    basemap1.m.drawmeridians(np.arange(map_config['min_lat'],
-                                       map_config['max_lat'], 5))
-    basemap1.m.drawparallels(np.arange(map_config['min_lon'],
-                                        map_config['max_lon'], 5))
+#    title = 'Smoothed seismicity rate for learning \nperiod %i %i, K=%i, Mmin=%.1f' % (
+#        config['learning_start'], config['learning_end'], smoother.config['k'], smoother.config['mmin'])
+#    basemap1 = HMTKBaseMap(map_config, title)
+#    basemap1.m.drawmeridians(np.arange(map_config['min_lat'],
+#                                       map_config['max_lat'], 5))
+#    basemap1.m.drawparallels(np.arange(map_config['min_lon'],
+#                                        map_config['max_lon'], 5))
     # Adding the smoothed grip to the basemap
-    sym = (2., 3.,'cx')
-    x,y = basemap1.m(smoother.grid[:,0], smoother.grid[:,1])
-    if smoother.config['mmin'] == 3.5:
-        vmax=-1.0
-    elif smoother.config['mmin'] == 4.0:
-        vmax=-2.5
-    else:
-        vmax=-1.0
-    basemap1.m.scatter(x, y, marker = 's', c = np.log10(smoother.rates), cmap = plt.cm.coolwarm, zorder=10, lw=0, vmin=-7.0, vmax=vmax)
-    basemap1.m.drawcoastlines(linewidth=1, zorder=50) # Add coastline on top
+#    sym = (2., 3.,'cx')
+#    x,y = basemap1.m(smoother.grid[:,0], smoother.grid[:,1])
+#    if smoother.config['mmin'] == 3.5:
+#        vmax=-1.0
+#    elif smoother.config['mmin'] == 4.0:
+#        vmax=-2.5
+#    else:
+#        vmax=-1.0
+#    basemap1.m.scatter(x, y, marker = 's', c = np.log10(smoother.rates), cmap = plt.cm.coolwarm, zorder=10, lw=0, vmin=-7.0, vmax=vmax)
+#    basemap1.m.drawcoastlines(linewidth=1, zorder=50) # Add coastline on top
     #basemap1.m.drawmeridians(np.arange(llat, ulat, 5))
     #basemap1.m.drawparallels(np.arange(llon, ulon, 5))
-    plt.colorbar(label='Log10(Smoothed rate per cell)')
+#    plt.colorbar(label='Log10(Smoothed rate per cell)')
     #plt.colorbar()#label='log10(Smoothed rate per cell)')
-    plt.legend()
+#    plt.legend()
     #basemap1.m.scatter(x, y, marker = 's', c = smoother.data[:,4], cmap = plt.cm.coolwarm, zorder=10)
     #basemap1.m.scatter([150],[22], marker='o')
     #basemap1.fig.show()
 
     #(smoother.data[0], smoother.data[1])
     #basemap1.add_catalogue(catalogue_depth_clean, erlay=False)
-    figname = smoother_filename[:-4] + '_smoothed_rates_map.png'
-    plt.savefig(figname)
+#    figname = smoother_filename[:-4] + '_smoothed_rates_map.png'
+#    plt.savefig(figname)
                                        
     source_list = []
     #i=0
@@ -277,11 +277,11 @@ for i in range(0, len(config_params)*3, 1):
         print('Run %s' % run)
         completeness_table = config_params[i/3]['COMPLETENESS']
         if i % 3 == 0:
-            bvalue = config_params[i/3]['BVAL_BEST']
+            bvalue = config_params[i//3]['BVAL_BEST']
         if i % 3 == 1:
-            bvalue = config_params[i/3]['BVAL_UPPER']
+            bvalue = config_params[i//3]['BVAL_UPPER']
         if i % 3 == 2:
-            bvalue = config_params[i/3]['BVAL_LOWER']
+            bvalue = config_params[i//3]['BVAL_LOWER']
         try:
             os.remove(("Aus1_tmp2%.3f_%s.hdf5" % (bvalue, run)))
         except OSError:
@@ -300,7 +300,7 @@ for i in range(0, len(config_params)*3, 1):
 
         run_smoothing(grid_lims, config, catalogue_depth_clean, completeness_table, map_config, run)
 
-#pypar.barrier()
+comm.Barrier()
 
 if myid == 0:
     ss = int(MPI.Wtime() - t0)
@@ -309,8 +309,8 @@ if myid == 0:
     s = (ss % 3600) % 60
     print("--------------------------------------------------------")
     print('P0: Total time (%i seconds): %s:%s:%s (hh:mm:ss)' % (ss,
-                                                                string.zfill(h, 2),
-                                                                string.zfill(m, 2),
-                                                                string.zfill(s,2)))
+                                                                h.zfill(2),
+                                                                m.zfill(2),
+                                                                s.zfill(2)))
     print("--------------------------------------------------------")
 #pypar.finalize()

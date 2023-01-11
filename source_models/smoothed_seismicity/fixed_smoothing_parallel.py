@@ -174,21 +174,21 @@ def run_smoothing(grid_lims, smoothing_config, catalogue, completeness_table, ma
         nrml.write([source_model], f, '%s', xmlns = NAMESPACE)
 
     # Creating a basemap - input a cconfiguration and (if desired) a title
-    title = 'Smoothed seismicity rate for learning \nperiod %i 2017, Mmin = %.1f' %(
-         completeness_table[0][0], completeness_table[0][1])
-    basemap1 = HMTKBaseMap(map_config, 'Smoothed seismicity rate')
-    # Adding the smoothed grip to the basemap
-    sym = (2., 3.,'cx')
-    x,y = basemap1.m(smoother.data[:,0], smoother.data[:,1])
-    basemap1.m.scatter(x, y, marker = 's', c = np.log10(smoother.data[:,4]), cmap = plt.cm.coolwarm, zorder=10, lw=0,
-                       vmin=-6.5, vmax = 1.5 )
-    basemap1.m.drawcoastlines(linewidth=1, zorder=50) # Add coastline on top
-    basemap1.m.drawmeridians(np.arange(map_config['min_lat'], map_config['max_lat'], 5))
-    basemap1.m.drawparallels(np.arange(map_config['min_lon'], map_config['max_lon'], 5))
-    plt.colorbar(label='log10(Smoothed rate per cell)')
-    plt.legend()
-    figname = smoother_filename[:-4] + '_smoothed_rates_map.png'
-    plt.savefig(figname)
+#    title = 'Smoothed seismicity rate for learning \nperiod %i 2017, Mmin = %.1f' %(
+#         completeness_table[0][0], completeness_table[0][1])
+#    basemap1 = HMTKBaseMap(map_config, 'Smoothed seismicity rate')
+#    # Adding the smoothed grip to the basemap
+#    sym = (2., 3.,'cx')
+#    x,y = basemap1.m(smoother.data[:,0], smoother.data[:,1])
+#    basemap1.m.scatter(x, y, marker = 's', c = np.log10(smoother.data[:,4]), cmap = plt.cm.coolwarm, zorder=10, lw=0,
+#                       vmin=-6.5, vmax = 1.5 )
+#    basemap1.m.drawcoastlines(linewidth=1, zorder=50) # Add coastline on top
+#    basemap1.m.drawmeridians(np.arange(map_config['min_lat'], map_config['max_lat'], 5))
+#    basemap1.m.drawparallels(np.arange(map_config['min_lon'], map_config['max_lon'], 5))
+#    plt.colorbar(label='log10(Smoothed rate per cell)')
+#    plt.legend()
+#    figname = smoother_filename[:-4] + '_smoothed_rates_map.png'
+#    plt.savefig(figname)
 
 # Set up paralell
 comm = MPI.COMM_WORLD
@@ -286,7 +286,7 @@ for i in range(0, len(config_combinations), 1):
         run_smoothing(grid_lims, config, catalogue_depth_clean, completeness_table, map_config, run, overwrite)
             
 
-#pypar.barrier()
+comm.barrier()
 
 if myid == 0:
     ss = int(MPI.Wtime() - t0)
