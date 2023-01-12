@@ -290,14 +290,14 @@ comm.Barrier()
 
 if myid == 0:
     ss = int(MPI.Wtime() - t0)
-    h = ss / 3600
-    m = (ss % 3600) / 60
+    h = ss // 3600
+    m = (ss % 3600) // 60
     s = (ss % 3600) % 60
     print("--------------------------------------------------------")
     print('P0: Total time (%i seconds): %s:%s:%s (hh:mm:ss)' % (ss,
-                                                                h.zfill(2),
-                                                                m.zfill(2),
-                                                                s.zfill(2)))
+                                                                str(h).zfill(2),
+                                                                str(m).zfill(2),
+                                                                str(s).zfill(2)))
     print("--------------------------------------------------------")
 #pypar.finalize()
 

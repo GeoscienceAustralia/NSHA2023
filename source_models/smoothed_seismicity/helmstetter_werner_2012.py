@@ -195,9 +195,10 @@ class HelmstetterWerner2012(object):
             self.grid_limits["zmax"] + self.grid_limits["zspc"],
             self.grid_limits["zspc"])
         self._build_grid()
-        #if not os.path.exists(storage_file):
-        #    os.path.mkdir(temp_dir)
-        self.fle = h5py.File(storage_file)
+#        temp_dir = 'tmp'
+#        if not os.path.exists(storage_file):
+ #           os.path.mkdir(temp_dir)
+        self.fle = h5py.File(storage_file, 'w')
         self.learning_weights = None
         self.target_weights = None
         self.catalogue = catalogue

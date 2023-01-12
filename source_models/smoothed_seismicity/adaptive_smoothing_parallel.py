@@ -208,7 +208,7 @@ def run_smoothing(grid_lims, config, catalogue, completeness_table,map_config, r
         source_list.append(point_source)
 
     mod_name = "Australia_Adaptive_K%i_b%.3f" % (smoother.config['k'], smoother.config['bvalue'])   
-    nodes = list(map(obj_to_node, sorted(source_list)))
+    nodes = list(map(obj_to_node, source_list))
     source_model = Node("sourceModel", {"name": name}, nodes=nodes)
     with open(filename, 'wb') as f:
         nrml.write([source_model], f, '%s', xmlns = NAMESPACE)
@@ -304,13 +304,13 @@ comm.Barrier()
 
 if myid == 0:
     ss = int(MPI.Wtime() - t0)
-    h = ss / 3600
-    m = (ss % 3600) / 60
+    h = ss // 3600
+    m = (ss % 3600) // 60
     s = (ss % 3600) % 60
     print("--------------------------------------------------------")
     print('P0: Total time (%i seconds): %s:%s:%s (hh:mm:ss)' % (ss,
-                                                                h.zfill(2),
-                                                                m.zfill(2),
-                                                                s.zfill(2)))
+                                                                str(h).zfill(2),
+                                                                str(m).zfill(2),
+                                                                str(s).zfill(2)))
     print("--------------------------------------------------------")
 #pypar.finalize()
