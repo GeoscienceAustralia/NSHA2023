@@ -286,7 +286,7 @@ for i in range(0, len(config_combinations), 1):
         run_smoothing(grid_lims, config, catalogue_depth_clean, completeness_table, map_config, run, overwrite)
             
 
-comm.barrier()
+comm.Barrier()
 
 if myid == 0:
     ss = int(MPI.Wtime() - t0)
@@ -295,9 +295,9 @@ if myid == 0:
     s = (ss % 3600) % 60
     print("--------------------------------------------------------")
     print('P0: Total time (%i seconds): %s:%s:%s (hh:mm:ss)' % (ss,
-                                                                string.zfill(h, 2),
-                                                                string.zfill(m, 2),
-                                                                string.zfill(s,2)))
+                                                                h.zfill(2),
+                                                                m.zfill(2),
+                                                                s.zfill(2)))
     print("--------------------------------------------------------")
 #pypar.finalize()
 

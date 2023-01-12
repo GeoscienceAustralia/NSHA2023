@@ -275,7 +275,7 @@ for i in range(0, len(config_params)*3, 1):
     if i % proc == myid:
         run = "%03d" % i
         print('Run %s' % run)
-        completeness_table = config_params[i/3]['COMPLETENESS']
+        completeness_table = config_params[i//3]['COMPLETENESS']
         if i % 3 == 0:
             bvalue = config_params[i//3]['BVAL_BEST']
         if i % 3 == 1:
