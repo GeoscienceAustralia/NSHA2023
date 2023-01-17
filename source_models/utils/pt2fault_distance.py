@@ -5,7 +5,12 @@ to the MFD and nodal plane distirbution. Nearest distance to the fault is calcul
 import os, sys
 import numpy as np
 import copy
-from openquake.hazardlib.nrml import SourceModelParser, write, NAMESPACE
+from openquake.hazardlib.nrml import write, NAMESPACE 
+#from openquake.hmtk.parsers.source_model.nrml04_parser import nrmlSourceModelParser as SourceModelParser
+#try this
+from openquake.hazardlib.nrml import to_python
+#from openquake.hazardlib.sourceconverter import SourceConverter
+
 from openquake.hazardlib.sourceconverter import SourceConverter, SourceGroup
 from openquake.hazardlib.sourcewriter import write_source_model
 from openquake.hazardlib.sourcewriter import obj_to_node
@@ -24,9 +29,11 @@ from matplotlib import pyplot
 def read_pt_source(pt_source_file):
     """Read nrml source model into pt source objects
     """
+ #   sm = to_python(pt_source_file)
     converter = SourceConverter(50, 2, width_of_mfd_bin=0.1,
                                 area_source_discretization=10.)
-    parser = SourceModelParser(converter)
+
+    parser = nrml.read_source_models([pt_source_file],converter)
     try:
         sources = parser.parse_sources(pt_source_file)
     except AttributeError: # Handle version 2.1 and above
