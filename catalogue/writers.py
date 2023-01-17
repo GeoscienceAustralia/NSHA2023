@@ -10,7 +10,7 @@ def checkstr(num):
     '''
     from numpy import isnan
     
-    if  isinstance(num, basestring):
+    if  isinstance(num, str):
         return num
     else:
         if isnan(num):

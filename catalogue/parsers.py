@@ -212,7 +212,7 @@ def parse_altmag_hmtk_catalogue(hmtk_csv):
         try:
             evdt = datetime.strptime(dateStr, '%Y%m%d%H%M')
         except:
-            print dateStr
+            print(dateStr)
             evdt = datetime.strptime(dateStr, '%Y-%m-%d %H:%M')
         ev_date = evdt
         

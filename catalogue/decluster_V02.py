@@ -44,8 +44,10 @@ def flag_dependent_events(catalogue, flagvector, doAftershocks, method):
         
         # set max time to ~5.5 yrs (2000 days) max foreshock to 3 yrs
         if max_time_ceil == True:
-           max_time_aftershock = min(max_time_aftershock, 2000)
-           max_time_foreshock = min(max_time_foreshock, 1000)
+            idx = max_time_aftershock > 5000.
+            max_time_aftershock[idx] = 5000.
+            idx = max_time_foreshock > 1000.
+            max_time_foreshock[idx] = 1000.
         
     elif method == 'Stien08':
         max_time_foreshock = 10**((catalogue.data['magnitude']-2.70)*1.1) + 4.0
@@ -62,9 +64,9 @@ def flag_dependent_events(catalogue, flagvector, doAftershocks, method):
     evdate = np.array(evdate)
 
     if doAftershocks == True:
-        print 'Flagging aftershocks...'
+        print('Flagging aftershocks...')
     else:
-        print 'Flagging foreshocks...'
+        print('Flagging foreshocks...')
     
     # loop through earthquakes
     for i in range(0, neq):
@@ -76,8 +78,10 @@ def flag_dependent_events(catalogue, flagvector, doAftershocks, method):
         # set time-dependent distance cut-off - this was reversed in NSHA18
         if (evdate[i] <= test_day_1 ):
             max_dist = max_dist + 10.0
+            #max_dist = max_dist + 20.0 # test
         elif (evdate[i] <= test_day_2 ):
             max_dist = max_dist + 5.0
+            #max_dist = max_dist + 10.0 # test
         
         #########################################################################
         # flag aftershocks
@@ -193,7 +197,7 @@ def decluster_SCR(method, cat, deblastOnly):
     
     catalogue_l08.purge_catalogue(flagvector_asfsman == 0) # cluster_flags == 0: mainshocks
     
-    print 'Leonard 2008\tbefore: ', cat.get_number_events(), " after: ", catalogue_l08.get_number_events()
+    print('Leonard 2008\tbefore: ', cat.get_number_events(), " after: ", catalogue_l08.get_number_events())
     
     #####################################################
     # write declustered catalogue
@@ -206,7 +210,7 @@ def decluster_SCR(method, cat, deblastOnly):
     try:
         remove(declustered_catalog_file)
     except:
-        print declustered_catalog_file, 'does not exist' 
+        print(declustered_catalog_file, 'does not exist')
     
     # set-up writer
     writer = CsvCatalogueWriter(declustered_catalog_file) 
@@ -214,7 +218,7 @@ def decluster_SCR(method, cat, deblastOnly):
     # write
     writer.write_file(catalogue_l08)
     
-    print 'Declustered catalogue: ok\n'
+    print('Declustered catalogue: ok\n')
     
     return declustered_catalog_file, catalogue_l08
 
@@ -231,7 +235,7 @@ def decluster_GK74(catalogue):
     # decluster here
     #####################################################
     
-    print 'Running GK declustering...'
+    print('Running GK declustering...')
     decluster_method = GardnerKnopoffType1()
     
     #---------------------------------------------
@@ -253,7 +257,7 @@ def decluster_GK74(catalogue):
     
     catalogue_gk.purge_catalogue(cluster_flags_gk == 0) # cluster_flags == 0: mainshocks
     
-    print 'Gardner-Knopoff\tbefore: ', catalogue.get_number_events(), " after: ", catalogue_gk.get_number_events()
+    print('Gardner-Knopoff\tbefore: ', catalogue.get_number_events(), " after: ", catalogue_gk.get_number_events())
     
     #####################################################
     # write declustered catalogue
@@ -266,7 +270,7 @@ def decluster_GK74(catalogue):
     try:
         remove(declustered_catalog_file)
     except:
-        print declustered_catalog_file, 'does not exist'
+        print(declustered_catalog_file, 'does not exist')
     
     # set-up writer
     writer = CsvCatalogueWriter(declustered_catalog_file) 
@@ -274,7 +278,7 @@ def decluster_GK74(catalogue):
     # write
     writer.write_file(catalogue_gk)
     #writer.write_file(catalogue_af)
-    print 'Declustered catalogue: ok\n'
+    print('Declustered catalogue: ok\n')
 
 
 #########################################################################
@@ -292,10 +296,10 @@ max_time_ceil = True # set max aftershock window to ~5.5 yrs (2000 days) & max f
 recommend declustering on original magnitudes given the declustering algorithm 
 was based on these magnitudes
 '''
-prefmag1 = 'orig' # declusters based on original catalogue magnitude
+prefmag1 = 'mw' # declusters based on original catalogue magnitude - values either "orig" or "mw"
 
 # Use 2018 NSHA catalogue
-print 'Declustering NSHA18CAT.MW.V0.2.csv'
+print('Declustering NSHA18CAT.MW.V0.2.csv')
 nsha2018csv = path.join('data', 'NSHA18CAT.MW.V0.2.csv')
 nsha_dict = parse_NSHA2018_catalogue(nsha2018csv)
 
@@ -326,9 +330,9 @@ if leonard == True:
     # try following HMTK format
     method = 'Leonard08'
     if method == 'Leonard08':
-        print  'Using Leonard 2008 method...'
+        print( 'Using Leonard 2008 method...')
     if method == 'Stein08':
-        print  'Using Stein 2008 method...'
+        print( 'Using Stein 2008 method...')
         
     declustered_catalog_filename, declustered_cat = decluster_SCR(method, cat, deblastOnly)
     
@@ -342,7 +346,7 @@ else:
 #########################################################################
 # merge extra columns removed by HMTK parser
 #########################################################################
-print 'Merging stripped columns...\n'
+print('Merging stripped columns...\n')
 
 prefmag2 = 'mw' # replaces orig mag with preferred MW in declustered catalogue
 #prefmag2 = 'orig' # keeps orig mag in declustered catalogue
@@ -389,7 +393,7 @@ for line in lines[1:]:
     
     # testing
     if len(eqidx) > 1:
-        print 'Possible duplicate:', datestr[eqidx[0]], eqidx
+        print('Possible duplicate:', datestr[eqidx[0]], eqidx)
     
     # replace orig mag in "magnitude" column
     if len(eqidx) > 0:
@@ -414,7 +418,7 @@ for line in lines[1:]:
         
         newtxt += newline
     else:
-        print 'No match:', line
+        print('No match:', line)
 
 # re-write declustered catalogue
 if deblastOnly == False:
