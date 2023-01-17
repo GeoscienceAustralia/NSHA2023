@@ -7,13 +7,14 @@ import ogr
 import shapefile
 from shapely.geometry import Point, Polygon
 
-from source_models.logic_trees import logic_tree
-from source_models.utils.pt2fault_distance import read_pt_source, combine_pt_sources
+from NSHA2023.source_models.logic_trees import logic_tree
+from NSHA2023.source_models.utils.pt2fault_distance import read_pt_source, combine_pt_sources
 from openquake.hazardlib.sourcewriter import write_source_model
 from openquake.hazardlib.sourcewriter import obj_to_node
 from openquake.baselib.node import Node
 from openquake.hazardlib import nrml
-from openquake.hazardlib.nrml import SourceModelParser, write, NAMESPACE
+from openquake.hazardlib.nrml import write, NAMESPACE #SourceModelParser
+from openquake.hmtk.parsers.source_model.nrml04_parser import nrmlSourceModelParser as SourceModelParser
 from openquake.hazardlib.geo.nodalplane import NodalPlane
 from openquake.hazardlib.pmf import PMF
 from openquake.hazardlib.mfd.evenly_discretized import EvenlyDiscretizedMFD

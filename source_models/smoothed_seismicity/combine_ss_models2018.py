@@ -7,8 +7,8 @@ import ogr
 import shapefile
 from shapely.geometry import Point, Polygon
 
-from source_models.logic_trees import logic_tree
-from source_models.utils.pt2fault_distance import read_pt_source, combine_pt_sources
+from NSHA2023.source_models.logic_trees import logic_tree
+from NSHA2023.source_models.utils.pt2fault_distance import read_pt_source, combine_pt_sources
 from openquake.hazardlib.sourcewriter import write_source_model
 from openquake.hazardlib.sourcewriter import obj_to_node
 from openquake.baselib.node import Node
