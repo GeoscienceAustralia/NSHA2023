@@ -169,9 +169,13 @@ def run_smoothing(grid_lims, smoothing_config, catalogue, completeness_table, ma
         source_list.append(point_source)
 
     nodes = list(map(obj_to_node, source_list))
-    source_model = Node("sourceModel", {"name": name}, nodes=nodes)
+    # now we need to add back in tectonic_region type
+    for node in nodes:
+        node.__setitem__('tectonicRegion', 'Non_cratonic')
+    mod_name = smoother_filename.rstrip('csv')
+    source_model = Node("sourceModel", {"name": mod_name}, nodes=nodes)
     with open(filename, 'wb') as f:
-        nrml.write([source_model], f, '%s', xmlns = NAMESPACE)
+        nrml.write([source_model], f, '%s', xmlns = NAMESPACE)        
 
     # Creating a basemap - input a cconfiguration and (if desired) a title
 #    title = 'Smoothed seismicity rate for learning \nperiod %i 2017, Mmin = %.1f' %(

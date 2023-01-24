@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt  # Matplotlib - Python's plotting library
 from copy import deepcopy   # Python module for copying objects
 import ogr
 import shapefile
-from shapely.geometry import Point, Polygon
+#from shapely.geometry import Point, Polygon
 from utilities import params_from_shp
 
 # For running in parallel
@@ -86,7 +86,8 @@ print("Everything Imported OK!")
 #print 'b value', bvalue
 #domains_shp = '../zones/2018_mw/Domains_mc_ext/shapefiles/Domains_NSHA18_MFD.shp'
 domains_shp = '../zones/2018_mw/Domains_single_mc/shapefiles/Domains_NSHA18_MFD.shp'
-ifile = "../../catalogue/data/NSHA18CAT_V0.1_hmtk_declustered.csv"
+#ifile = "../../catalogue/data/NSHA18CAT_V0.1_hmtk_declustered.csv" #Used for NSHA18
+ifile = "../../catalogue/data/NSHA18CAT_V0.2_hmtk_declustered.csv"
 #ifile = "../../catalogue/data/AUSTCAT_V0.12_hmtk_mx_orig.csv"
 # Flag for whether to overwrite exiting .xml source model 
 # files with the same b value and completeness combination.
@@ -205,13 +206,19 @@ def run_smoothing(grid_lims, config, catalogue, completeness_table,map_config, r
                                    mfd, 2, msr,
                                    2.0, tom, 0.1, 20.0, point,
                                    nodal_plane_dist, hypo_depth_dist)
+        print('trt', point_source.tectonic_region_type)
         source_list.append(point_source)
 
-    mod_name = "Australia_Adaptive_K%i_b%.3f" % (smoother.config['k'], smoother.config['bvalue'])   
+    mod_name = "Australia_Adaptive_K%i_b%.3f" % (smoother.config['k'], smoother.config['bvalue'])
+    
     nodes = list(map(obj_to_node, source_list))
-    source_model = Node("sourceModel", {"name": name}, nodes=nodes)
+    # now we need to add back in tectonic_region type                                                                                                                           
+    for node in nodes:
+        node.__setitem__('tectonicRegion', 'Non_cratonic')
+    source_model = Node("sourceModel", {"name": mod_name}, nodes=nodes)
     with open(filename, 'wb') as f:
         nrml.write([source_model], f, '%s', xmlns = NAMESPACE)
+
                                       
 # Set up paralell
 comm = MPI.COMM_WORLD
