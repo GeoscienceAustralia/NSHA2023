@@ -16,7 +16,7 @@ from obspy import UTCDateTime
 # parse Phil's merged catalogue with revised MLs
 ###############################################################################
 
-mcdf = pd.read_csv('Merged_Catalogue.csv')
+mcdf = pd.read_csv('Merged_Catalogue_Test.csv')
 #mcdf.sort_values('DATESTR',inplace=True)
 
 # get GA IDs
