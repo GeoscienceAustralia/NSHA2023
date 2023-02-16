@@ -12,13 +12,14 @@ from numpy import array, where, nan, isnan, unique, mean, delete
 from obspy import UTCDateTime
 from mapping_tools import distance
 from data_fmt_tools import return_all_au_station_data
+
 '''
 set clipping logic!
 '''
 
 def get_ml_cor(repi, eqdep, legacyML, targetML, ml):
     from calculate_magnitudes import get_ml_corrections
-    from numpy import sqrt
+    from numpy import sqrt, nan
     
     logA = 0 # dummy value
     rhyp = sqrt(repi**2 + eqdep**2)
@@ -26,14 +27,22 @@ def get_ml_cor(repi, eqdep, legacyML, targetML, ml):
     mldict = get_ml_corrections(logA, rhyp, eqdep)
     #print(mldict)
     
-    legacy_corr = mldict[legacyML]
-    target_corr = mldict[targetML]
-    
-    # get difference between ML relationships
-    corr_diff = target_corr - legacy_corr
-    
-    # back-engineer log A value - for testing
-    sta_logA = ml - legacy_corr
+    # if legacy is null - set nan
+    if legacyML == 'null':
+        legacy_corr = nan
+        target_corr = nan
+        corr_diff = 0.0
+        sta_logA = nan
+        
+    else:
+        legacy_corr = mldict[legacyML]
+        target_corr = mldict[targetML]
+        
+        # get difference between ML relationships
+        corr_diff = target_corr - legacy_corr
+        
+        # back-engineer log A value - for testing
+        sta_logA = ml - legacy_corr
     
     return {'ml':ml, 'rhyp':rhyp, 'corr_diff':corr_diff, 'legacy_corr':legacy_corr, 
             'target_corr':target_corr, 'sta_logA': sta_logA}
@@ -60,8 +69,8 @@ for i, mc in enumerate(mcdat):
     # reset variables
     add_W_A_correction = False # for changes in W-A magnification: False assumes 2800; True assumes 2080
     add_GG91_HV_corr = False # for bugs in implementation of GG91 post MGO: add 0.13 if True
-    legacyML = ''
-    targetML = ''
+    legacyML = 'null'
+    targetML = 'null'
     event_mlcor = nan
     
     ###############################################################################    
@@ -71,7 +80,8 @@ for i, mc in enumerate(mcdat):
     if mc['MLREGION'] == 'WA':
         # get from and to eqns based on date and agency
         if mc['PREFMLSRC'] == 'ADE':
-            if mc['DATETIME'] < UTCDateTime(1968,1,1):
+            if mc['DATETIME'] >= UTCDateTime(1950,1,1) \
+                and mc['DATETIME'] < UTCDateTime(1968,1,1):
                 legacyML = 'R35'
                 targetML = 'GG91'
             
@@ -98,8 +108,8 @@ for i, mc in enumerate(mcdat):
                    
             # fix Antelope & SCP bugs
             elif mc['DATETIME'] >= UTCDateTime(2008,7,1):
-                legacyML = 'GG91'
-                targetML = 'GG91'
+                legacyML = 'null'
+                targetML = 'null'
                 add_GG91_HV_corr = True
                 add_W_A_correction = True
                 
@@ -110,28 +120,24 @@ for i, mc in enumerate(mcdat):
             # if MGO location, asume MGO ML too
             elif mc['DATETIME'] >= UTCDateTime(1990,1,1) \
                 and mc['DATETIME'] < UTCDateTime(2000,1,1):
-                legacyML = 'GG91'
-                targetML = 'GG91'
-            
-            
+                legacyML = 'null'
+                targetML = 'null'
+                        
         # for MGO/BMR
         else:
-            if mc['DATETIME'] < UTCDateTime(1990,1,1):
+            if mc['DATETIME'] >= UTCDateTime(1950,1,1) \
+                and mc['DATETIME'] < UTCDateTime(1990,1,1):
                 legacyML = 'R35'
                 targetML = 'GG91'
             
-            # make no change - but set anyway
-            else:
-                legacyML = 'GG91'
-                targetML = 'GG91'
-
     ###############################################################################
     # for South Australia/Flinders Ranges region - set to Greenhalgh & Singh (1986)
     ###############################################################################
     
     if mc['MLREGION'] == 'SA':
         if mc['PREFMLSRC'] == 'ADE':
-            if mc['DATETIME'] < UTCDateTime(1968,1,1):
+            if mc['DATETIME'] >= UTCDateTime(1950,1,1) \
+                and mc['DATETIME'] < UTCDateTime(1968,1,1):
                 legacyML = 'R35'
                 targetML = 'GS86'
            
@@ -144,14 +150,14 @@ for i, mc in enumerate(mcdat):
             # make no change, but assume eqlocl & eqFocus with W-A Gain = 2080 
             elif mc['DATETIME'] >= UTCDateTime(1998,1,1) \
                 and mc['DATETIME'] < UTCDateTime(2010,1,1):
-                legacyML = 'GS86'
-                targetML = 'GS86'
+                legacyML = 'null'
+                targetML = 'null'
                 add_W_A_correction = True
             
             # make no change
-            else:
-                legacyML = 'GS86'
-                targetML = 'GS86'
+            elif mc['DATETIME'] >= UTCDateTime(1950,1,1):
+                legacyML = 'null'
+                targetML = 'null'
         
         elif mc['PREFMLSRC'] == 'AUST':
             # fix MagCalc bugs where SEA ML was used for SA
@@ -162,30 +168,27 @@ for i, mc in enumerate(mcdat):
             
             # add Antelope/SCP W-A correction
             elif mc['DATETIME'] > UTCDateTime(2008,7,1):
-                legacyML = 'GS86'
-                targetML = 'GS86'
+                legacyML = 'null'
+                targetML = 'null'
                 add_W_A_correction = True
                 
-            elif mc['DATETIME'] < UTCDateTime(1990,1,1):
+            elif mc['DATETIME'] >= UTCDateTime(1950,1,1) \
+                and mc['DATETIME'] < UTCDateTime(1990,1,1):
                 legacyML = 'R35'
                 targetML = 'GS86'
                 
-            # make no change
-            else:
-                legacyML = 'GS86'
-                targetML = 'GS86'
+            # make no change - assume events recalculated from 2010
+            elif  mc['DATETIME'] < UTCDateTime(2010,1,1):
+                legacyML = 'null'
+                targetML = 'null'
                
         # assume other agencies (including GA/AGSO/BMR) used Richter
         else:
-            if mc['DATETIME'] < UTCDateTime(1990,1,1):
+            if mc['DATETIME'] >= UTCDateTime(1950,1,1) \
+                and mc['DATETIME'] < UTCDateTime(1990,1,1):
                 legacyML = 'R35'
                 targetML = 'GS86'
-            
-            # make no change
-            else:
-                legacyML = 'GS86'
-                targetML = 'GS86'
-                            
+                                        
     ###############################################################################            
     # for Eastern Australia - set to Michael-Lieba & Malafant (1992)
     ###############################################################################
@@ -206,8 +209,8 @@ for i, mc in enumerate(mcdat):
             
             # assume SRC using eqFocus with W-A Gain=2080
             elif mc['DATETIME'] >= UTCDateTime(2016,1,1):
-                 legacyML = 'MLM92'
-                 targetML = 'MLM92'
+                 legacyML = 'null'
+                 targetML = 'null'
                  add_W_A_correction = True
                 
         elif mc['PREFMLSRC'] == 'AUST':
@@ -219,42 +222,44 @@ for i, mc in enumerate(mcdat):
             
             # add Antelope/SCP W-A correction
             elif mc['DATETIME'] > UTCDateTime(2008,7,1):
-                legacyML = 'MLM92'
-                targetML = 'MLM92'
+                legacyML = 'null'
+                targetML = 'null'
                 add_W_A_correction = True
                 
-            elif mc['DATETIME'] < UTCDateTime(1991,1,1):
+            elif mc['DATETIME'] >= UTCDateTime(1950,1,1) \
+                and mc['DATETIME'] < UTCDateTime(1991,1,1):
                 legacyML = 'R35'
                 targetML = 'MLM92'
                 
-            # make no change
-            else:
-                legacyML = 'MLM92'
-                targetML = 'MLM92'
-            
         elif mc['PREFMLSRC'] == 'ADE':
-            if mc['DATETIME'] >= UTCDateTime(1998,1,1) \
+            if mc['DATETIME'] >= UTCDateTime(1950,1,1) \
+                and mc['DATETIME'] < UTCDateTime(1968,1,1):
+                legacyML = 'R35'
+                targetML = 'MLM92'
+                
+            elif mc['DATETIME'] >= UTCDateTime(1998,1,1) \
                 and mc['DATETIME'] < UTCDateTime(2016,1,1):
                 legacyML = 'BJ84'
                 targetML = 'MLM92'
                 add_W_A_correction = True
                 
+            elif mc['DATETIME'] >= UTCDateTime(1950,1,1):
+                legacyML = 'GS86'
+                targetML = 'MLM92'
+            
+                
         elif mc['PREFMLSRC'] == 'BRS':
             # assume R35 all the time as per correspondence with Jack Rynn
-                legacyML = 'R35'
-                targetML = 'MLM92'
+            legacyML = 'R35'
+            targetML = 'MLM92'
         
         # assume other agencies (including GA/AGSO/BMR) used Richter
         else:
-            if mc['DATETIME'] < UTCDateTime(1991,1,1):
+            if mc['DATETIME'] >= UTCDateTime(1950,1,1) \
+                and mc['DATETIME'] < UTCDateTime(1991,1,1):
                 legacyML = 'R35'
                 targetML = 'MLM92'
                 
-            # make no change - but set anyway
-            else:
-                legacyML = 'MLM92'
-                targetML = 'MLM92'
-               
     ###############################################################################            
     # get recording stations relative to event
     ###############################################################################
@@ -293,6 +298,7 @@ for i, mc in enumerate(mcdat):
     for line in lines:
         sta_sets.append(set(line.strip().split(',')))
     
+    # find duplicate stations - find indexes
     didx = []
     for ss in sta_sets:
         cnt = 0
@@ -355,9 +361,15 @@ for i, mc in enumerate(mcdat):
         doi: 10.11636/Record.2020.020.
         '''
         event_mlcor += 0.07 
+    
+    # if event_mlcor == 0.0, set to nan so REVML_2023 == nan
+    if event_mlcor == 0.0:
+        event_mlcor = nan
         
     # add revised ML to mccat
     mcdat[i]['REVML_2023'] = mc['PREFML'] + event_mlcor
+    mcdat[i]['legacyML'] = legacyML
+    mcdat[i]['targetML'] = targetML
     
     '''
     # for test events
