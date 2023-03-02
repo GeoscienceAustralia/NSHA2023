@@ -5,7 +5,8 @@ Created on Fri Jan 20 15:57:11 2023
 @author: u56903
 """
 import pickle
-from numpy import array, where, nan, isnan, unique, mean, delete
+import pandas as pd
+from numpy import array, where, nan, isnan, unique, mean, delete, loadtxt
 #from io_catalogues import parse_ga_event_query
 #from misc_tools import dictlist2array
 #from mag_tools import get_au_ml_zone
@@ -13,9 +14,6 @@ from obspy import UTCDateTime
 from mapping_tools import distance
 from data_fmt_tools import return_all_au_station_data
 
-'''
-set clipping logic!
-'''
 
 def get_ml_cor(repi, eqdep, legacyML, targetML, ml):
     from calculate_magnitudes import get_ml_corrections
@@ -58,6 +56,9 @@ mcdat = pickle.load(open('merged_cat.pkl', 'rb'))
 # read station data
 sta_dat = return_all_au_station_data()
 
+# load coeffs for ML (pre-1950), MD, or MP correction
+r0, r1 = loadtxt('ml_revision_reg.csv', delimiter=',')
+
 ###############################################################################
 # loop thru events
 ###############################################################################
@@ -68,35 +69,53 @@ for i, mc in enumerate(mcdat):
     
     # reset variables
     add_W_A_correction = False # for changes in W-A magnification: False assumes 2800; True assumes 2080
+    add_DC_W_A_correction = False # as above, but where damping = 0.8 for both magnifications
     add_GG91_HV_corr = False # for bugs in implementation of GG91 post MGO: add 0.13 if True
     legacyML = 'null'
     targetML = 'null'
     event_mlcor = nan
     
+    # set min distance considered so effects of saturation can be considered - from Allen (2021)
+    if mc['PREFML'] >= 4.0 and mc['PREFML'] < 4.5 and mc['DATETIME'] < UTCDateTime(2010,1,1):
+        min_considered_dist = 75. # km
+    elif mc['PREFML'] >= 4.5 and mc['PREFML'] < 5.0 and mc['DATETIME'] < UTCDateTime(2010,1,1):
+        min_considered_dist = 150. # km
+    elif mc['PREFML'] >= 5.0 and mc['DATETIME'] < UTCDateTime(2010,1,1):
+        min_considered_dist = 250. # km
+    else:
+        min_considered_dist = 80. # km
+        
+    
     ###############################################################################    
     # for western & central Australia - set to Gaull & Gregson (1991)
     ###############################################################################
     
-    if mc['MLREGION'] == 'WA':
+    if mc['MLREGION'] == 'WA' or mc['MLREGION'] == 'WCA':
         # get from and to eqns based on date and agency
         if mc['PREFMLSRC'] == 'ADE':
-            if mc['DATETIME'] >= UTCDateTime(1950,1,1) \
+            if mc['DATETIME'] >= UTCDateTime(1960,1,1) \
                 and mc['DATETIME'] < UTCDateTime(1968,1,1):
                 legacyML = 'R35'
                 targetML = 'GG91'
             
-            # assume ADE using eqFocus with W-A Gain=2080
-            elif mc['DATETIME'] > UTCDateTime(2010,1,1):
-                legacyML = 'BJ84'
+            elif mc['DATETIME'] >= UTCDateTime(1968,1,1) \
+                and mc['DATETIME'] < UTCDateTime(1998,1,1):
+                legacyML = 'GS86'
                 targetML = 'GG91'
-                add_W_A_correction = True
-                
-            # assume eqlocl & eqFocus with W-A Gain = 2080 
+               
+            # assume eqlocl with W-A Gain = 2080 
             elif mc['DATETIME'] >= UTCDateTime(1998,1,1) \
                 and mc['DATETIME'] < UTCDateTime(2010,1,1):
                 legacyML = 'GS86'
                 targetML = 'GG91'
                 add_W_A_correction = True
+                
+            # assume ADE using eqFocus with W-A Gain=2080
+            elif mc['DATETIME'] > UTCDateTime(2010,1,1):
+                 legacyML = 'BJ84'
+                 targetML = 'GG91'
+                 add_W_A_correction = True
+                 
         
         if mc['PREFMLSRC'] == 'AUST':
             # fix MagCalc bugs where SA ML was used for WA
@@ -125,7 +144,7 @@ for i, mc in enumerate(mcdat):
                         
         # for MGO/BMR
         else:
-            if mc['DATETIME'] >= UTCDateTime(1950,1,1) \
+            if mc['DATETIME'] >= UTCDateTime(1960,1,1) \
                 and mc['DATETIME'] < UTCDateTime(1990,1,1):
                 legacyML = 'R35'
                 targetML = 'GG91'
@@ -136,7 +155,7 @@ for i, mc in enumerate(mcdat):
     
     if mc['MLREGION'] == 'SA':
         if mc['PREFMLSRC'] == 'ADE':
-            if mc['DATETIME'] >= UTCDateTime(1950,1,1) \
+            if mc['DATETIME'] >= UTCDateTime(1960,1,1) \
                 and mc['DATETIME'] < UTCDateTime(1968,1,1):
                 legacyML = 'R35'
                 targetML = 'GS86'
@@ -155,7 +174,7 @@ for i, mc in enumerate(mcdat):
                 add_W_A_correction = True
             
             # make no change
-            elif mc['DATETIME'] >= UTCDateTime(1950,1,1):
+            elif mc['DATETIME'] >= UTCDateTime(1960,1,1):
                 legacyML = 'null'
                 targetML = 'null'
         
@@ -170,9 +189,9 @@ for i, mc in enumerate(mcdat):
             elif mc['DATETIME'] > UTCDateTime(2008,7,1):
                 legacyML = 'null'
                 targetML = 'null'
-                add_W_A_correction = True
+                add_DC_W_A_correction = True
                 
-            elif mc['DATETIME'] >= UTCDateTime(1950,1,1) \
+            elif mc['DATETIME'] >= UTCDateTime(1960,1,1) \
                 and mc['DATETIME'] < UTCDateTime(1990,1,1):
                 legacyML = 'R35'
                 targetML = 'GS86'
@@ -184,7 +203,7 @@ for i, mc in enumerate(mcdat):
                
         # assume other agencies (including GA/AGSO/BMR) used Richter
         else:
-            if mc['DATETIME'] >= UTCDateTime(1950,1,1) \
+            if mc['DATETIME'] >= UTCDateTime(1960,1,1) \
                 and mc['DATETIME'] < UTCDateTime(1990,1,1):
                 legacyML = 'R35'
                 targetML = 'GS86'
@@ -193,10 +212,11 @@ for i, mc in enumerate(mcdat):
     # for Eastern Australia - set to Michael-Lieba & Malafant (1992)
     ###############################################################################
     
-    if mc['MLREGION'] == 'SEA':
+    if mc['MLREGION'] == 'SEA' or mc['MLREGION'] == 'EA':
         if mc['PREFMLSRC'] == 'MEL' or mc['PREFMLSRC'] == 'SRC' \
             or mc['PREFMLSRC'] == 'RC' or mc['PREFMLSRC'] == 'GG':
-            if mc['DATETIME'] < UTCDateTime(1998,1,1):
+            if mc['DATETIME'] >= UTCDateTime(1960,1,1) \
+                and mc['DATETIME'] < UTCDateTime(1998,1,1):
                 legacyML = 'R35'
                 targetML = 'MLM92'
             
@@ -226,36 +246,43 @@ for i, mc in enumerate(mcdat):
                 targetML = 'null'
                 add_W_A_correction = True
                 
-            elif mc['DATETIME'] >= UTCDateTime(1950,1,1) \
+            elif mc['DATETIME'] >= UTCDateTime(1960,1,1) \
                 and mc['DATETIME'] < UTCDateTime(1991,1,1):
                 legacyML = 'R35'
                 targetML = 'MLM92'
                 
         elif mc['PREFMLSRC'] == 'ADE':
-            if mc['DATETIME'] >= UTCDateTime(1950,1,1) \
+            if mc['DATETIME'] >= UTCDateTime(1960,1,1) \
                 and mc['DATETIME'] < UTCDateTime(1968,1,1):
                 legacyML = 'R35'
                 targetML = 'MLM92'
                 
-            elif mc['DATETIME'] >= UTCDateTime(1998,1,1) \
-                and mc['DATETIME'] < UTCDateTime(2016,1,1):
+            elif mc['DATETIME'] >= UTCDateTime(2010,1,1) \
+                and mc['DATETIME'] < UTCDateTime(2018,1,1):
                 legacyML = 'BJ84'
                 targetML = 'MLM92'
                 add_W_A_correction = True
                 
-            elif mc['DATETIME'] >= UTCDateTime(1950,1,1):
+            elif mc['DATETIME'] >= UTCDateTime(1960,1,1):
                 legacyML = 'GS86'
                 targetML = 'MLM92'
             
                 
         elif mc['PREFMLSRC'] == 'BRS':
-            # assume R35 all the time as per correspondence with Jack Rynn
-            legacyML = 'R35'
-            targetML = 'MLM92'
+            if mc['DATETIME'] >= UTCDateTime(1960,1,1):
+                # assume R35 all the time as per correspondence with Jack Rynn
+                legacyML = 'R35'
+                targetML = 'MLM92'
+            
+        # Assumed W-A sensitivity of 2080
+        elif mc['PREFMLSRC'] == 'Allen (unpublished)':
+            legacyML = 'null'
+            targetML = 'null'
+            add_DC_W_A_correction = True
         
         # assume other agencies (including GA/AGSO/BMR) used Richter
         else:
-            if mc['DATETIME'] >= UTCDateTime(1950,1,1) \
+            if mc['DATETIME'] >= UTCDateTime(1960,1,1) \
                 and mc['DATETIME'] < UTCDateTime(1991,1,1):
                 legacyML = 'R35'
                 targetML = 'MLM92'
@@ -315,61 +342,114 @@ for i, mc in enumerate(mcdat):
     event_dists = delete(event_dists, didx)
     event_stas = delete(event_stas, didx)
     
-    idx = where(event_dists <= 180.)[0]
+    #idx = where(event_dists <= 180.)[0]
     #print(event_stas)
     
-    # loop thru stations found for each event    
-    if len(event_dists) > 0:
-        idx = where((event_dists >= 80.) & (event_dists <= 180.))[0]
-        
-        if len(idx) > 0:
-            # get corrections for all stations in range
-            for repi in event_dists[idx]:
-                ml_corrections = get_ml_cor(repi, depth, legacyML, targetML, mc['PREFML'])
-                
-                sta_mlcor.append(ml_corrections['corr_diff'])
-            
-            # get final correction
-            event_mlcor = mean(array(sta_mlcor))
-            #print('Mean ML coor: '+str(event_mlcor))
-            #print(sta_mlcor)
-            
-        # else, get closest distant site     
-        else:
-            idx = where((event_dists > 180.) & (event_dists <= 1100.))[0]
-            
-            # get minimum distance
-            min_repi = min(event_dists[idx])
-            
-            ml_corrections = get_ml_cor(min_repi, depth, legacyML, targetML, mc['PREFML'])
-            
-            # get final correction
-            event_mlcor = ml_corrections['corr_diff']
+    ###############################################################################            
+    # get corrections
+    ###############################################################################
     
-    # now add correction for incorrect use of V to H correction for GG91
-    #print('\n'+str(event_mlcor))
-    if add_GG91_HV_corr == True:
-        event_mlcor += 0.13
-        
-    if add_W_A_correction == True:
-        # add approximate mangitude difference after accounting for W-A magnification and damping
-        '''
-        For more details, see: Glanville, H., T. Allen, B. Stepin, and C. Bugden 
-        (2020). Seismic monitoring of the NSW CSG areas: monitoring of seismic 
-        activity in the CSG production area of Camden and the seismicity of the 
-        region, Geoscience Australia Record 2020/20, Canberra, 39 pp, 
-        doi: 10.11636/Record.2020.020.
-        '''
-        event_mlcor += 0.07 
-    
-    # if event_mlcor == 0.0, set to nan so REVML_2023 == nan
-    if event_mlcor == 0.0:
+    '''
+    # if different magnitude types preferred, ignore - still want to keep best ML estimate if not preferred
+    if mc['MX_TYPE'] == 'mb' or mc['MX_TYPE'] == 'MS':
+        legacyML = 'null'
+        targetML = 'null'
         event_mlcor = nan
+    '''
+    
+    # if ML(< 1950), use regression from regress_ml_legacy_target.py
+    if mc['DATETIME'] < UTCDateTime(1960,1,1) and isnan(mc['PREFML']) == False:
+        event_mlcor = (r0 * mc['PREFML'] + r1) - mc['PREFML']
+        legacyML = 'null'
+        targetML = 'regression'
+        min_repi = nan
+    
+    # if MD or MP, use regression from regress_ml_legacy_target.py
+    elif mc['MX_TYPE'] == 'MP' or mc['MX_TYPE'] == 'MD':
+        if isnan(mc['PREFML']) == False:
+            event_mlcor = (r0 * mc['PREFML'] + r1) - mc['PREFML']
+            legacyML = 'null'
+            targetML = 'regression'
+            min_repi = nan
+                
+    else:
+        # loop thru stations found for each event    
+        if len(event_dists) > 0:
+            
+            mcd = min_considered_dist
+            
+            if mcd < 180.:
+                idx = where((event_dists >= mcd) & (event_dists <= 180.))[0]
+            else:
+                idx = []
+            
+            if len(idx) > 0 and mcd < 180:
+                # get corrections for all stations in range
+                for repi in event_dists[idx]:
+                    ml_corrections = get_ml_cor(repi, depth, legacyML, targetML, mc['PREFML'])
+                    min_repi = min(event_dists)
+                    
+                    sta_mlcor.append(ml_corrections['corr_diff'])
+                
+                # get final correction
+                event_mlcor = mean(array(sta_mlcor))
+                #print('Mean ML coor: '+str(event_mlcor))
+                #print(sta_mlcor)
+                
+            # else, get closest distant site     
+            else:
+                
+                idx = where((event_dists > mcd) & (event_dists <= 1100.))[0]
+                
+                # get minimum distance
+                if len(idx) > 0:
+                    min_repi = min(event_dists[idx])
+                
+                    ml_corrections = get_ml_cor(min_repi, depth, legacyML, targetML, mc['PREFML'])
+                    
+                    # get final correction
+                    event_mlcor = ml_corrections['corr_diff']
+                    
+                else:
+                    min_repi = nan
+                    event_mlcor = nan
+        
+        # now add correction for incorrect use of V to H correction for GG91
+        #print('\n'+str(event_mlcor))
+        if add_GG91_HV_corr == True:
+            event_mlcor += 0.13
+            
+        if add_W_A_correction == True:
+            # add approximate mangitude difference after accounting for W-A gain and damping
+            '''
+            For more details, see: Glanville, H., T. Allen, B. Stepin, and C. Bugden 
+            (2020). Seismic monitoring of the NSW CSG areas: monitoring of seismic 
+            activity in the CSG production area of Camden and the seismicity of the 
+            region, Geoscience Australia Record 2020/20, Canberra, 39 pp, 
+            doi: 10.11636/Record.2020.020.
+            
+            Using ML_2080 dependent relationship as outlined in: The 2023 National 
+            Seismic Hazard Assessment for Australia: Earthquake Hypocentre Catalogue
+            '''
+            # ML2800_corr = m0 * ML2080 + m1
+            m0 = -0.00686502963174
+            m1 = 0.123141814037
+            ML2800_corr = m0 * (mc['PREFML'] + event_mlcor) + m1
+            event_mlcor += ML2800_corr
+        
+        # if W-A damping = 0.8 for both W-A gain settings
+        if add_DC_W_A_correction == True:
+            event_mlcor += 0.13
+        
+        # if event_mlcor == 0.0, set to nan so REVML_2023 == nan
+        if event_mlcor == 0.0:
+            event_mlcor = nan
         
     # add revised ML to mccat
     mcdat[i]['REVML_2023'] = mc['PREFML'] + event_mlcor
     mcdat[i]['legacyML'] = legacyML
     mcdat[i]['targetML'] = targetML
+    mcdat[i]['min_repi'] = min_repi
     
     '''
     # for test events
@@ -389,3 +469,11 @@ for i, mc in enumerate(mcdat):
 pklfile = open('merged_cat_revised_ml.pkl', 'wb')
 pickle.dump(mcdat, pklfile, protocol=-1)
 pklfile.close()
+
+#####################################################################
+# now convert to pandas and write to csv
+#####################################################################        
+
+# convert dicts back to dataframe
+mcdf = pd.DataFrame(mcdat)
+mcdf.to_csv('merged_cat_revised_ml.csv', sep=',')

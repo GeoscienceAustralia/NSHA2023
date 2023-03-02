@@ -1,6 +1,6 @@
 import shapefile
 from shapely.geometry import Polygon
-from numpy import ones_like, array
+from numpy import ones_like, array, nan
 try:
     from tools.nsha_tools import get_field_data
     from tools.source_shapefile_builder import get_preferred_catalogue, \
@@ -9,7 +9,7 @@ try:
                                                get_ul_seismo_depths, get_neotectonic_domain_params, \
                                                aggregate_intraslab_sources
 except:
-    print 'Add PYTHONPATH to NSHA18 root directory'
+    print('Add PYTHONPATH to NSHA18 root directory')
 
 ###############################################################################
 
@@ -21,7 +21,7 @@ except:
 
 domshp = 'NSHA13_NSHA18_Merged.shp'
 
-print 'Reading source shapefile...'
+print('Reading source shapefile...')
 sf = shapefile.Reader(domshp)
 shapes = sf.shapes()
 polygons = []
@@ -222,9 +222,9 @@ prefCat = get_preferred_catalogue(domshp)
 
 # fix catalogue for source zones
 
-prefCat[60] = 'NSHA18CAT_V0.1_hmtk_declustered.csv'
-prefCat[64] = 'NSHA18CAT_V0.1_hmtk_declustered.csv'
-prefCat[59] = 'NSHA18CAT_V0.1_hmtk_declustered.csv'
+prefCat[60] = 'NSHA23CAT_V0.1_hmtk_declustered.csv'
+prefCat[64] = 'NSHA23CAT_V0.1_hmtk_declustered.csv'
+prefCat[59] = 'NSHA23CAT_V0.1_hmtk_declustered.csv'
 ###############################################################################
 # load 2018 completeness models
 ###############################################################################
@@ -252,7 +252,6 @@ min_rmag[54] = 3.3 # Z025
 min_rmag[3] = 6.1 # TAFS
 min_rmag[11] = 6.0 # NBOT
 min_rmag[12] = 6.1 # NBT
-
 
 
 # SEOB - multi-corner

@@ -647,7 +647,7 @@ def get_preferred_catalogue(targetshpfile):
     for poly in targetshapes:
         
         # set default catalogue
-        tmpcat = 'NSHA18CAT_V0.1_hmtk_declustered.csv'
+        tmpcat = 'NSHA23CAT_V0.1_hmtk_declustered.csv'
         
         # now loop through all points in target shape
         for tlon, tlat in poly.points:
@@ -655,7 +655,7 @@ def get_preferred_catalogue(targetshpfile):
             
             # check if point in catshape
             if point.within(Polygon(catshape.points)) == False:
-                tmpcat = 'ISC-GEM_V5_hmtk_GK74_declustered_clip.csv'
+                tmpcat = 'ISC-GEM_V9.1_hmtk_GK74_declustered_clip.csv'
                 
         # now append catalogue
         cat.append(tmpcat)

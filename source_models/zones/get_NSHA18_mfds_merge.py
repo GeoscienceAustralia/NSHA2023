@@ -72,12 +72,12 @@ except:
 
 # load param file
 lines = open(paramfile).readlines()
-rootfolder  = lines[0].split('=')[-1].strip()
-hmtk_csv    = lines[1].split('=')[-1].strip()
+rootfolder  = sep.join(lines[0].split('=')[-1].strip().split('//'))
+hmtk_csv    = sep.join(lines[1].split('=')[-1].strip().strip().split('//'))
 dec_flag    = lines[2].split('=')[-1].strip() # decluster flag
-shpfile     = lines[3].split('=')[-1].strip()
-origshpfile = lines[4].split('=')[-1].strip()
-outfolder   = path.join(rootfolder, lines[5].split('=')[-1].strip())
+shpfile     = sep.join(lines[3].split('=')[-1].strip().strip().split('//'))
+origshpfile = sep.join(lines[4].split('=')[-1].strip().strip().split('//'))
+outfolder   = sep.join(path.join(rootfolder, lines[5].split('=')[-1].strip()).strip().split('//'))
 outsrcshp   = lines[6].split('=')[-1].strip()
 bin_width   = float(lines[7].split('=')[-1].strip())
 #bval_shp    = lines[7].split('=')[-1].strip()
@@ -185,12 +185,12 @@ else:
 ###############################################################################
 
 # parse NSHA-Cat catalogue
-hmtk_csv = path.join('..','..','catalogue','data','NSHA18CAT_V0.1_hmtk_declustered.csv')
+hmtk_csv = path.join('..','..','catalogue','data','NSHA23CAT_V0.1_hmtk_declustered.csv')
 nshaCat, full_neq = parse_hmtk_cat(hmtk_csv)
 nshaMaxYear = toYearFraction(nshaCat[-1]['datetime'])
 
 # parse ISC-GEM catalogue
-hmtk_csv = path.join('..','..','catalogue','data','ISC-GEM_V5_hmtk_GK74_declustered_clip.csv')
+hmtk_csv = path.join('..','..','catalogue','data','ISC-GEM_V9.1_hmtk_GK74_declustered_clip.csv')
 iscCat, crust_neq = parse_hmtk_cat(hmtk_csv)
 iscMaxYear = toYearFraction(iscCat[-1]['datetime'])
 
@@ -1001,7 +1001,8 @@ for i in srcidx:
             tlim = ax.get_xlim()
             #tlim[0] = 1900
             #dttlim = [floor(tlim[0]), ceil(tlim[1])]
-            plt.xlim(tlim)
+            #plt.xlim(tlim)
+            plt.xlim([1900, 2025])
             
             # sey ylim to one
             ylims = array(ax.get_ylim())
@@ -1067,6 +1068,7 @@ for i in srcidx:
                 
                 plt.ylabel('Cumulative Rate (/yr)')
                 plt.xlabel('Magnitude (MW)')
+                plt.xlim([1900, 2025])
                 
                 # get plotting limits
                 plt.xlim([2.0, bc_mrng_up[-1]+bin_width])
@@ -1296,7 +1298,8 @@ for i in srcidx:
                 # set xlims
                 tlim = [int(round(x)) for x in tlim] # converting to ints
                 
-                plt.xlim(tlim)
+                #plt.xlim(tlim)
+                plt.xlim([1900, 2025])
                 
                 # sey ylim to zero
                 ylims = array(ax.get_ylim())

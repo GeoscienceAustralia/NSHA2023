@@ -16,8 +16,8 @@ from obspy import UTCDateTime
 # parse Phil's merged catalogue with revised MLs
 ###############################################################################
 
-mcdf = pd.read_csv('Merged_Catalogue_Test.csv')
-#mcdf.sort_values('DATESTR',inplace=True)
+#mcdf = pd.read_csv('Merged_Catalogue_Test.csv')
+mcdf = pd.read_csv('Merged_Catalogue.csv')
 
 # get GA IDs
 mc_gaid = array(mcdf.GA_EventID)
@@ -61,9 +61,6 @@ for i, mc in enumerate(mcdat):
         elif not isnan(gadat[idx[0]]['mag_mw']):
             mcdat[i]['PREFMW'] = gadat[idx[0]]['mag_mw']
             mcdat[i]['PREFMWSRC'] = 'AUST'
-        elif not isnan(gadat[idx[0]]['mag_mwp']):
-            mcdat[i]['PREFMW'] = gadat[idx[0]]['mag_mwp']
-            mcdat[i]['PREFMWSRC'] = 'AUST'
             
         # set other mags
         if not isnan(gadat[idx[0]]['mag_ms']):
@@ -85,6 +82,12 @@ for i, mc in enumerate(mcdat):
         else:
             mcdat[i]['MLREGION'] = 'Other'
         
+###############################################################################
+# Append additional NEAC data
+###############################################################################
+
+print('append additional neac mags here') # but maybe not, as MLs not great
+
 #####################################################################
 # Add missing GCMT data (see ISC cat)
 #####################################################################        

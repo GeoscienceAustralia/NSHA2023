@@ -153,6 +153,95 @@ def ggcat2hmtk_csv(ggcat_dict, hmtkfile, prefmag):
     f.write(oq_dat)
     f.close()
     
+def nsha2hmtk_csv(nsha_dict, hmtkfile, prefmag):
+    '''
+    prefmag = 'orig' or 'mw'
+    '''
+    
+    '''
+    takes catalogue dictionary format as parsed by catalogues.parsers.parse_ggcat
+    
+    returns OQ compliant catalogue in csv fmt
+    '''
+    
+    # make oq cat dict
+    try:
+        #test = nsha_dict[0]['ml2mw_qd']
+        header = ','.join(('eventID','year', 'month', 'day', 'hour', 'minute', 'second', \
+                           'longitude', 'latitude','depth','magnitude','magnitudeType', \
+                           'Agency', 'flag')) #, 'mx_origML', 'mx_origType', 'mx_revML', 'pref_mw'))
+    except:
+        header = ','.join(('eventID','year', 'month', 'day', 'hour', 'minute', 'second', \
+                           'longitude', 'latitude','depth','magnitude','magnitudeType', \
+                           'Agency', 'flag')) #, 'mx_origML', 'mx_origType', 'mx_revML', 'pref_mw'))
+                           
+    oq_dat = header + '\n'
+                       
+    # loop thru eqs
+    for nd in nsha_dict:
+        # make datstr - strftime does not work for dats < 1900!
+        datestr = '{0.year:4d}{0.month:02d}{0.day:02d}{0.hour:02d}{0.minute:02d}'.format(nd['DATETIME'])
+        
+        # flag dependent or man-made events
+        '''
+        # for 2012 catalogue
+        if nd['dependence'] == 'Aftershock' or nd['dependence'] == 'Foreshock':
+            flag = '1'
+        elif  nd['ev_type'] == 'blast' or nd['ev_type'] == 'coal':
+            flag = '2'
+        else:
+            flag = '0'
+        '''
+        # for 2023 catalogue
+        try:
+           if nd['DEPENDENCE'] == 0:
+               flag = '1'
+           else:
+               flag = '0'
+        except:
+            flag = '-99'
+            
+        # set Original magnitude as main magnitude for declustering (mx_orig) and add additional columns
+        if prefmag == 'orig':
+            # try alt ml2mw version
+            try:
+                line = ','.join((datestr, checkstr(nd['DATETIME'].year), checkstr(nd['DATETIME'].month),checkstr(nd['DATETIME'].day), \
+                             checkstr(nd['DATETIME'].hour).zfill(2),checkstr(nd['DATETIME'].minute).zfill(2),checkstr(nd['DATETIME'].second),checkstr(nd['lon']),checkstr(nd['lat']), \
+                             checkstr(nd['DEP']),checkstr(nd['PREFMX_2023']),checkstr(nd['mx_origType']),nd['auth'], flag, \
+                             checkstr(nd['mx_origML']), checkstr(nd['mx_origType']), checkstr(nd['mx_revML']), checkstr(nd['prefmag']), \
+                             checkstr(nd['ml2mw_qd']),checkstr(nd['ml2mw_bl'])))
+                             
+            except:
+                line = ','.join((datestr, checkstr(nd['year']), checkstr(nd['month']),checkstr(nd['day']), \
+                             checkstr(nd['hour']).zfill(2),checkstr(nd['min']).zfill(2),checkstr(nd['sec']),checkstr(nd['lon']),checkstr(nd['lat']), \
+                             checkstr(nd['dep']),checkstr(nd['mx_origML']),checkstr(nd['mx_origType']),nd['auth'], flag, \
+                             checkstr(nd['mx_origML']), checkstr(nd['mx_origType']), checkstr(nd['mx_revML']), checkstr(nd['prefmag'])))
+        
+        # else use pref mw
+        else:
+            try:
+                line = ','.join((datestr, checkstr(nd['DATETIME'].year), checkstr(nd['DATETIME'].month),checkstr(nd['DATETIME'].day), \
+                             checkstr(nd['DATETIME'].hour).zfill(2),checkstr(nd['DATETIME'].minute).zfill(2),checkstr(nd['DATETIME'].second), \
+                             checkstr(nd['LON']),checkstr(nd['LAT']), checkstr(nd['DEP']), \
+                             checkstr(nd['PREFMW_2023']),checkstr(nd['PREFMXTYPE_2023']),nd['PREFMWSRC_2023'], flag, \
+                             checkstr(nd['PREFMX_2023']), checkstr(nd['PREFMXTYPE_2023']), checkstr(nd['PREFMX_2023']), checkstr(nd['prefmag']), \
+                             checkstr(nd['ml2mw_qd']),checkstr(nd['ml2mw_bl'])))
+                                             
+            except:
+                line = ','.join((datestr, checkstr(nd['DATETIME'].year), checkstr(nd['DATETIME'].month),checkstr(nd['DATETIME'].day), \
+                             checkstr(nd['DATETIME'].hour).zfill(2),checkstr(nd['DATETIME'].minute).zfill(2),checkstr(nd['DATETIME'].second), \
+                             checkstr(nd['LON']),checkstr(nd['LAT']), checkstr(nd['DEP']), \
+                             checkstr(nd['PREFMW_2023']),checkstr(nd['PREFMXTYPE_2023']),nd['PREFMWSRC_2023'], flag))     
+
+        oq_dat += line + '\n'
+        
+    #write to OQ out
+    print('Writing HMTK csv...')
+    f = open(hmtkfile, 'w')
+    f.write(oq_dat)
+    f.close()
+
+    
 def iscgem2hmtk_csv(iscgem_dict, hmtkfile):
     
     '''
