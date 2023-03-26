@@ -1,0 +1,2 @@
+# coeffs for MW-ML for W-A sensitivity = 2800, e.g.: MW = c0 * ML2800**2 + c1 * ML2800 + c2
+0.0563961222619,0.399125812357,1.40990205683

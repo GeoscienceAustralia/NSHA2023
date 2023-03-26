@@ -111,6 +111,27 @@ for i, mc in enumerate(mcdat):
             print(dt)
 
 ###############################################################################
+# remove events not declusterd
+###############################################################################
+
+lines =  open('manual_event_removal.csv').readlines()[1:]
+evdt = []
+for line in lines:
+    dat = line.strip().split(',')
+    evdt.append(UTCDateTime(dat[0]))
+    
+# now merge with mcat
+print('\nManually removing aftershocks')
+mcdat_old = mcdat
+mcdat = []
+for i, mc in enumerate(mcdat_old):
+    for j, dt in enumerate(evdt):
+        if dt != mc['DATETIME']:
+            mcdat.append(mc)
+        else:
+            print(dt)
+            
+###############################################################################
 # set pref ML logic
 ###############################################################################
 
@@ -200,7 +221,8 @@ for i, mc in enumerate(mcdat):
         mcdat[i]['PREFMXTYPE_2023'] = 'ML'
         mcdat[i]['PREFMXSRC_2023'] = mc['PREFMLSRC_2023']
         
-        mcdat[i]['PREFMW_2023'] = nsha23_piecewise_ml2mw(mc['PREFML_2023'])
+        #mcdat[i]['PREFMW_2023'] = nsha23_piecewise_ml2mw(mc['PREFML_2023'])
+        mcdat[i]['PREFMW_2023'] = nsha23_ml2mw(mc['PREFML_2023']) # using simulated data conversion
         mcdat[i]['PREFMWSRC_2023'] = 'ML2MW'
         
     # take larger of mb/MS

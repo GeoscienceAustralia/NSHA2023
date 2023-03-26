@@ -1,0 +1,8 @@
+ROOT FOLDER      = 2023_mw//Domains_multi_mc
+CATALOGUE        = ..//..//catalogue//data//NSHA23CAT_V0.1_hmtk_declustered.csv
+DECLUSTERED      = True
+SHAPEFILE INPUT  = shapefiles//Domains//Domains_NSHA18_multi_Mc.shp
+ORIGINAL SHAPES  = shapefiles//Domains//Domains_Sep2011_edit.shp
+OUTPUT FOLDER    = mfd
+SHAPEFILE OUTPUT = Domains_NSHA23_MFD.shp
+MFD BIN WIDTH    = 0.1

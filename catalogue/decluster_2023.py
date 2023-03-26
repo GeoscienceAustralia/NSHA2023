@@ -5,9 +5,9 @@ Created on Fri Feb 10 13:30:27 2017
 @author: u56903
 """
 
-from hmtk.parsers.catalogue.csv_catalogue_parser import CsvCatalogueParser, CsvCatalogueWriter
-from hmtk.seismicity.utils import haversine
-from parsers import parse_NSHA2018_catalogue
+from openquake.hmtk.parsers.catalogue.csv_catalogue_parser import CsvCatalogueParser, CsvCatalogueWriter
+from openquake.hmtk.seismicity.utils import haversine
+from nsha_parsers import parse_NSHA2018_catalogue
 from writers import nsha2hmtk_csv, htmk2shp
 import numpy as np
 import datetime as dt

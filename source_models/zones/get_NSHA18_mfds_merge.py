@@ -988,6 +988,9 @@ for i in srcidx:
             ymax = ax.get_ylim()[-1]
             plt.plot([toYearFraction(ydt), toYearFraction(ydt)], \
                      [mcomps[-1], ymax], 'g-', lw=1.5)
+                     
+            # plot max of NSHA18 catalogue
+            plt.plot([2017.625, 2017.625], [2.5, 7.0], 'k--', lw=0.75)
             
             # add grids
             plt.grid(which='major')    
