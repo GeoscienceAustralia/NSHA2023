@@ -9,7 +9,7 @@ try:
                                                get_ul_seismo_depths, get_neotectonic_domain_params, \
                                                aggregate_intraslab_sources
 except:
-    print 'Add PYTHONPATH to NSHA18 root directory'
+    print('Add PYTHONPATH to NSHA18 root directory')
 
 ###############################################################################
 
@@ -21,7 +21,7 @@ except:
 
 domshp = 'AUS6_NSHA18_Merged.shp'
 
-print 'Reading source shapefile...'
+print('Reading source shapefile...')
 sf = shapefile.Reader(domshp)
 shapes = sf.shapes()
 polygons = []
@@ -149,7 +149,7 @@ domains[84] = 8.
 ###############################################################################
 #  set intraslab aggregation class
 ###############################################################################
-print '\n!!! REMEMBER TO RESET SRM_200_300 SOURCE CODE !!!!\n'
+print('\n!!! REMEMBER TO RESET SRM_200_300 SOURCE CODE !!!!\n')
 new_src_codes = []
 for i, src_code in enumerate(src_codes):
     
@@ -218,9 +218,9 @@ prefCat = get_preferred_catalogue(domshp)
 
 # fix catalogue for source zones
 
-prefCat[156] = 'NSHA18CAT_V0.1_hmtk_declustered.csv'
-prefCat[90] = 'NSHA18CAT_V0.1_hmtk_declustered.csv'
-prefCat[155] = 'NSHA18CAT_V0.1_hmtk_declustered.csv'
+prefCat[156] = 'NSHA23CAT_V0.1_hmtk_declustered.csv'
+prefCat[90] = 'NSHA23CAT_V0.1_hmtk_declustered.csv'
+prefCat[155] = 'NSHA23CAT_V0.1_hmtk_declustered.csv'
 ###############################################################################
 # load 2018 completeness models
 ###############################################################################

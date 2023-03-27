@@ -231,10 +231,10 @@ prefCat = get_preferred_catalogue(domshp)
 
 # fix catalogue for source zones
 
-prefCat[52] = 'NSHA18CAT_V0.1_hmtk_declustered.csv'
-prefCat[54] = 'NSHA18CAT_V0.1_hmtk_declustered.csv'
+prefCat[52] = 'NSHA23CAT_V0.1_hmtk_declustered.csv'
+prefCat[54] = 'NSHA23CAT_V0.1_hmtk_declustered.csv'
 '''
-prefCat[155] = 'NSHA18CAT_V0.1_hmtk_declustered.csv'
+prefCat[155] = 'NSHA23CAT_V0.1_hmtk_declustered.csv'
 '''
 ###############################################################################
 # load 2018 completeness models

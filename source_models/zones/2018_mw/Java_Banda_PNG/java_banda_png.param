@@ -1,8 +1,8 @@
-ROOT FOLDER      = 2018_mw//Java_Banda_PNG
-CATALOGUE        = ..//..//catalogue//data//NSHA18CAT_V0.1_hmtk_declustered.csv
+ROOT FOLDER      = 2023_mw//Java_Banda_PNG
+CATALOGUE        = ..//..//catalogue//data//NSHA23CAT_V0.1_hmtk_declustered.csv
 DECLUSTERED      = True
 SHAPEFILE INPUT  = shapefiles//Java_Banda_PNG//java_banda_png.shp
 ORIGINAL SHAPES  = shapefiles//Java_Banda_PNG//java_banda_png.shp
 OUTPUT FOLDER    = mfd
-SHAPEFILE OUTPUT = Java_Banda_PNG_NSHA18_MFD.shp
+SHAPEFILE OUTPUT = Java_Banda_PNG_NSHA23_MFD.shp
 MFD BIN WIDTH    = 0.1
