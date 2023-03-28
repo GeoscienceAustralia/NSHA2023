@@ -235,8 +235,12 @@ def write_oq_sourcefile(model, meta, mx_dict):
             
             # rename source code if "." exists
             m['src_code'].replace('.', '')
-            
-            newxml += '        <areaSource id="'+m['src_code']+'" name="'+\
+            if m['src_code'].startswith('_'):
+                src_code = m['src_code'][1:]
+            else:
+                src_code = m['src_code']
+                
+            newxml += '        <areaSource id="'+src_code+'" name="'+\
                        m['src_name']+'" tectonicRegion="'+m['gmm_trt']+'">\n'
             
             newxml += '            <areaGeometry>\n'
