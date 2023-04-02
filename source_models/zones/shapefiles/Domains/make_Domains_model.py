@@ -8,7 +8,7 @@ try:
                                                get_rate_adjust_factor, build_source_shape, \
                                                aggregate_intraslab_sources
 except:
-    print 'Add PYTHONPATH to NSHA18 root directory'
+    print('Add PYTHONPATH to NSHA18 root directory')
 
 ###############################################################################
 
@@ -20,7 +20,7 @@ except:
 
 domshp = 'Domains_NSHA18_Merged.shp'
 
-print 'Reading source shapefile...'
+print('Reading source shapefile...')
 sf = shapefile.Reader(domshp)
 shapes = sf.shapes()
 polygons = []
