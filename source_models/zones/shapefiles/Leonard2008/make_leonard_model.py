@@ -9,7 +9,7 @@ try:
                                                get_ul_seismo_depths, get_neotectonic_domain_params, \
                                                aggregate_intraslab_sources
 except:
-    print 'Add PYTHONPATH to NSHA18 root directory'
+    print('Add PYTHONPATH to NSHA18 root directory')
 
 ###############################################################################
 
@@ -21,7 +21,7 @@ except:
 
 domshp = 'Leonard08_NSHA18_Merged.shp'
 
-print 'Reading source shapefile...'
+print('Reading source shapefile...')
 sf = shapefile.Reader(domshp)
 shapes = sf.shapes()
 polygons = []
@@ -87,7 +87,12 @@ for i in range(0,len(trt)):
 ###############################################################################
 
 # set domestic domain numbers based on neotectonic domains
-neo_domains, neo_min_rmag, neo_mmax, neo_trt, neo_bval_fix, neo_bval_sig_fix = get_neotectonic_domain_params(sf, trt_new)
+refshpfile = '..//reference_shp.txt'
+
+# set domestic domain numbers based on neotectonic domains
+neo_domains, neo_min_rmag, neo_mmax, neo_trt, neo_bval_fix, neo_bval_sig_fix \
+    = get_neotectonic_domain_params(sf, trt_new, refshpfile)
+
 for i in range(0, len(domains)):
     if neo_domains[i] > 0 and neo_domains[i] < 8:
         domains[i] = neo_domains[i]
@@ -148,7 +153,7 @@ domains[26] = 8.
 ###############################################################################
 #  set intraslab aggregation class
 ###############################################################################
-print '\n!!! REMEMBER TO RESET SRM_200_300 SOURCE CODE !!!!\n'
+print('\n!!! REMEMBER TO RESET SRM_200_300 SOURCE CODE !!!!\n')
 new_src_codes = []
 for i, src_code in enumerate(src_codes):
     
