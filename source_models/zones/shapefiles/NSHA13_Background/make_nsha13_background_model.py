@@ -224,6 +224,7 @@ min_rmag[26] = 3.5 # NWO
 min_rmag[3] = 6.1 # TAFS
 min_rmag[11] = 6.0 # NBOT
 min_rmag[12] = 6.1 # NBT
+min_rmag[54] = 3.3 # EBGZ
 
 
 '''

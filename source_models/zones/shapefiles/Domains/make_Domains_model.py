@@ -138,6 +138,7 @@ min_rmag[53] = 3.5 # WAPM
 min_rmag[48] = 3.2 # YLGN
 min_rmag[56] = 3.2 # WAEP
 min_rmag[66] = 3.5 # NWB1
+min_rmag[47] = 3.5 # SAPM
 
 # SEOB - multi-corner
 ycomp[59] = '1980;1964;1900'

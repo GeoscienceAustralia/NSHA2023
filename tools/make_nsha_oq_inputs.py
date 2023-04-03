@@ -215,11 +215,13 @@ def write_oq_sourcefile(model, meta, mx_dict):
             ruptAspectRatio = 1.5
             min_mag = 5.5
         elif float(m['class']) == 10:
-            magScaleRel = 'StrasserInterface'
+            #magScaleRel = 'StrasserInterface'
+            magScaleRel = 'AllenHayesInterfaceBilinear'
             ruptAspectRatio = 1.5 # based on approx AH interface apect ratios at Mw 8
             min_mag = 6.5
         elif floor(float(m['class'])) == 11:
-            magScaleRel = 'StrasserIntraslab'
+            #magScaleRel = 'StrasserIntraslab'
+            magScaleRel = 'AllenHayesIntraslab'
             ruptAspectRatio = 1.2 # based on approx AH intraslab apect ratios at Mw 7.5
             min_mag = 5.5
         

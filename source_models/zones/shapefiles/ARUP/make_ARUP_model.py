@@ -87,7 +87,6 @@ for i in range(0,len(trt)):
 ###############################################################################
 
 # set domestic domain numbers based on neotectonic domains
-# set domestic domain numbers based on neotectonic domains
 refshpfile = '..//reference_shp.txt'
 #refshpfile = '..//reference_shp_mx.txt' # for testing only!
 neo_domains, neo_min_rmag, neo_mmax, neo_trt, neo_bval_fix, neo_bval_sig_fix \

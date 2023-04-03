@@ -9,7 +9,7 @@ try:
                                                get_ul_seismo_depths, get_neotectonic_domain_params, \
                                                aggregate_intraslab_sources
 except:
-    print 'Add PYTHONPATH to NSHA18 root directory'
+    print('Add PYTHONPATH to NSHA18 root directory')
 
 ###############################################################################
 
@@ -21,7 +21,7 @@ except:
 
 domshp = 'SIN_MCC_NSHA18_Merged.shp'
 
-print 'Reading source shapefile...'
+print('Reading source shapefile...')
 sf = shapefile.Reader(domshp)
 shapes = sf.shapes()
 polygons = []
@@ -87,7 +87,11 @@ for i in range(0,len(trt)):
 ###############################################################################
 
 # set domestic domain numbers based on neotectonic domains
-neo_domains, neo_min_rmag, neo_mmax, neo_trt, neo_bval_fix, neo_bval_sig_fix = get_neotectonic_domain_params(sf, trt_new)
+refshpfile = '..//reference_shp.txt'
+#refshpfile = '..//reference_shp_mx.txt' # for testing only!
+neo_domains, neo_min_rmag, neo_mmax, neo_trt, neo_bval_fix, neo_bval_sig_fix \
+    = get_neotectonic_domain_params(sf, trt_new, refshpfile)
+
 for i in range(0, len(domains)):
     if neo_domains[i] > 0 and neo_domains[i] < 8:
         domains[i] = neo_domains[i]
@@ -170,8 +174,8 @@ prefCat = get_preferred_catalogue(domshp)
 
 # fix catalogue for source zones
 
-prefCat[51] = 'NSHA18CAT_V0.1_hmtk_declustered.csv'
-prefCat[25] = 'NSHA18CAT_V0.1_hmtk_declustered.csv'
+prefCat[51] = 'NSHA23CAT_V0.1_hmtk_declustered.csv'
+prefCat[25] = 'NSHA23CAT_V0.1_hmtk_declustered.csv'
  
 ###############################################################################
 # load 2018 completeness models
@@ -193,6 +197,7 @@ min_rmag[3] = 6.1 # TAFS
 min_rmag[11] = 6.0 # NBOT
 min_rmag[12] = 6.1 # NBT
 min_rmag[25] = 3.8 # TP
+min_rmag[-3] = 3.2 # ZN5
 
 #min_rmag[53] = 3.5 # SEOB
 #min_rmag[55] = 3.5 # SEM

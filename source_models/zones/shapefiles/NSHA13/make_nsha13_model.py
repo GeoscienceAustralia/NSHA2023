@@ -246,7 +246,7 @@ min_rmag[72] = 3.
 min_rmag[84] = 3.5 # SEOB
 min_rmag[63] = 3.8 # Zone38
 min_rmag[66] = 3.2 # Z001
-min_rmag[73] = 3.2 # Z002
+min_rmag[73] = 3.4 # Z002
 min_rmag[51] = 3.0 # Z022
 min_rmag[54] = 3.3 # Z025
 

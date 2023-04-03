@@ -20,6 +20,7 @@ except:
 ###############################################################################
 
 domshp = 'Leonard08_NSHA18_Merged.shp'
+#domshp = 'Leonard08_NSHA18_Merged_Perth.shp' # alternative to fix overshoot into Pert Basin
 
 print('Reading source shapefile...')
 sf = shapefile.Reader(domshp)
