@@ -41,12 +41,12 @@ if not os.path.exists(model_output_base_source_folder):
     os.mkdir(model_output_base_source_folder)
 output_dir_name = '_'.join((params['job_type'], run_start_time, model_name, user))
 output_dir = join(model_output_base_source_folder, output_dir_name)
-print 'Output Path:', output_dir
+print('Output Path:', output_dir)
 os.mkdir(output_dir)
 
 # make full job path
 full_job_dir = join(output_dir, params['job_file'])
-print full_job_dir
+print(full_job_dir)
 
 # We want to ensure we are using the same ground motion models
 # for all model runs
@@ -85,7 +85,7 @@ except IOError:
     msg = 'Sites file %s not found!' % sites_file
     raise IOError(msg)
 except NameError:
-    print 'Warning: No sites file specified, is this intended?'
+    print('Warning: No sites file specified, is this intended?')
 
 # Find source models from logic tree file
 # and copy to output dir
@@ -134,5 +134,5 @@ f_out.close()
 # Change to output directory and submit job
 os.chdir(output_dir)
 cmd = 'qsub %s' % run_script_name
-print cmd
+print(cmd)
 os.system(cmd)

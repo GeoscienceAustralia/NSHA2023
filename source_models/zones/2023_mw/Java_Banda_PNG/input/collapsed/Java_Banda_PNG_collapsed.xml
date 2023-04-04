@@ -1951,6 +1951,6 @@
                 <hypoDepth probability="1.0" depth="10.0"/>
             </hypoDepthDist>
         </areaSource>
-
+        
     </sourceModel>
 </nrml>

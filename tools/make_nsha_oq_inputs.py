@@ -203,6 +203,7 @@ def write_oq_sourcefile(model, meta, mx_dict):
     #ucodes = unique(codes)
     
     # start loop thru area sources
+    #print(model)
     for m in model:
         
         # set magScaleRel
@@ -232,8 +233,10 @@ def write_oq_sourcefile(model, meta, mx_dict):
         #######################################################################
         # write area sources
         #######################################################################
+        #print(m['src_type'])
         if m['src_type'] == 'area':
-            #print(m['src_type']
+            
+            #print(m['src_code'])
             
             # rename source code if "." exists
             m['src_code'].replace('.', '')
@@ -577,8 +580,10 @@ def write_oq_sourcefile(model, meta, mx_dict):
     ######################################################################
     
     #indo_png_fault_file = path.join('..', 'banda', 'Banda_Fault_Sources_NSHA_2018.xml')
-    indo_png_source_file = path.join('2018_mw', 'Java_Banda_PNG', 'input', 'collapsed', 'Java_Banda_PNG_collapsed.xml')
+    indo_png_source_file = path.join('2023_mw', 'Java_Banda_PNG', 'input', 'collapsed', 'Java_Banda_PNG_collapsed_faults.xml')
     lines = open(indo_png_source_file).readlines()[4:-2]
+    
+    # comment out when writing Banda model
     for line in lines:
         newxml += line
     
@@ -714,6 +719,7 @@ def src_shape2dict(modelshp):
     for rec, shape in zip(records, shapes):
         if not float(rec[15]) == -99:
             # determine whether source optimization occurs - ignores banda, etc sources to ensure same params are used
+            # adjust 8 > 20 when writing Banda model
             if float(rec[3]) <= 8.:
                 optim_code = '_'.join((code_prefix, rec[1]))
                 
