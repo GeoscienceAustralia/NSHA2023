@@ -9,9 +9,9 @@ from openquake.hazardlib.nrml import write, NAMESPACE
 #from openquake.hmtk.parsers.source_model.nrml04_parser import nrmlSourceModelParser as SourceModelParser
 #try this
 from openquake.hazardlib.nrml import to_python
-#from openquake.hazardlib.sourceconverter import SourceConverter
 
-from openquake.hazardlib.sourceconverter import SourceConverter, SourceGroup
+from openquake.hazardlib.sourceconverter import SourceGroup
+from openquake.hazardlib.sourceconverter import SourceConverter
 from openquake.hazardlib.sourcewriter import write_source_model
 from openquake.hazardlib.sourcewriter import obj_to_node
 from openquake.baselib.node import Node
@@ -29,22 +29,34 @@ from matplotlib import pyplot
 def read_pt_source(pt_source_file):
     """Read nrml source model into pt source objects
     """
- #   sm = to_python(pt_source_file)
+#    sm = to_python(pt_source_file)
     converter = SourceConverter(50, 2, width_of_mfd_bin=0.1,
                                 area_source_discretization=10.)
+    source_models=nrml.read_source_models([pt_source_file], converter)
+    source_list = []
+    pts = []
+    for source in source_models:
+        source_list.append(source)
+        print('source list', source_list)
+    for sourcegroup in source_list:
+        for source in sourcegroup:
+            for pt in source:
+                pts.append(pt)
+    sm = pts
+    #sm = source_models[0]
 
-    parser = nrml.read_source_models([pt_source_file],converter)
-    try:
-        sources = parser.parse_sources(pt_source_file)
-    except AttributeError: # Handle version 2.1 and above
-        sources = []
-        groups = parser.parse_src_groups(pt_source_file)
-        for group in groups:
-            for source in group:
-                sources.append(source)
+ #   parser = nrml.read_source_models([pt_source_file],converter)
+ #   try:
+ #       sources = parser.parse_sources(pt_source_file)
+ #   except AttributeError: # Handle version 2.1 and above
+ #       sources = []
+ #       groups = parser.parse_src_groups(pt_source_file)
+ #       for group in groups:
+ #           for source in group:
+ #               sources.append(source)
 #    for pt in sources:
 #        print pt.mfd.max_mag
-    return sources
+    return sm #sources
 
 #def merge_pt_sources(point_source_list, filename, name, nrml_version='04'):
 #    """Method for merging multiple point source file into one
