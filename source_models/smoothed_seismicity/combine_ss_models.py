@@ -227,7 +227,7 @@ def combine_ss_models(filename_stem, domains_shp, params,lt, bval_key, output_di
     outfile = os.path.join(output_dir, outfile)
     name = outfile.rstrip('.xml')
     if nrml_version == '04':
-        nodes = list(map(obj_to_node, sorted(merged_pts)))
+        nodes = list(map(obj_to_node, merged_pts))
         source_model = Node("sourceModel", {"name": name}, nodes=nodes)
         with open(outfile, 'wb') as f:
             nrml.write([source_model], f, '%s', xmlns = NAMESPACE)

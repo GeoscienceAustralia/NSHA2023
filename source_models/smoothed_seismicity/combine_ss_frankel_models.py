@@ -7,18 +7,18 @@ import ogr
 import shapefile
 from shapely.geometry import Point, Polygon
 
-from NSHA2018.source_models.logic_trees import logic_tree
-from NSHA2018.source_models.utils.pt2fault_distance import read_pt_source, combine_pt_sources
+from NSHA2023.source_models.logic_trees import logic_tree
+from NSHA2023.source_models.utils.pt2fault_distance import read_pt_source, combine_pt_sources
 from openquake.hazardlib.sourcewriter import write_source_model
 from openquake.hazardlib.sourcewriter import obj_to_node
 from openquake.baselib.node import Node
 from openquake.hazardlib import nrml
-from openquake.hazardlib.nrml import SourceModelParser, write, NAMESPACE
+from openquake.hazardlib.nrml import write, NAMESPACE
 from openquake.hazardlib.geo.nodalplane import NodalPlane
 from openquake.hazardlib.pmf import PMF
 from openquake.hazardlib.mfd.evenly_discretized import EvenlyDiscretizedMFD
 
-from .utilities import params_from_shp
+from utilities import params_from_shp
 
 def gr2inc_mmax(mfd, mmaxs, weights, model_weight=1.):
     """Function to convert a GR distribution to incremental MFD and 
@@ -220,7 +220,9 @@ def combine_ss_models(filename_stem, domains_shp, params,lt, bval_key, output_di
     outfile = os.path.join(output_dir, outfile)
     name = outfile.rstrip('.xml')
     if nrml_version == '04':
-        nodes = list(map(obj_to_node, sorted(merged_pts)))
+        nodes = list(map(obj_to_node, merged_pts))
+        for i,node in enumerate(nodes):
+            node.__setitem__('tectonicRegion', merged_pts[i].tectonic_region_type)
         source_model = Node("sourceModel", {"name": name}, nodes=nodes)
         with open(outfile, 'wb') as f:
             nrml.write([source_model], f, '%s', xmlns = NAMESPACE)
