@@ -6,7 +6,7 @@ Created on Thu May 11 17:41:07 2017
 """
 from os import path, getcwd, walk
 from tools.make_nsha_oq_inputs import make_logic_tree
-from .logic_tree import LogicTree
+#from logic_tree import LogicTree
 from source_models.utils.utils import largest_remainder
 from numpy import array, hstack, unique
 from shutil import copyfile
@@ -18,9 +18,9 @@ weighted_smoothing = False # for weighting two adaptive with different Mmin
 # copy regional source models
 ###############################################################################
 
-relpath = path.join('..', 'zones', '2018_mw')
+relpath = path.join('..', 'zones', '2023_mw')
 faultpath = path.join('..', 'faults')
-destinationPath = 'final'
+destinationPath = '2023_final'
 
 #print '\n!!! Using Original Magnitudes !!!\n'
 #relpath = path.join('..', 'zones', '2012_mx_ge_4.0')
@@ -191,7 +191,7 @@ if weighted_smoothing == True:
     lt = LogicTree('../../shared/seismic_source_model_weights_rounded_p0.4.ss_split.csv')
 else:
 '''
-lt = LogicTree('../../shared/seismic_source_model_weights_rounded_p0.4.edit.csv')
+#lt = LogicTree('../../shared/seismic_source_model_weights_rounded_p0.4.edit.csv')
 
 # set up metadata dictionary
 modelPath = getcwd() # path where source logic tree is to be saved
