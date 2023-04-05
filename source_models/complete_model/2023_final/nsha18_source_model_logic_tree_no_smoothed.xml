@@ -38,7 +38,7 @@
                 </logicTreeBranch>
 
                 <logicTreeBranch branchID="b7">
-                    <uncertaintyModel>Leonard08_collapsed.xml</uncertaintyModel>
+                    <uncertaintyModel>Leonard2008_collapsed.xml</uncertaintyModel>
                     <uncertaintyWeight>0.053</uncertaintyWeight>
                 </logicTreeBranch>
 
@@ -48,7 +48,7 @@
                 </logicTreeBranch>
 
                 <logicTreeBranch branchID="b9">
-                    <uncertaintyModel>SinMcC2016_collapsed.xml</uncertaintyModel>
+                    <uncertaintyModel>SIN_MCC_collapsed.xml</uncertaintyModel>
                     <uncertaintyWeight>0.019</uncertaintyWeight>
                 </logicTreeBranch>
 
