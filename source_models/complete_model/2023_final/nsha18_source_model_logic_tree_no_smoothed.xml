@@ -28,7 +28,7 @@
                 </logicTreeBranch>
 
                 <logicTreeBranch branchID="b5">
-                    <uncertaintyModel>DIMAUS_collapsed_NFSM</uncertaintyModel>
+                    <uncertaintyModel>DIMAUS_collapsed_NFSM.xml</uncertaintyModel>
                     <uncertaintyWeight>0.165</uncertaintyWeight>
                 </logicTreeBranch>
 
