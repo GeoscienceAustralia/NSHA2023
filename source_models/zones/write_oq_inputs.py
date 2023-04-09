@@ -149,6 +149,7 @@ elif outputType == '1':
         if shpfile.endswith('b_MFD.shp'):
             xmlfile = path.split(shpfile)[-1].strip('shp')[:-6] + 'collapsed_NFSM.xml'
         else:
+            #xmlfile = path.split(shpfile)[-1].strip('shp')[:-11] + 'collapsed_NFSM_alt_mmin.xml'
             xmlfile = path.split(shpfile)[-1].strip('shp')[:-11] + 'collapsed_NFSM.xml'
     
     else:
@@ -161,6 +162,7 @@ elif outputType == '1':
         elif shpfile.endswith('b_MFD.shp'):
             xmlfile = path.split(shpfile)[-1].strip('shp')[:-6] + 'collapsed_NFSM.xml'
         else:
+            #xmlfile = path.split(shpfile)[-1].strip('shp')[:-11] + 'collapsed_alt_mmin.xml'
             xmlfile = path.split(shpfile)[-1].strip('shp')[:-11] + 'collapsed.xml'
     
     modPath = sep.join(splitpath)
