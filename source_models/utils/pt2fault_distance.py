@@ -129,7 +129,7 @@ def combine_pt_sources(point_source_list, filename, name, nrml_version='04',
 #        for source in combined_pt_sources:
 #            source_list.append(source)
 #            id_index = max(id_index, source.source_id)
-        nodes = list(map(obj_to_node, sorted(combined_pt_sources)))
+        nodes = list(map(obj_to_node, combined_pt_sources))
         source_model = Node("sourceModel", {"name": name}, nodes=nodes)
         with open(filename, 'wb') as f:
             nrml.write([source_model], f, '%s', xmlns = NAMESPACE)
@@ -170,7 +170,7 @@ def write_combined_faults_points(point_sources, fault_sources,
         if area_sources is not None:
             for area_source in area_sources:
                 source_list.append(area_source)
-        nodes = list(map(obj_to_node, sorted(source_list)))
+        nodes = list(map(obj_to_node, source_list))
         source_model = Node("sourceModel", {"name": name}, nodes=nodes)
         with open(filename, 'wb') as f:
             nrml.write([source_model], f, '%s', xmlns = NAMESPACE)
@@ -428,7 +428,7 @@ def pt2fault_distance(pt_sources, fault_sources, min_distance = 5.0,
         for trt, sources in revised_point_sources.items():
             for source in sources:
                 source_list.append(source)
-        nodes = list(map(obj_to_node, sorted(source_list)))
+        nodes = list(map(obj_to_node, source_list))
         source_model = Node("sourceModel", {"name": name}, nodes=nodes)
         with open(source_model_file, 'wb') as f:
             nrml.write([source_model], f, '%s', xmlns = NAMESPACE)
