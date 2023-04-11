@@ -91,7 +91,8 @@ print("Everything Imported OK!")
 
 domains_shp = '../zones/2018_mw/Domains_single_mc/shapefiles/Domains_NSHA18_MFD.shp'
 #Importing catalogue
-catalogue_filename = "../../catalogue/data/NSHA18CAT_V0.1_hmtk_declustered.csv"
+#catalogue_filename = "../../catalogue/data/NSHA18CAT_V0.1_hmtk_declustered.csv"
+catalogue_filename = "../../catalogue/data/NSHA18CAT_V0.2_hmtk_trunc-declustered_mw.csv"
 # Flag for whether to overwrite exiting .xml source model 
 # files with the same b value and completeness combination.
 # Shoudld normally set to True unless you are being really careful.
