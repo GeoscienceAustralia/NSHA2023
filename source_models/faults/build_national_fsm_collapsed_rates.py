@@ -26,7 +26,7 @@ from NSHA2023.source_models.utils.scaling import Leonard2014_SCR_extension
 from subprocess import call
 
 from openquake.hazardlib.sourceconverter import SourceConverter, \
-    area_to_point_sources, SourceGroup
+    SourceGroup
 
 # Basic parameters
 shapefile = 'FSM/FSD_simple_faults.shp'

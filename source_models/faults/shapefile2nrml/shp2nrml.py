@@ -72,9 +72,11 @@ def parse_line_shapefile(shapefile,shapefile_faultname_attribute,
                 except ValueError:
                     sliprate = '""'
         sliprates.append(sliprate)
-        line = [list(pts) for pts in line]
+        line = [list([pts[1], pts[0]]) for pts in line]
+        print(line)
         fault_length = 0
         for i in range(len(line)):
+            print(line[i])
             if i == len(line) -1:
                 break
             else:

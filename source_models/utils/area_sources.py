@@ -7,9 +7,9 @@ Geoscience Australia April 2017
 import os, sys
 import copy
 import numpy as np
-from openquake.hazardlib.nrml import SourceModelParser, write, NAMESPACE
+from openquake.hazardlib.nrml import write, NAMESPACE
 from openquake.hazardlib.sourceconverter import SourceConverter, \
-    area_to_point_sources, SourceGroup
+    SourceGroup
 from openquake.hazardlib.sourcewriter import write_source_model, obj_to_node
 from openquake.baselib.node import Node
 from openquake.hazardlib import nrml
@@ -22,15 +22,26 @@ def nrml2sourcelist(area_source_file, investigation_time=50,
     """
     converter = SourceConverter(50, 10, width_of_mfd_bin=0.1,
                                 area_source_discretization=area_source_discretisation)
-    parser = SourceModelParser(converter)
-    try:
-        sources = parser.parse_sources(area_source_file)
-    except AttributeError: # Handle version 2.1 and above
-        sources = []
-        groups = parser.parse_src_groups(area_source_file)
-        for group in groups:
-            for source in group:
-                sources.append(source)
+    source_models=nrml.read_source_models([pt_source_file], converter)
+    source_list = []
+    sources = []
+    for source in source_models:
+        source_list.append(source)
+        print('source list', source_list)
+    for sourcegroup in source_list:
+        for source in sourcegroup:
+            sources.append(source)
+            #for  in source:
+            #    pts.append(pt)
+#    parser = SourceModelParser(converter)
+#    try:
+#        sources = parser.parse_sources(area_source_file)
+#    except AttributeError: # Handle version 2.1 and above
+#        sources = []
+#        groups = parser.parse_src_groups(area_source_file)
+#        for group in groups:
+#            for source in group:
+#                sources.append(source)
     return sources
 
 def weighted_pt_source(pt_sources, weights, name,
@@ -136,7 +147,11 @@ def area2pt_source(area_source_file, sources = None, investigation_time=50,
         elif source.source_id in exclude_ids:
             excluded_area_sources.append(source)
         else:
-            pt_sources = area_to_point_sources(source)
+            pt_sources = []
+            for pt in source:
+                pt_sources.append(pt)
+#            pt_sources = area_to_point_sources(source)
+#            pt_source = source.convert_pointSource()
             for pt in pt_sources:
                 pt.source_id = pt.source_id.replace(':','')
                 pt.name = pt.name.replace(':','_')
