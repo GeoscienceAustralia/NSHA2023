@@ -86,7 +86,10 @@ power of 0.4 and a 75th percentile cut-off to remove lowly weighted branches -->
                 </logicTreeBranch>
 
                 <logicTreeBranch branchID="NGAEastGMPE">
-                    <uncertaintyModel>NGAEastGMPE</uncertaintyModel>
+                    <uncertaintyModel>
+                        [GMPETable]
+                         gmpe_table = "../../../../gmm_tables/NGA-East_Backbone_Model.geometric.hdf5"
+                    </uncertaintyModel>
                     <uncertaintyWeight>0.15</uncertaintyWeight>
                 </logicTreeBranch>
 

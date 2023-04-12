@@ -211,6 +211,7 @@ def write_oq_sourcefile(model, meta, mx_dict):
             magScaleRel = 'Leonard2014_SCR'
             ruptAspectRatio = 1.5 # balance between L14 and Cea14 surface rupture lengths
             min_mag = 4.5
+            #min_mag = 5.0 # changed for EE workshop 2023-04-17
         elif float(m['class']) == 8 or float(m['class']) == 9:
             magScaleRel = 'WC1994'
             ruptAspectRatio = 1.5
@@ -581,7 +582,7 @@ def write_oq_sourcefile(model, meta, mx_dict):
     
     #indo_png_fault_file = path.join('..', 'banda', 'Banda_Fault_Sources_NSHA_2018.xml')
     indo_png_source_file = path.join('2023_mw', 'Java_Banda_PNG', 'input', 'collapsed', 'Java_Banda_PNG_collapsed_faults.xml')
-    lines = open(indo_png_source_file).readlines()[4:-2]
+    lines = open(indo_png_source_file).readlines()[5:-2]
     
     # comment out when writing Banda model
     for line in lines:
