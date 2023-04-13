@@ -1,0 +1,11 @@
+ncpus = 192 
+mem = 512GB
+walltime = 1:00:00
+jobfs = 200GB
+sandpit_path = /home/547/
+model_rel_path = NSHA2023/source_models/complete_model/2023_final
+shared_rel_path = NSHA2023/shared
+gsim_lt_filename = NSHA18_Aus_GMPE_75thp_logic_tree_cal_power_p0.4.xml
+model_output_base = /scratch/w84/NSHA23/expert_elicitation/zone_testing
+job_file = job_nsha_localities_nosmoothed_sigma6.ini
+job_type = hazcurve
