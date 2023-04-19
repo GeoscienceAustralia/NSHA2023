@@ -166,9 +166,10 @@ for i, mc in enumerate(mcdat):
                 mcdat[i]['PREFML_2023'] = mc['MLa05_net']
             mcdat[i]['PREFMLSRC_2023'] = 'Cummins (recalc)'
             
-        # add V-H correction to WA records
+        # add V-H correction to WA records - this is not double counting - Phil does not do this
         if mcdat[i]['MLREGION'] == 'WA' or mcdat[i]['MLREGION'] == 'WCA':
             mcdat[i]['PREFML_2023'] += 0.13
+        
                 
     # now get next preferred ML
     elif isnan(mc['REVML_2023']) == False:
@@ -224,6 +225,8 @@ for i, mc in enumerate(mcdat):
         #mcdat[i]['PREFMW_2023'] = nsha23_piecewise_ml2mw(mc['PREFML_2023'])
         mcdat[i]['PREFMW_2023'] = nsha23_ml2mw(mc['PREFML_2023']) # using simulated data conversion
         mcdat[i]['PREFMWSRC_2023'] = 'ML2MW'
+        
+        print(nsha23_ml2mw(mc['PREFML_2023']), nsha23_piecewise_ml2mw(mc['PREFML_2023']))
         
     # take larger of mb/MS
     elif isnan(mc['PREFMS']) == False or isnan(mc['PREFmb']) == False:

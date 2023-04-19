@@ -57,7 +57,15 @@ mcdat = pickle.load(open('merged_cat.pkl', 'rb'))
 sta_dat = return_all_au_station_data()
 
 # load coeffs for ML (pre-1950), MD, or MP correction
-r0, r1 = loadtxt('ml_revision_reg.csv', delimiter=',')
+try:
+    r0, r1 = loadtxt('ml_revision_reg.csv', delimiter=',')
+except:
+    # assume 1:1 until re-run
+    r0 = 1.0
+    r1 = 0.0
+
+# load W-A correction coeffs
+fn = loadtxt('wa_sensitivity_coeffs.csv', delimiter=',', skiprows=1)
 
 ###############################################################################
 # loop thru events
@@ -431,11 +439,20 @@ for i, mc in enumerate(mcdat):
             Using ML_2080 dependent relationship as outlined in: The 2023 National 
             Seismic Hazard Assessment for Australia: Earthquake Hypocentre Catalogue
             '''
-            # ML2800_corr = m0 * ML2080 + m1
+            # ML2800_corr = 4th order poly
+            '''
             m0 = -0.00686502963174
             m1 = 0.123141814037
-            ML2800_corr = m0 * (mc['PREFML'] + event_mlcor) + m1
+            ML2800_corr = m0 * (ML2800_corr + event_mlcor) + m1
             event_mlcor += ML2800_corr
+            '''
+            # now using 4th order polynomial
+            norm_mean = fn[5]
+            norm_std  = fn[6]
+            x_norm = ((mc['PREFML'] + event_mlcor) - norm_mean)/norm_std
+            ML2800_corr = fn[0] * x_norm**4 + fn[1] * x_norm**3 + fn[2] * x_norm**2 + fn[3] * x_norm + fn[4]
+            event_mlcor += ML2800_corr
+            print(ML2800_corr)
         
         # if W-A damping = 0.8 for both W-A gain settings
         if add_DC_W_A_correction == True:
