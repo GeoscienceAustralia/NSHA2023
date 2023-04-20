@@ -122,14 +122,19 @@ for line in lines:
     
 # now merge with mcat
 print('\nManually removing aftershocks')
-mcdat_old = mcdat
+mcdat_old = mcdat.copy()
+del mcdat
 mcdat = []
+
 for i, mc in enumerate(mcdat_old):
+    add_event = True
     for j, dt in enumerate(evdt):
-        if dt != mc['DATETIME']:
-            mcdat.append(mc)
-        else:
+        if dt == mc['DATETIME']:
             print(dt)
+            add_event = False
+            
+    if add_event == True:
+        mcdat.append(mc)
             
 ###############################################################################
 # set pref ML logic
