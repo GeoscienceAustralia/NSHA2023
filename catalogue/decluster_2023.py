@@ -45,7 +45,7 @@ def flag_dependent_events(catalogue, flagvector, doAftershocks, method):
         
         # set max time to ~5.5 yrs (2000 days) max foreshock to 3 yrs
         if max_time_ceil == True:
-            idx = max_time_aftershock > 5000.
+            idx = max_time_aftershock > 5000. 
             max_time_aftershock[idx] = 5000.
             idx = max_time_foreshock > 1000.
             max_time_foreshock[idx] = 1000.
