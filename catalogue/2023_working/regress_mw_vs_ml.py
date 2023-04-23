@@ -5,7 +5,7 @@ Created on Wed Feb 15 15:14:25 2023
 @author: u56903
 """
 import pickle
-from numpy import arange, array, delete, isnan, where, loadtxt, zeros_like
+from numpy import arange, array, delete, isnan, where, loadtxt, zeros_like, hstack
 from obspy import UTCDateTime
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FormatStrFormatter
@@ -39,6 +39,32 @@ ml_2800 = delete(ml_2800, idx)
 mw = delete(mw, idx)
 evdt = delete(evdt, idx)
 mwref = delete(mwref, idx)
+
+###############################################################################
+# add data from recent events
+###############################################################################
+# events: 2021 Marble Bar, 2022 Arthur River
+newml = array([5.55+0.13, 4.753+0.13, 5.0+0.13]) # last one just a guess
+newmw = array([5.323, 4.5, 4.69268914])
+newdt = array([UTCDateTime('2021-11-13T13:05:52.663'), UTCDateTime('2022-01-24T21:24:47.666'), \
+              UTCDateTime('2023-04-17T09:02:57.386')])
+newref = array(['AUST', 'AUST', 'AUST'])
+
+# load W-A correction coeffs
+fn = loadtxt('wa_sensitivity_coeffs.csv', delimiter=',', skiprows=1)
+
+# conv 2080 to 2800
+norm_mean = fn[5]
+norm_std  = fn[6]
+x_norm = (newml - norm_mean)/norm_std
+ML2800_corr = fn[0] * x_norm**4 + fn[1] * x_norm**3 + fn[2] * x_norm**2 + fn[3] * x_norm + fn[4]
+newml += ML2800_corr
+
+# concat
+ml_2800 = hstack((ml_2800, newml))
+mw = hstack((mw, newmw))
+evdt = hstack((evdt, newdt))
+mwref = hstack((mwref, newref))
 
 ###############################################################################
 # regress all corrections
