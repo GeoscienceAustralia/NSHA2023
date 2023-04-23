@@ -5,7 +5,7 @@ Created on Wed Feb 15 15:14:25 2023
 @author: u56903
 """
 import pickle
-from numpy import arange, array, delete, isnan, where, loadtxt, concatenate, interp
+from numpy import arange, array, delete, isnan, where, loadtxt, concatenate, interp, hstack
 from obspy import UTCDateTime
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FormatStrFormatter
@@ -90,6 +90,22 @@ mb = delete(mb, idx)
 mw = delete(mw, idx)
 evdt = delete(evdt, idx)
 mwref = delete(mwref, idx)
+
+###############################################################################
+# add data from recent events
+###############################################################################
+# events: 2021 Marble Bar, 2022 Arthur River
+newmb = array(5.699, 4.9, 4.9)
+mewmw = array(5.323, 4.5, 4.69268914)
+newdt = array(UTCDateTime('2021-11-13T13:05:52.663'), UTCDateTime('2022-01-24T21:24:47.666'), \
+              UTCDateTime('2023-04-17T09:02:57.386'))
+newref = array('AUST', 'AUST', 'AUST')
+
+# concat
+mb = hstack((mb, newmb))
+mw = hstack((mw, newmw))
+evdt = hstack((evdt, newdt))
+mwref = hstack((mwref, newref))
 
 ###############################################################################
 # regress all corrections

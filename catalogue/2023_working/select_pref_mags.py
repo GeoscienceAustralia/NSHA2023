@@ -227,11 +227,11 @@ for i, mc in enumerate(mcdat):
         mcdat[i]['PREFMXTYPE_2023'] = 'ML'
         mcdat[i]['PREFMXSRC_2023'] = mc['PREFMLSRC_2023']
         
-        #mcdat[i]['PREFMW_2023'] = nsha23_piecewise_ml2mw(mc['PREFML_2023'])
+        #mcdat[i]['PREFMW_2023'] = nsha23_piecewise_ml2mw(mc['PREFML_2023']) # using empirical conversion
         mcdat[i]['PREFMW_2023'] = nsha23_ml2mw(mc['PREFML_2023']) # using simulated data conversion
         mcdat[i]['PREFMWSRC_2023'] = 'ML2MW'
         
-        print(nsha23_ml2mw(mc['PREFML_2023']), nsha23_piecewise_ml2mw(mc['PREFML_2023']))
+        #print(nsha23_ml2mw(mc['PREFML_2023']), nsha23_piecewise_ml2mw(mc['PREFML_2023']))
         
     # take larger of mb/MS
     elif isnan(mc['PREFMS']) == False or isnan(mc['PREFmb']) == False:

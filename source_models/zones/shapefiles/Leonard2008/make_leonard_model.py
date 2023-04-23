@@ -44,6 +44,9 @@ stk = get_field_data(sf, 'strike1', 'float')
 dip = get_field_data(sf, 'dip1', 'float')
 rke = get_field_data(sf, 'rake1', 'float')
 
+for i, code in enumerate(src_codes):
+    print(str(i)+' '+code)
+
 # merge source names
 src_names = []
 mmax = []
@@ -223,7 +226,7 @@ prefCat = get_preferred_catalogue(domshp)
 
 # fix catalogue for source zones
 
-prefCat[53] = 'NSHA18CAT_V0.1_hmtk_declustered.csv'
+prefCat[53] = 'NSHA23CAT_V0.1_hmtk_declustered.csv'
 #prefCat[25] = 'NSHA18CAT_V0.1_hmtk_declustered.csv'
 
 ###############################################################################
@@ -275,6 +278,10 @@ min_rmag[66] = 3.5 # NWB1
 # SEOB - multi-corner
 ycomp[50] = '1980;1964;1900'
 mcomp[50] = '3.5;5.0;6.0'
+
+# NA_2 - multi-corner
+ycomp[50] = '1995;1970;1960;1940;1905;1880'
+mcomp[50] = '3.05;3.95;4.55;5.05;6.05;6.55'
 
 ###############################################################################
 # load Rajabi SHMax vectors 
