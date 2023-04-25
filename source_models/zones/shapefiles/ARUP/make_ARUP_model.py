@@ -43,6 +43,9 @@ stk = get_field_data(sf, 'strike1', 'float')
 dip = get_field_data(sf, 'dip1', 'float')
 rke = get_field_data(sf, 'rake1', 'float')
 
+for i, src_code in enumerate(src_codes):
+    print(str(i)+' '+src_code)
+
 # merge source names
 src_names = []
 mmax = []
@@ -220,6 +223,7 @@ min_rmag[44] = 3.8 # TP
 min_rmag[15] = 3.5 # ZN7d
 min_rmag[0] = 3.0 # ZN7d
 min_rmag[14] = 3.2 # ZN6b
+min_rmag[67] = 3.5 # NWMB2
 
 '''
 #min_rmag[46] = 3.8 # NWO

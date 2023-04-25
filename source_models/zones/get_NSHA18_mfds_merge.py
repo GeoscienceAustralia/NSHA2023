@@ -241,7 +241,7 @@ for uclass in unique_sup_classes:
     
     # loop thru source zones
     for i in srcidx:        
-        if floor(src_class_num[i]) == uclass:
+        if floor(src_class_num[i]) == uclass: # and uclass == 7.:
         
             # first check rate adjustment factor
             if not src_rte_adj[i] == 1.0:
@@ -296,7 +296,7 @@ for uclass in unique_sup_classes:
             total_tvect = hstack((total_tvect, tvect))
             total_dec_tvect = hstack((total_dec_tvect, dec_tvect))
             total_ev_dict = hstack((total_ev_dict, ev_dict))
-                    
+            
             ###############################################################################
             # get earthquakes that pass completeness in merged zones
             ###############################################################################
@@ -343,7 +343,8 @@ for uclass in unique_sup_classes:
     ###############################################################################
     # get b-values from joined zones
     ###############################################################################
-    
+    #if uclass == 7.:
+
     # get bval for combined zones data - uses new MW estimates ("total_mvect") to do cleaning
     bval, beta, sigb, sigbeta, fn0, cum_rates, ev_out, err_up, err_lo = \
           get_mfds(total_mvect, total_mxvect, total_tvect, total_dec_tvect, total_ev_dict, \
@@ -361,7 +362,7 @@ unique_sub_classes = array(unique_sub_classes)
 ###############################################################################
 # now, assign sub-class rates with super-class b-values
 ###############################################################################
-
+#crash
 for uclass in unique_sub_classes:
     
     # fix super-class b-val
@@ -484,6 +485,8 @@ for uclass in unique_sub_classes:
             total_mxvect = delete(total_mxvect, didx)
             total_dec_tvect = delete(total_dec_tvect, didx)
             total_ev_dict = delete(total_ev_dict, didx)
+            
+            #print(len(total_mvect))
             
             # set min regression magnitude
             if src_mmin_reg[i] > class_mmin_reg:
@@ -611,7 +614,7 @@ for uclass in unique_sub_classes:
 ###############################################################################
 # loops through individual sources using class b-value
 ###############################################################################
-
+#crash
 src_area = [] 
 
 for i in srcidx:

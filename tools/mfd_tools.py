@@ -344,13 +344,12 @@ def get_mfds(mvect, mxvect, tvect, dec_tvect, ev_dict, mcomps, ycomps, ymax, mrn
     # remove incomplete events based on original preferred magnitudes (mxvect)
     mvect, mxvect, tvect, dec_tvect, ev_dict, out_idx, ev_out = \
          remove_incomplete_events(mvect, mxvect, tvect, dec_tvect, ev_dict, mcomps, ycomps, bin_width)
-        
+
     # get annualised rates using preferred MW (mvect)
     cum_rates, cum_num, bin_rates, n_obs, n_yrs = \
         get_annualised_rates(mcomps, ycomps, mvect, mrng, bin_width, ymax)
         
     print('    Number of events:', len(mvect))
-    #print(cum_rates
             
     ###############################################################################
     # calculate MFDs if at least 50 events
@@ -367,7 +366,6 @@ def get_mfds(mvect, mxvect, tvect, dec_tvect, ev_dict, mcomps, ycomps, ymax, mrn
     # make sure there is at least 4 observations for b-value calculations
     if len(midx) < 5:
         idxstart = midx[0] - 1
-        
         while idxstart >= 0 and len(midx) < 5:
             # if num observations greater than zero, add to midx
             if n_obs[idxstart] > 0:
@@ -428,7 +426,6 @@ def get_mfds(mvect, mxvect, tvect, dec_tvect, ev_dict, mcomps, ycomps, ymax, mrn
         bval, sigb, a_m, siga_m, fn0, stdfn0 = weichert_algorithm(array(n_yrs[midx]), \
                                                mrng[midx]+bin_width/2, n_obs[midx], mrate=0.0, \
                                                bval=1.1, itstab=1E-4, maxiter=1000)
-        
         beta = bval2beta(bval)
         sigbeta = bval2beta(sigb)
     
@@ -451,7 +448,7 @@ def get_mfds(mvect, mxvect, tvect, dec_tvect, ev_dict, mcomps, ycomps, ymax, mrn
         fn0 = fit_a_value(bval, mrng, cum_rates, src_mmax, bin_width, midx)
         
         print('    Automatic b-value =', bval, sigb)
-        
+    
     ###############################################################################
     # get confidence intervals
     ###############################################################################

@@ -40,6 +40,9 @@ stk = get_field_data(sf, 'strike1', 'float')
 dip = get_field_data(sf, 'dip1', 'float')
 rke = get_field_data(sf, 'rake1', 'float')
 
+for i, src_code in enumerate(src_codes):
+    print(str(i)+' '+src_code)
+
 # set domain for unset domains
 trt_new = []
 for i in range(0,len(trt)):
@@ -131,19 +134,24 @@ min_rmag[26] = 3.5 # NWO
 min_rmag[50] = 3.2 # CARP
 min_rmag[51] = 3.5 # EAPM
 min_rmag[52] = 3.3 # KMBY
-min_rmag[55] = 3.3 # NACR
+min_rmag[55] = 3.1 # NACR
 min_rmag[54] = 3.3 # NAOR
 min_rmag[49] = 3.3 # PLBR
 min_rmag[53] = 3.5 # WAPM
 min_rmag[48] = 3.2 # YLGN
 min_rmag[56] = 3.2 # WAEP
-min_rmag[66] = 3.5 # NWB1
+min_rmag[66] = 3.5 # NWMB1
 min_rmag[47] = 3.5 # SAPM
+min_rmag[65] = 3.5 # NWMB2
 
 # SEOB - multi-corner
 ycomp[59] = '1980;1964;1900'
 mcomp[59] = '3.5;5.0;6.0'
 min_rmag[59] = 3.5
+
+# OSGB - multi-corner
+ycomp[46] = '1990;1960;1950;1885'
+mcomp[46] = '2.95;3.45;4.55;5.65'
 
 ###############################################################################
 #  set intraslab aggregation class
