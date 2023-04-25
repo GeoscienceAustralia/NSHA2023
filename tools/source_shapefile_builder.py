@@ -24,7 +24,7 @@ def get_completeness_model(src_codes, src_shapes, domains, singleCorner):
         compshp = path.join('..','Other','Mcomp_NSHA18_single.shp') # single corner 
     else:
         #compshp = path.join('..','Other','Mcomp_NSHA18_multi.shp') # multi corner 
-        compshp = path.join('..','Other','gridded_polygons_3d_completeness.shp') # gridded model for updated Mc - Jan 2020
+        compshp = path.join('..','Other','gridded_polygons_3d_completeness_adj.shp') # gridded model for updated Mc - Apr 2023
     
     mcsf = shapefile.Reader(compshp)
     
