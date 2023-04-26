@@ -1300,6 +1300,7 @@ for i in srcidx:
                 plt.step(dates_ge_3[didx], range(0, len(didx)), color='k', lw=1.5)
                 plt.xlabel('Event Year')
                 plt.ylabel('Count | MW >= 3.5')
+                plt.grid(which='both')
             
                 # set xlims
                 tlim = [int(round(x)) for x in tlim] # converting to ints
