@@ -19,7 +19,7 @@ from openquake.hazardlib.geo.nodalplane import NodalPlane
 from openquake.hazardlib.pmf import PMF
 from openquake.hazardlib.mfd.evenly_discretized import EvenlyDiscretizedMFD
 
-from .utilities import params_from_shp
+from utilities import params_from_shp
 
 def gr2inc_mmax(mfd, mmaxs, weights, model_weight=1.):
     """Function to convert a GR distribution to incremental MFD and 
@@ -143,7 +143,7 @@ def combine_ss_models(filename_stem, domains_shp, params,lt, bval_key, output_di
         print('Parsing %s' % filename)
         
         # TA kluge - hardwire jdg547 path
-        jdgpath = '/scratch/w84/NSHA18/sandpit/jdg547/NSHA2018/source_models/smoothed_seismicity/'                
+        jdgpath = '/scratch/w84/jdg547/NSHA2023/source_models/smoothed_seismicity/'                
         
         # Only keep points within domain
         pts = read_pt_source(jdgpath+filename)
@@ -228,6 +228,9 @@ def combine_ss_models(filename_stem, domains_shp, params,lt, bval_key, output_di
     name = outfile.rstrip('.xml')
     if nrml_version == '04':
         nodes = list(map(obj_to_node, merged_pts))
+        # now we need to add back in tectonic_region type
+        for i,node in enumerate(nodes):
+            node.__setitem__('tectonicRegion', merged_pts[i].tectonic_region_type)
         source_model = Node("sourceModel", {"name": name}, nodes=nodes)
         with open(outfile, 'wb') as f:
             nrml.write([source_model], f, '%s', xmlns = NAMESPACE)
@@ -236,18 +239,18 @@ def combine_ss_models(filename_stem, domains_shp, params,lt, bval_key, output_di
 if __name__ == "__main__":
 
     output_dir = 'GA_adaptive_smoothing_collapsed_K3_single_corner_completeness'
-    point_source_names = ['Australia_Adaptive_K3_BVAL_BEST.xml',
-                         'Australia_Adaptive_K3_BVAL_UPPER.xml',
-                         'Australia_Adaptive_K3_BVAL_LOWER.xml']
-    point_source_list = []
-    for fn in point_source_names:
-        point_source_list.append(os.path.join(output_dir, fn))
-    #point_source_list= None
+#    point_source_names = ['Australia_Adaptive_K3_BVAL_BEST.xml',
+#                         'Australia_Adaptive_K3_BVAL_UPPER.xml',
+#                         'Australia_Adaptive_K3_BVAL_LOWER.xml']
+#    point_source_list = []
+#    for fn in point_source_names:
+#        point_source_list.append(os.path.join(output_dir, fn))
+    point_source_list= None
 #    filedict = {'Non_cratonic': 'source_model_adelaide_pts.xml'}
 
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
-    domains_shp = '../zones/2018_mw/Domains_single_mc/shapefiles/Domains_NSHA18_MFD.shp'
+    domains_shp = '../zones/2023_mw/Domains_multi_mc/shapefiles/Domains_NSHA23_MFD.shp'
     lt  = logic_tree.LogicTree('../../shared/seismic_source_model_weights_rounded_p0.4.csv')
     params = params_from_shp(domains_shp, trt_ignore=['Interface', 'Active', 'Oceanic', 'Intraslab'])
     filename_stem = 'Australia_Adaptive_K3'

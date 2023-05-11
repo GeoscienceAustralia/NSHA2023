@@ -89,10 +89,11 @@ from openquake.hazardlib.geo.nodalplane import NodalPlane
 from openquake.hazardlib.pmf import PMF
 print("Everything Imported OK!")
 
-domains_shp = '../zones/2018_mw/Domains_single_mc/shapefiles/Domains_NSHA18_MFD.shp'
+domains_shp = '../zones/2023_mw/Domains_multi_mc/shapefiles/Domains_NSHA23_MFD.shp' 
 #Importing catalogue
 #catalogue_filename = "../../catalogue/data/NSHA18CAT_V0.1_hmtk_declustered.csv"
-catalogue_filename = "../../catalogue/data/NSHA18CAT_V0.2_hmtk_trunc-declustered_mw.csv"
+#catalogue_filename = "../../catalogue/data/NSHA18CAT_V0.2_hmtk_trunc-declustered_mw.csv"
+catalogue_filename = "../../catalogue/data/NSHA23CAT_V0.1_hmtk_declustered.csv"
 # Flag for whether to overwrite exiting .xml source model 
 # files with the same b value and completeness combination.
 # Shoudld normally set to True unless you are being really careful.

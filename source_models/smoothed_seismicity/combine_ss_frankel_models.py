@@ -240,7 +240,7 @@ if __name__ == "__main__":
     point_source_list = None
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
-    domains_shp = '../zones/2018_mw/Domains_single_mc/shapefiles/Domains_NSHA18_MFD.shp'
+    domains_shp = '../zones/2023_mw/Domains_multi_mc/shapefiles/Domains_NSHA23_MFD.shp'
     lt  = logic_tree.LogicTree('../../shared/seismic_source_model_weights_rounded_p0.4.csv')
     params = params_from_shp(domains_shp, trt_ignore=['Interface', 'Active', 'Oceanic', 'Intraslab'])
     filename_stem = 'Australia_Fixed_50_3'
