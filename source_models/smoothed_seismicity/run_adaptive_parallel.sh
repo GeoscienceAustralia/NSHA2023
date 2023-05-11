@@ -19,5 +19,6 @@ module load gdal/3.5.0
 export PYTHONPATH=.:/home/547/jdg547/.local/lib/python3.9/site-packages:${PYTHONPATH}
 export PYTHONPATH=.::/home/547/jdg547/:${PYTHONPATH}
 export PYTHONPATH=.::/home/547/jdg547/modelling/oq-engine/:${PYTHONPATH}
+export PYTHONPATH=.::/scratch/w84/jdg547/:${PYTHONPATH}
 
 mpirun -np 16 python3 adaptive_smoothing_parallel.py > adaptive_smoothing_parallel.log

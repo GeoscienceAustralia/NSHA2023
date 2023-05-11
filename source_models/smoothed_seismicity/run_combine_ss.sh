@@ -17,6 +17,7 @@ module load gdal/3.5.0
 export PYTHONPATH=.:/home/547/jdg547/.local/lib/python3.9/site-packages:${PYTHONPATH}
 export PYTHONPATH=.::/home/547/jdg547/:${PYTHONPATH}
 export PYTHONPATH=.::/home/547/jdg547/modelling/oq-engine/:${PYTHONPATH}
+export PYTHONPATH=.::/scratch/w84/jdg547/:${PYTHONPATH}
 
 python3 combine_ss_frankel_models.py >& combine_ss_frankel_models.log
 #python3 combine_ss_models.py >& combine_ss_models.log         
