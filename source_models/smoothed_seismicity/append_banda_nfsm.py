@@ -54,6 +54,7 @@ for line in lines:
         
         #indo_png_fault_file = path.join('..', 'zones', '2018_mw', 'Java_Banda_PNG', 'input', 'collapsed', 'Java_Banda_PNG_collapsed_faults.xml')
         indo_png_fault_file = path.join('..', 'zones', '2018_mw', 'Java_Banda_PNG', 'input', 'collapsed', 'Java_Banda_PNG_collapsed.xml') # file above is replaced (includes faults)
+        print(indo_png_fault_file)
         blines = open(indo_png_fault_file).readlines()[4:-2]
         for bline in blines:
             newxml += bline
@@ -66,9 +67,8 @@ for line in lines:
 if appendNFSM == True:
     newFile = xmlFile[:-4]+'_banda_nfsm.xml'
 else:
-    newFile = xmlFile[:-4]+'_banda.xml'
-    	
-f = open(newFile, 'wb')
+    newFile = xmlFile[:-4]+'_banda.xml'    	
+f = open(newFile, 'w')
 f.write(newxml)
 f.close()
 
