@@ -25,7 +25,10 @@ except TypeError:
     raise Exception(('params file %s not found' % args.param_file))
 for line in f_in.readlines():
     row = line.split('=')
-    params[row[0].rstrip()] = row[1].rstrip().lstrip()
+    try:
+        params[row[0].rstrip()] = row[1].rstrip().lstrip()
+    except:
+        print('End of param file')
 
 user = getpass.getuser()
 run_start_time = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
