@@ -14,7 +14,7 @@ faultshp = '../source_models/faults/FSM/FSD_simple_faults_plus_vert2.shp'
 #csvfile = '../source_models/zones/2018_mw/Domains_multi_mc/results_maps_PGA/hazard_map-mean_mapping.csv'
 
 # build grid
-step = 10. # km
+step = 12.5 # km
 lons = []
 lats = []
 
@@ -65,8 +65,8 @@ lons = array(lons)
 lats = array(lats)
 
 # down sample lo/la for outsite AU polygon
-dlon = lons[range(0, len(lons), 15)]
-dlat = lats[range(0, len(lats), 15)]
+dlon = lons[range(0, len(lons), 21)]
+dlat = lats[range(0, len(lats), 21)]
     
 #parese shapefile
 print('Reading source shapefile...')

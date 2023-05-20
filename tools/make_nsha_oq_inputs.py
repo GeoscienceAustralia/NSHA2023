@@ -205,7 +205,6 @@ def write_oq_sourcefile(model, meta, mx_dict):
     # start loop thru area sources
     #print(model)
     for m in model:
-        
         # set magScaleRel
         if float(m['class']) <= 7.:
             magScaleRel = 'Leonard2014_SCR'
@@ -217,6 +216,7 @@ def write_oq_sourcefile(model, meta, mx_dict):
             ruptAspectRatio = 1.5
             min_mag = 5.5
         elif float(m['class']) == 10:
+            print('do i go here?')
             magScaleRel = 'StrasserInterface'
             #magScaleRel = 'AllenHayesInterfaceBilinear' # - Work for AS1170.4 sites, but not maps
             ruptAspectRatio = 1.5 # based on approx AH interface apect ratios at Mw 8
