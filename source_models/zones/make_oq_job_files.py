@@ -46,7 +46,7 @@ for i, imt in enumerate(imts):
     jobtxt = jobtxt.replace('Domains_source', sourceModelSimple+'_source')
     
     # make job file
-    jobFile = sourcePath + sep + 'job_maps_' + imtstrp + '.ini'
+    jobFile = path.join(sourcePath, 'collapsed', 'job_maps_' + imtstrp + '.ini')
      
     # write file
     f = open(jobFile, 'w')
@@ -83,9 +83,9 @@ for i, imt in enumerate(imts):
     
     # make job file
     if modelType == 0:
-        paramFile = sourcePath + sep + 'params_maps_' + imtstrp + '_himem.txt'
+        paramFile = path.join(sourcePath, 'collapsed', 'params_maps_' + imtstrp + '_himem.txt')
     else:
-        paramFile = sourcePath + sep + 'params_maps_' + imtstrp + '.txt'
+        paramFile = path.join(sourcePath, 'collapsed', 'params_maps_' + imtstrp + '.txt')
     
     # write file
     f = open(paramFile, 'w')
