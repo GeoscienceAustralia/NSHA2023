@@ -46,7 +46,10 @@ for i, imt in enumerate(imts):
     jobtxt = jobtxt.replace('Domains_source', sourceModelSimple+'_source')
     
     # make job file
-    jobFile = path.join(sourcePath, 'collapsed', 'job_maps_' + imtstrp + '.ini')
+    if modelType <= 2:
+        jobFile = path.join(sourcePath, 'collapsed', 'job_maps_' + imtstrp + '.ini')
+    else:
+        jobFile = path.join(sourcePath, 'seismo_collapsed', 'job_maps_' + imtstrp + '.ini')
      
     # write file
     f = open(jobFile, 'w')
