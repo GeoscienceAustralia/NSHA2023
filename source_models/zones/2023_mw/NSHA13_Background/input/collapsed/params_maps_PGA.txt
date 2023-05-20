@@ -1,5 +1,5 @@
-ncpus = 192 
-mem = 256GB
+ncpus = 384 
+mem = 1024GB
 walltime = 4:00:00
 jobfs = 200GB
 sandpit_path = /home/547/
