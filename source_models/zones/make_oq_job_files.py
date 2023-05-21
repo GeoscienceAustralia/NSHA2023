@@ -84,12 +84,19 @@ for i, imt in enumerate(imts):
     
     paramtxt = paramtxt.replace('job_maps_PGA.ini', path.split(jobFile)[-1])
     
+    '''
     # make job file
     if modelType == 0:
         paramFile = path.join(sourcePath, 'collapsed', 'params_maps_' + imtstrp + '_himem.txt')
     else:
         paramFile = path.join(sourcePath, 'collapsed', 'params_maps_' + imtstrp + '.txt')
-    
+    '''
+    # make job file
+    if modelType <= 2:
+        paramFile = path.join(sourcePath, 'collapsed', 'params_maps_' + imtstrp + '.txt')
+    else:
+        paramFile = path.join(sourcePath, 'seismo_collapsed', 'params_maps_' + imtstrp + '.txt')
+        
     # write file
     f = open(paramFile, 'w')
     f.write(paramtxt)

@@ -1,6 +1,6 @@
 ncpus = 512 
 mem = 1500GB
-walltime = 6:00:00
+walltime = 5:00:00
 jobfs = 400GB
 sandpit_path = /home/547/
 model_rel_path = NSHA2023/source_models/zones/2023_mw/ARUP/input/collapsed
