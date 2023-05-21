@@ -15,7 +15,7 @@ sourceModelSimple = sourceModel.split('_')[0]
 
 imts = ['PGA', 'SA(0.05)', 'SA(0.1)', 'SA(0.2)', 'SA(0.3)', 'SA(0.5)', 'SA(0.7)', 'SA(1.0)', 'SA(1.5)', 'SA(2.0)', 'SA(4.0)']
 
-print '\nMAKE OPTION FOR mean_hazard_curves= TRUE OR FALSE\n'
+#print '\nMAKE OPTION FOR mean_hazard_curves= TRUE OR FALSE\n'
 
 # loop thru imts
 jobList = []
@@ -46,10 +46,13 @@ for i, imt in enumerate(imts):
     jobtxt = jobtxt.replace('Domains_source', sourceModelSimple+'_source')
     
     # make job file
-    jobFile = sourcePath + sep + 'job_maps_' + imtstrp + '.ini'
+    if modelType <= 2:
+        jobFile = path.join(sourcePath, 'collapsed', 'job_maps_' + imtstrp + '.ini')
+    else:
+        jobFile = path.join(sourcePath, 'seismo_collapsed', 'job_maps_' + imtstrp + '.ini')
      
     # write file
-    f = open(jobFile, 'wb')
+    f = open(jobFile, 'w')
     f.write(jobtxt)
     f.close()
     
@@ -81,14 +84,21 @@ for i, imt in enumerate(imts):
     
     paramtxt = paramtxt.replace('job_maps_PGA.ini', path.split(jobFile)[-1])
     
+    '''
     # make job file
     if modelType == 0:
-        paramFile = sourcePath + sep + 'params_maps_' + imtstrp + '_himem.txt'
+        paramFile = path.join(sourcePath, 'collapsed', 'params_maps_' + imtstrp + '_himem.txt')
     else:
-        paramFile = sourcePath + sep + 'params_maps_' + imtstrp + '.txt'
-    
+        paramFile = path.join(sourcePath, 'collapsed', 'params_maps_' + imtstrp + '.txt')
+    '''
+    # make job file
+    if modelType <= 2:
+        paramFile = path.join(sourcePath, 'collapsed', 'params_maps_' + imtstrp + '.txt')
+    else:
+        paramFile = path.join(sourcePath, 'seismo_collapsed', 'params_maps_' + imtstrp + '.txt')
+        
     # write file
-    f = open(paramFile, 'wb')
+    f = open(paramFile, 'w')
     f.write(paramtxt)
     f.close()
 

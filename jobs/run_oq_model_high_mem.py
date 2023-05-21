@@ -58,6 +58,7 @@ f_in = open(job_file, 'r')
 for line in f_in.readlines():
     if line.startswith('source_model_logic_tree_file'):
         src_lt = line.split('=')[1].strip()
+        #print(src_lt)
         src_lt_file = join(model_path, src_lt)
     if line.startswith('gsim_logic_tree_file'):
         gsim_lt = line.split('=')[1].strip()

@@ -1,0 +1,11 @@
+ncpus = 576 
+mem = 1500GB
+walltime = 5:00:00
+jobfs = 400GB
+sandpit_path = /home/547/
+model_rel_path = NSHA2023/source_models/zones/2023_mw/DIMAUS/input/seismo_collapsed
+shared_rel_path = NSHA2023/shared
+gsim_lt_filename = NSHA23_alternative_gmm_logic_for_expert_elicitation_ngae.xml
+model_output_base = /scratch/w84/NSHA23/regional/DIMAUS/SA05
+job_file = job_maps_SA05.ini
+job_type = maps
