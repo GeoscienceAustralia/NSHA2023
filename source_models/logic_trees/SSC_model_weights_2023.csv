@@ -1,0 +1,26 @@
+Cut off weight,0.11
+Mw catalogue only,0.98
+Combined catalogues,0.02
+Combined catalogues Mw weight,0.86
+Combined catalogues Ml weight,0.14
+Decluter truncation = True,0.48
+Decluster truncation = False,0.52
+Decluster truncation value,26.34
+Bg b individual source zone,0.18
+Bg b aggregated domains,0.52
+Bg b centroid domains,0.30
+Regional b individual source zone,0.27
+Regional b aggregated domains,0.41
+Regional b centroid domains,0.32
+Smoothed seismicity b neo domains,0.53
+Smoothed seismicity b neo superdomains,0.47
+Mmin=4.0,0.23
+Mmin=4.5,0.36
+Mmin=5.0,0.41
+Background class weight,0.16
+Regional class weight,0.00
+Seismotectonic class weight,0.39
+Smoothed seismicity class weight,0.13
+Smoothed seismicity FSM class weight,0.32
+Adaptive SS weight,0.42
+Fixed SS weight,0.58
