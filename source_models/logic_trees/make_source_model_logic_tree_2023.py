@@ -87,30 +87,21 @@ xmllist.append(path.split(targetXML)[-1])
 # copy seismotectonic source models
 ###############################################################################
 
-#relpath = path.join('..', 'faults')
-#relpath = path.join('..', 'faults', 'mx') # for testing catalogue with original magnitudes
-
 # copy NSHA13
-#sourceXML = path.join(relpath, 'NSHA13', 'input', 'seismo_collapsed', 'NSHA13_collapsed_NFSM.xml')
-sourceXML = path.join(faultpath, 'National_Fault_Source_Model_2018_Collapsed_NSHA13_2018', \
-                      'National_Fault_Source_Model_2018_Collapsed_NSHA13_2018__all_methods_collapsed_inc_cluster.xml')
-targetXML = path.join('..', 'complete_model', destinationPath, 'NFSM_NSHA13_' + path.split(sourceXML)[-1])
+sourceXML = path.join(relpath, 'NSHA13', 'input', 'seismo_collapsed', 'NSHA13_collapsed_NFSM.xml')
+targetXML = path.join('..', 'complete_model', destinationPath, path.split(sourceXML)[-1])
 copyfile(sourceXML, targetXML)
 xmllist.append(path.split(targetXML)[-1])
 
 # copy AUS6
-#sourceXML = path.join(relpath, 'AUS6', 'input', 'seismo_collapsed', 'AUS6_collapsed_NFSM.xml')
-sourceXML = path.join(faultpath, 'National_Fault_Source_Model_2018_Collapsed_AUS6_2018', \
-                      'National_Fault_Source_Model_2018_Collapsed_AUS6_2018__all_methods_collapsed_inc_cluster.xml')
-targetXML = path.join('..', 'complete_model', destinationPath, 'NFSM_AUS6_' + path.split(sourceXML)[-1])
+sourceXML = path.join(relpath, 'AUS6', 'input', 'seismo_collapsed', 'AUS6_collapsed_NFSM.xml')
+targetXML = path.join('..', 'complete_model', destinationPath, path.split(sourceXML)[-1])
 copyfile(sourceXML, targetXML)
 xmllist.append(path.split(targetXML)[-1])
 
 # copy DIMAUS
-#sourceXML = path.join(relpath, 'DIMAUS', 'input', 'seismo_collapsed', 'DIMAUS_collapsed_NFSM.xml')
-sourceXML = path.join(faultpath, 'National_Fault_Source_Model_2018_Collapsed_DIMAUS_2018', \
-                      'National_Fault_Source_Model_2018_Collapsed_DIMAUS_2018__all_methods_collapsed_inc_cluster.xml')
-targetXML = path.join('..', 'complete_model', destinationPath, 'NFSM_DIMAUS_' + path.split(sourceXML)[-1])
+sourceXML = path.join(relpath, 'DIMAUS', 'input', 'seismo_collapsed', 'DIMAUS_collapsed_NFSM.xml')
+targetXML = path.join('..', 'complete_model', destinationPath, path.split(sourceXML)[-1])
 copyfile(sourceXML, targetXML)
 xmllist.append(path.split(targetXML)[-1])
 
@@ -124,6 +115,7 @@ if weighted_smoothing == True:
 
 # Use four smoothed models
 else:
+    '''
     sourceXML = path.join('..', 'smoothed_seismicity', 'Cuthbertson2018', 'cuthbertson2018_source_model_banda.xml')
     targetXML = path.join('..', 'complete_model', destinationPath, 'cuthbertson2018_source_model_banda.xml')
     copyfile(sourceXML, targetXML)
@@ -133,7 +125,7 @@ else:
     targetXML = path.join('..', 'complete_model', destinationPath, 'Hall2007_2018_banda.xml')
     copyfile(sourceXML, targetXML)
     xmllist.append(path.split(targetXML)[-1])
-    
+    '''
     #GA adaptive
     sourceXML = path.join('..', 'smoothed_seismicity', 'GA_adaptive_smoothing_collapsed_K3_single_corner_completeness', \
                           'GA_adaptive_smoothing_collapsed_K3_single_corner_completeness_banda.xml')
@@ -159,6 +151,7 @@ if weighted_smoothing == True:
 
 # Use four smoothed models with faults
 else:
+    '''
     sourceXML = path.join('..', 'smoothed_seismicity', 'Cuthbertson2018', 'cuthbertson2018_source_model_banda_nfsm.xml')
     targetXML = path.join('..', 'complete_model', destinationPath, 'cuthbertson2018_source_model_banda_nfsm.xml')
     copyfile(sourceXML, targetXML)
@@ -168,18 +161,19 @@ else:
     targetXML = path.join('..', 'complete_model', destinationPath, 'Hall2007_2018_banda_nfsm.xml')
     copyfile(sourceXML, targetXML)
     xmllist.append(path.split(targetXML)[-1])
+    '''
     
-    #source_models/smoothed_seismicity/GA_adaptive_smoothing_collapsed_K3_single_corner_completeness/ 
+    #GA adaptive
     sourceXML = path.join('..', 'smoothed_seismicity', 'GA_adaptive_smoothing_collapsed_K3_single_corner_completeness', \
                           'GA_adaptive_smoothing_collapsed_K3_single_corner_completeness_banda_nfsm.xml')
-    targetXML = path.join('..', 'complete_model', destinationPath, 'GA_NFSM_adaptive_smoothing_collapsed_K3_single_corner_completeness_banda_nfsm.xml')
+    targetXML = path.join('..', 'complete_model', destinationPath, 'GA_adaptive_smoothing_collapsed_K3_single_corner_completeness_banda_nfsm.xml')
     copyfile(sourceXML, targetXML)
     xmllist.append(path.split(targetXML)[-1])
     
     #GA fixed kernel 
     sourceXML = path.join('..', 'smoothed_seismicity', 'GA_fixed_smoothing_50_3_collapsed_single_corner_completeness', \
                           'GA_fixed_smoothing_50_3_collapsed_single_corner_completeness_banda_nfsm.xml')
-    targetXML = path.join('..', 'complete_model', destinationPath, 'GA_NFSM_fixed_smoothing_50_3_collapsed_single_corner_completeness_banda_nfsm.xml')
+    targetXML = path.join('..', 'complete_model', destinationPath, 'GA_fixed_smoothing_50_3_collapsed_single_corner_completeness_banda_nfsm.xml')
     copyfile(sourceXML, targetXML)
     xmllist.append(path.split(targetXML)[-1])
     
