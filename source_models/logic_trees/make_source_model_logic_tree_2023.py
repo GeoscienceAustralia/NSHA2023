@@ -180,158 +180,146 @@ else:
 ###############################################################################
 # parse weights file
 ###############################################################################
-'''
-if weighted_smoothing == True:
-    lt = LogicTree('../../shared/seismic_source_model_weights_rounded_p0.4.ss_split.csv')
-else:
-'''
-#lt = LogicTree('../../shared/seismic_source_model_weights_rounded_p0.4.edit.csv')
 
+lines = open('../../shared/2023_seismic_source_model_weights_draft.csv')
+
+class_wgts = []
+mod_wgts = []
+
+for line in lines:
+    dat = line.strip().split(',')
+    if dat[1].startswith('Source_type'):
+        class_wgts.append({'class':dat[3], 'wgt':float(dat[4])})
+    elif dat[1].startswith('Source_model'):
+        mod_wgts.append({'class':dat[2], 'name':dat[3], 'wgt':float(dat[4])})
+
+
+# set meta dict
 # set up metadata dictionary
 modelPath = getcwd() # path where source logic tree is to be saved
-meta = {'modelPath': modelPath, 'modelFile':'nsha18_source_model_logic_tree.xml', 
+meta = {'modelPath': modelPath, 'modelFile':'nsha23_source_model_logic_tree.xml', 
         'splitXMLPath': True} # assume source files in job dir 
 
-# get set weights
-src_type, src_wts = lt.get_weights('Source_model', 'Source_type')
-
-# temporarily set smoothed seis weights to smoothed+faults
-print('\!!!!REMEMBER TO DELETE SETTING REGIONAL WEIGHT TO SEISMOTECTONIC WEIGHT!!!!\n')
-#src_wts[0] += src_wts[1]
 
 ###############################################################################
 # recalibrate source type weights
 ###############################################################################
-
+'''
 #src_wts[0] = 0. # smoothed
 #src_wts[1] = 0. # smoothed faults
 
 # rescale source types
 src_wts = array(src_wts)/sum(array(src_wts))
-
+'''
 ###############################################################################
 # get weights
 ###############################################################################
-
-# set branch weights
-branch_wts = array([])
-branch_xml = []
 mod_dict = []
-
+src_wts = []
+branch_xml = []
 # loop throgh source model types
-for st, sw in zip(src_type, src_wts):
-    print('\n'+st)
+for cls in class_wgts:
+    print('\n'+cls['class'])
     src_type_wts = []
     
-    orig_st = st
-    
-    # assume intra-smoothed fault models have same weight as smoothed seis
-    '''
-    if st == 'Smoothed_faults':
-        st = 'Smoothed_seismicity'
-        #sw = 0.0 # set to zero for now!
-    '''    
-    # get weights within source type
-    models, mod_wts = lt.get_weights('Source_model', st)
-    print(models)
-    print(mod_wts)
-    
     # now loop through models within source type
-    for mod, mw in zip(models, mod_wts):
-        
-        # loop through xml files and find matches
-        for xl in xmllist:
+    for mod in mod_wgts:
+        if mod['class'] == cls['class']:
+            print('    '+mod['name'])
             
-            if xl.upper().startswith(mod.upper()):
-            
-                # do a couple of checks
-                #print mod, xl, mw
-                if mod == 'NSHA13' and xl.upper().startswith('NSHA13_BACKGROUND'):
-                    print('Not adding '+xl+' to '+orig_st+' set')
+            # loop through xml files and find matches
+            for xl in xmllist:
                 
-                elif mod == 'NSHA13' and orig_st == 'Seismotectonic' and xl.endswith('collapsed.xml'):
-                    print('Not adding '+xl+' to '+orig_st+' set')
-                    
-                elif mod == 'DIMAUS' and orig_st == 'Seismotectonic' and xl.endswith('collapsed.xml'):
-                    print('Not adding '+xl+' to '+orig_st+' set')
-                    
-                elif mod == 'DIMAUS' and orig_st == 'Regional' and xl.endswith('NFSM.xml'):
-                    print('Not adding '+xl+' to '+orig_st+' set')
-                    
-                elif mod == 'AUS6' and orig_st == 'Seismotectonic' and xl.endswith('collapsed.xml'):
-                    print('Not adding '+xl+' to '+orig_st+' set')
-                    
-                elif mod == 'AUS6' and orig_st == 'Regional' and xl.endswith('NFSM.xml'):
-                    print('Not adding '+xl+' to '+orig_st+' set')
-                    
-                elif mod == 'NSHA13' and orig_st == 'Regional' and xl.endswith('NFSM.xml'):
-                    print('Not adding '+xl+' to '+orig_st+' set')
-                    
-                elif mod == 'GA_NFSM_adaptive' and orig_st == 'Smoothed_seismicity' and xl.endswith('nfsm.xml'):
-                    print('Not adding '+xl+' to '+orig_st+' set')
-                    
-                elif mod == 'GA_adaptive' and orig_st == 'Smoothed_faults' and xl.endswith('banda.xml'):
-                    print('Not adding '+xl+' to '+orig_st+' set')
-                    
-                elif mod == 'GA_NFSM_fixed' and orig_st == 'Smoothed_seismicity' and xl.endswith('nfsm.xml'):
-                    print('Not adding '+xl+' to '+orig_st+' set')
-                    
-                elif mod == 'GA_fixed' and orig_st == 'Smoothed_faults':
-                    print('Not adding '+xl+' to '+orig_st+' set')
-                    
-                elif mod == 'Cuthbertson' and orig_st == 'Smoothed_seismicity' and xl.endswith('nfsm.xml'):
-                    print('Not adding '+xl+' to '+orig_st+' set')
+                if xl.upper().startswith(mod['name'].upper()):
                 
-                elif mod == 'Cuthbertson' and orig_st == 'Smoothed_faults' and xl.endswith('banda.xml'):
-                    print('Not adding '+xl+' to '+orig_st+' set')
+                    # do a couple of checks
+                    #print mod, xl, mw
+                    if mod['name'] == 'NSHA13' and xl.upper().startswith('NSHA13_BACKGROUND'):
+                        print('Not adding '+xl+' to '+mod['class']+' set')
                     
-                elif mod == 'Hall' and orig_st == 'Smoothed_seismicity' and xl.endswith('nfsm.xml'):
-                    print('Not adding '+xl+' to '+orig_st+' set')
-                
-                elif mod == 'Hall' and orig_st == 'Smoothed_faults' and xl.endswith('banda.xml'):
-                    print('Not adding '+xl+' to '+orig_st+' set')
-                
-                # else, add file to list
-                else:
-                    # multiply ARUP models by 0.5
-                    if mod.startswith('ARUP'):
-                       mod_wt = 0.5
-                       print('    Modifying ARUP model weight')
+                    elif mod['name'] == 'NSHA13' and mod['class'] == 'Seismotectonic' and xl.endswith('collapsed.xml'):
+                        print('Not adding '+xl+' to '+mod['class']+' set')
+                        
+                    elif mod['name'] == 'DIMAUS' and mod['class'] == 'Seismotectonic' and xl.endswith('collapsed.xml'):
+                        print('Not adding '+xl+' to '+mod['class']+' set')
+                        
+                    elif mod['name'] == 'DIMAUS' and mod['class'] == 'Regional' and xl.endswith('NFSM.xml'):
+                        print('Not adding '+xl+' to '+mod['class']+' set')
+                        
+                    elif mod['name'] == 'AUS6' and mod['class'] == 'Seismotectonic' and xl.endswith('collapsed.xml'):
+                        print('Not adding '+xl+' to '+mod['class']+' set')
+                        
+                    elif mod['name'] == 'AUS6' and mod['class'] == 'Regional' and xl.endswith('NFSM.xml'):
+                        print('Not adding '+xl+' to '+mod['class']+' set')
+                        
+                    elif mod['name'] == 'NSHA13' and mod['class'] == 'Regional' and xl.endswith('NFSM.xml'):
+                        print('Not adding '+xl+' to '+mod['class']+' set')
+                        
+                    elif mod['name'] == 'GA_adaptive' and mod['class'] == 'Smoothed_seismicity' and xl.endswith('nfsm.xml'):
+                        print('Not adding '+xl+' to '+mod['class']+' set')
+                        
+                    elif mod['name'] == 'GA_adaptive' and mod['class'] == 'Smoothed_faults' and xl.endswith('banda.xml'):
+                        print('Not adding '+xl+' to '+mod['class']+' set')
+                        
+                    elif mod['name'] == 'GA_fixed' and mod['class'] == 'Smoothed_seismicity' and xl.endswith('nfsm.xml'):
+                        print('Not adding '+xl+' to '+mod['class']+' set')
+                        
+                    elif mod['name'] == 'GA_fixed' and mod['class'] == 'Smoothed_faults' and xl.endswith('banda.xml'):
+                        print('Not adding '+xl+' to '+mod['class']+' set')
+                        
+                    elif mod['name'] == 'Cuthbertson' and mod['class'] == 'Smoothed_seismicity' and xl.endswith('nfsm.xml'):
+                        print('Not adding '+xl+' to '+mod['class']+' set')
+                    
+                    elif mod['name'] == 'Cuthbertson' and mod['class'] == 'Smoothed_faults' and xl.endswith('banda.xml'):
+                        print('Not adding '+xl+' to '+mod['class']+' set')
+                        
+                    elif mod['name'] == 'Hall' and mod['class'] == 'Smoothed_seismicity' and xl.endswith('nfsm.xml'):
+                        print('Not adding '+xl+' to '+mod['class']+' set')
+                    
+                    elif mod['name'] == 'Hall' and mod['class'] == 'Smoothed_faults' and xl.endswith('banda.xml'):
+                        print('Not adding '+xl+' to '+mod['class']+' set')
+                    
+                    # else, add file to list
                     else:
-                       mod_wt = 1.0
-                    
-                    # append weights within source type
-                    src_type_wts.append(mod_wt * mw)
-                    
-                    # append branch file
-                    branch_xml.append(xl)
-                     
-                    #print xl, mod, st, mw
-                    
-                    # get models actually added
-                    mod_dict.append({'xml':xl, 'model':mod, 'model_wt':mw, 'src_type':st, 'src_wt':sw, 'cml_wt':mw*sw})
-                    
-    # re-normalise source type weights if within type neq 1.0
-    src_type_wts = array(src_type_wts) / sum(src_type_wts)
+                        # multiply ARUP models by 0.5
+                        if mod['name'].startswith('ARUP'):
+                           mod_wt = 0.5
+                           print('        Modifying ARUP model weight')
+                        else:
+                           mod_wt = 1.0
+                        
+                        # append weights within source type
+                        src_wts.append(mod_wt * mod['wgt'] * cls['wgt'])
+                        print(mod_wt * mod['wgt'] * cls['wgt'])
+                        
+                        # append branch file
+                        branch_xml.append(xl)
+                         
+                        #print xl, mod, st, mw
+                        
+                        # get models actually added
+                        #mod_dict.append({'xml':xl, 'model':mod, 'model_wt':mw, 'src_type':st, 'src_wt':sw, 'cml_wt':mw*sw})
+                        
+# re-normalise source type weights if within type neq 1.0
+print(src_wts)
+#src_wts = array(src_type_wts) / sum(src_type_wts)
     
-    # now append source-type weights to branch wts
-    branch_wts = hstack((branch_wts, sw * array(src_type_wts)))
                 
 #print branch_wts
 
 # check weights sum to one!
-if not sum(branch_wts) == 1.0:
-    print('\nWeights do not sum to 1.0!:',sum(branch_wts))
+if not sum(src_wts) == 1.0:
+    print('\nWeights do not sum to 1.0!:',sum(src_wts))
     
     # assume testing, so rescale weights
-    if sum(branch_wts) < 0.95:
-        print(branch_wts)
+    if sum(src_wts) < 0.95:
+        print(src_wts)
         print('\nAre you testing?  Rescaling weights!!!\n')
         #branch_wts = branch_wts / sum(branch_wts)
         
        
 # do largest remainder method to make sure numlers 
-updated_weights = largest_remainder(branch_wts, expected_sum=1.0, precision=3)
+updated_weights = largest_remainder(src_wts, expected_sum=1.0, precision=4)
 #updated_weights = branch_wts
 
 # write source model logic tree
