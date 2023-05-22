@@ -1,6 +1,6 @@
-ncpus = 576 
-mem = 1500GB
-walltime = 5:00:00
+ncpus = 672 
+mem = 2600GB
+walltime = 3:30:00
 jobfs = 400GB
 sandpit_path = /home/547/
 model_rel_path = NSHA2023/source_models/zones/2023_mw/Domains_multi_mc/input/seismo_collapsed
