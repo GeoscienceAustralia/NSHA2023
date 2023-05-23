@@ -308,3 +308,57 @@ print('\nCratonic model weights - equal expert weighting')
 for i, label in enumerate(nc_c_labels):
     print(label, c_weights_equal[i])
 print(sum(c_weights_equal))
+
+# Now we write-out to nrml file
+outline = '<?xml version="1.0" encoding="UTF-8"?>\n'
+outline += '<nrml xmlns:gml="http://www.opengis.net/gml"\n'
+outline += '      xmlns="http://openquake.org/xmlns/nrml/0.4">\n'
+outline += '    <logicTree logicTreeID="lt1">\n\n'
+outline += '<!-- GMM selection and weights defined through expert elicitation process, using calibration\n' \
+    'power of 0.4 and a 75th percentile cut-off to remove lowly weighted branches -->\n\n'
+outline += '        <logicTreeBranchingLevel branchingLevelID="bl1">\n\n'
+outline += '            <logicTreeBranchSet uncertaintyType="gmpeModel" branchSetID="bs1"\n'
+outline += '                    applyToTectonicRegionType="Non_cratonic">\n\n'
+for i, gmm_name in enumerate(nc_c_labels):
+    weight = nc_weights[i]
+    if weight > 0:
+        outline += '                <logicTreeBranch branchID="%s">\n' % gmm_name
+        outline += '                    <uncertaintyModel>%s</uncertaintyModel>\n' % gmm_name
+        outline += '                    <uncertaintyWeight>%.2f</uncertaintyWeight>\n' % weight
+        outline += '                </logicTreeBranch>\n\n'
+outline += '           </logicTreeBranchSet>\n\n'
+outline += '        </logicTreeBranchingLevel>\n\n'
+outline += '        <logicTreeBranchingLevel branchingLevelID="bl2">\n\n'
+outline += '            <logicTreeBranchSet uncertaintyType="gmpeModel" branchSetID="bs2"\n'
+outline += '                    applyToTectonicRegionType="Cratonic">\n\n'
+for i, gmm_name in enumerate(nc_c_labels):
+    weight = c_weights[i]
+    if weight > 0:
+        outline += '                <logicTreeBranch branchID="%s">\n' % gmm_name
+        outline += '                    <uncertaintyModel>%s</uncertaintyModel>\n' % gmm_name
+        outline += '                    <uncertaintyWeight>%.2f</uncertaintyWeight>\n' % weight
+        outline += '                </logicTreeBranch>\n\n'
+outline += '           </logicTreeBranchSet>\n\n'
+outline += '        </logicTreeBranchingLevel>\n\n'
+outline += '        <logicTreeBranchingLevel branchingLevelID="bl3">\n\n'
+outline += '            <logicTreeBranchSet uncertaintyType="gmpeModel" branchSetID="bs3"\n'
+outline += '                    applyToTectonicRegionType="Subduction">\n\n'
+for i, gmm_name in enumerate(pb_labels):
+    weight = pb_weights[i]
+    if weight > 0:
+        outline += '                <logicTreeBranch branchID="%s">\n' % gmm_name
+        outline += '                    <uncertaintyModel>%s</uncertaintyModel>\n' % gmm_name
+        outline += '                    <uncertaintyWeight>%.2f</uncertaintyWeight>\n' % weight
+        outline += '                </logicTreeBranch>\n\n'
+            
+outline += '           </logicTreeBranchSet>\n\n'
+outline += '        </logicTreeBranchingLevel>\n\n'
+outline += '    </logicTree>\n'
+outline += '</nrml>'
+
+# gmm_path = join(target_path, 'ground_motion_results', 'gmm_logic_tree')
+xml_filename = 'NSHA23_Aus_GMM_logic_tree.xml'
+f_out = open(xml_filename, 'w')
+f_out.write(outline)
+f_out.close()
+
