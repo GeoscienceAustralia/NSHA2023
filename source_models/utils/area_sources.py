@@ -22,15 +22,16 @@ def nrml2sourcelist(area_source_file, investigation_time=50,
     """
     converter = SourceConverter(50, 10, width_of_mfd_bin=0.1,
                                 area_source_discretization=area_source_discretisation)
-    source_models=nrml.read_source_models([pt_source_file], converter)
+    source_models=nrml.read_source_models([area_source_file], converter)
     source_list = []
     sources = []
     for source in source_models:
         source_list.append(source)
-        print('source list', source_list)
-    for sourcegroup in source_list:
-        for source in sourcegroup:
-            sources.append(source)
+        print(source_list)
+    for source_model in source_list:
+        for sourcegroup in source_model:
+            for source in sourcegroup:
+                sources.append(source)
             #for  in source:
             #    pts.append(pt)
 #    parser = SourceModelParser(converter)
@@ -165,7 +166,8 @@ def area2pt_source(area_source_file, sources = None, investigation_time=50,
     source_group_list = []
     id = 0
     for trt, sources in new_pt_sources.items():
-        source_group = SourceGroup(trt, sources = sources, id=id)
+        source_group = SourceGroup(trt, sources = sources)#, id=id)
+        source_group.id = id
         id +=1
         source_group_list.append(source_group)
     if filename is not None:
@@ -174,7 +176,7 @@ def area2pt_source(area_source_file, sources = None, investigation_time=50,
             for trt, sources in new_pt_sources.items():
                 for source in sources:
                     source_list.append(source)
-            nodes = list(map(obj_to_node, sorted(source_list)))
+            nodes = list(map(obj_to_node, source_list))
             source_model = Node("sourceModel", {"name": name}, nodes=nodes)
             with open(nrml_pt_file, 'wb') as f:
                 nrml.write([source_model], f, '%s', xmlns = NAMESPACE)

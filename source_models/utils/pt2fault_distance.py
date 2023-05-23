@@ -130,6 +130,8 @@ def combine_pt_sources(point_source_list, filename, name, nrml_version='04',
 #            source_list.append(source)
 #            id_index = max(id_index, source.source_id)
         nodes = list(map(obj_to_node, combined_pt_sources))
+        for i,node in enumerate(nodes):
+            node.__setitem__('tectonicRegion', combined_pt_sources[i].tectonic_region_type)
         source_model = Node("sourceModel", {"name": name}, nodes=nodes)
         with open(filename, 'wb') as f:
             nrml.write([source_model], f, '%s', xmlns = NAMESPACE)
