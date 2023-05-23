@@ -203,10 +203,19 @@ for line in lines:
         ss_type_sum_normalised = float(row[65])/ss_type_sum + float(row[68])/ss_type_sum
         print(ss_type_sum_normalised)
         
-
-# Remove source weight class with total weight < cut-off value                                                                                                                                      
-print(bg_w)
+# Write out raw source weights
 sm_weights = np.array([bg_w, reg_w, seismo_w, ss_w, ss_fsm_w])
+labels = ['Background class weight', 'Regional class weight', \
+    'Seismotectonic class weight', 'Smoothed seismicity class weight', \
+    'Smoothed seismicity FSM class weight']
+f_out = open('source_class_weights_raw.csv', 'w')
+for i, label in enumerate(labels):
+    outline = label + ',%.10f\n' % sm_weights[i]
+    f_out.write(outline)
+f_out.close()
+
+# Remove source weight class with total weight < cut-off value                                                                       
+print(bg_w)
 min_sm_weight_ind = np.argmin(sm_weights)
 print(sm_weights)
 print(min_sm_weight_ind)
