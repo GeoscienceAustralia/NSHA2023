@@ -40,15 +40,175 @@ for line in lines:
     row = line.rstrip('\n').split(',')
     exp_weights[row[0]] = float(row[1])
 print(exp_weights)
-
+#sys.exit()
 #Plate Boundary sources
-pb_labels = []
-pb_weights = []
+num_pb_gmms = 7 # Number of plate boundary gmm options
+pb_labels = ['Allen2012_SS14', 'Allen2022', 'AtkinsonBoore2006',
+             'KuehnEtAl2020SSlab', 'KuehnEtAl2020SInter', 'NGAEastGMPE',
+             'SomervilleEtAl2009NonCratonic_SS14']
+nc_c_labels = ['AbrahamsonEtAl2014', 'Allen2012_SS14', 'AtkinsonBoore2006',
+               'BooreEtAl2014', 'CampbellBozorgnia2014', 'ChiouYoungs2008SWISS06',
+               'ChiouYoungs2014', 'DrouetBrazil2015', 'ESHM20Craton', 'NGAEastGMPE',
+               'RietbrockEdwards2019Mean', 'SomervilleEtAl2009NonCratonic_SS14',
+               'SomervilleEtAl2009YilgarnCraton_SS14', 'TromansEtAl2019',
+               'ZhaoEtAl2006AscSWISS08']
+num_nc_c_gmms = len(nc_c_labels)
+pb_weights_equal = np.zeros(num_pb_gmms)
+pb_weights = np.zeros(num_pb_gmms)
+nc_weights = np.zeros(num_nc_c_gmms)
+nc_weights_equal = np.zeros(num_nc_c_gmms)
+c_weights = np.zeros(num_nc_c_gmms)
+c_weights_equal = np.zeros(num_nc_c_gmms)
+
+# Other parameters
+gmm_sigma = np.zeros(4) # Sigma truncation options
+gmm_sigma_equal = np.zeros(4) # Sigma truncation options      
+gmm_cutoff_w = 0
+sigma_truncation_values = [3, 4, 5, 6]
+pb_model_weight_indices = [3, 6, 9, 12, 15, 18, 21] # plate boundary
+nc_c_model_weight_indices = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, \
+                             36, 39, 42, 45] # Non-cratonic and cratonic (same model choices
+sigma_weight_indices = [24, 27, 30, 33]
+gmm_cutoff_index = 36
 
 f = open(plate_boundary_target_file)
 lines = f.readlines()
 f.close()
-for line in lines:
-    print(line)
+
+for i, line in enumerate(lines):
     row = line.rstrip('\n').split(',')
     exp_ind = row[0]
+    expert_i_weights = []
+    expert_i_sigma_weights = []
+    for j,ind in enumerate(pb_model_weight_indices):
+        try:
+            w = float(row[ind])
+            expert_i_weights.append(w)
+        except:
+            msg = 'Weight for model %s for expert %s is not defined, setting to zero' \
+                % (pb_labels[j], exp_ind)
+            expert_i_weights.append(0.0)
+    expert_i_weights = np.array(expert_i_weights)
+    if np.allclose(sum(expert_i_weights), 1, rtol=1e-5):
+        pass
+    else:
+        msg = 'Weights for expert %s do not sum to one, renormalised' % exp_ind
+        print(msg)
+        expert_i_weights = expert_i_weights/sum(expert_i_weights)
+    for j,ind in enumerate(pb_model_weight_indices):
+        pb_weights_equal[j] = pb_weights_equal[j] + expert_i_weights[j]/len(lines)
+        pb_weights[j] = pb_weights[j] + expert_i_weights[j]*exp_weights[exp_ind]
+
+    # Now get sigma truncation and cutoff weight
+    for j,ind in enumerate(sigma_weight_indices):
+        try:
+            w = float(row[ind])
+            expert_i_sigma_weights.append(w)
+        except:
+            msg = 'Sigma truncation weights for expert %s is not defined, setting to zero' \
+                % (exp_ind)
+            expert_i_sigma_weights.append(0.0)
+    expert_i_sigma_weights = np.array(expert_i_sigma_weights)
+    if np.allclose(sum(expert_i_sigma_weights), 1, rtol=1e-5):
+        pass
+    else:
+        msg = 'Sigma truncation weights (%s) for expert %s do not sum to one, renormalised' \
+            % (expert_i_sigma_weights, exp_ind)
+        print(msg)
+        expert_i_sigma_weights = expert_i_sigma_weights/sum(expert_i_sigma_weights)
+    for j,ind in enumerate(sigma_weight_indices):
+        gmm_sigma_equal[j] = gmm_sigma_equal[j] + expert_i_sigma_weights[j]/len(lines)
+        gmm_sigma[j] = gmm_sigma[j] + expert_i_sigma_weights[j]*exp_weights[exp_ind]
+
+    # Get cut-off value for lowly weighted models
+    gmm_cutoff_w += float(row[gmm_cutoff_index])*exp_weights[exp_ind]
+
+# Now do non-cratonic gmms
+f = open(noncratonic_target_file)
+lines = f.readlines()
+f.close()
+for i, line in enumerate(lines):
+    row = line.rstrip('\n').split(',')
+    exp_ind = row[0]
+    expert_i_weights = []
+    expert_i_sigma_weights = []
+    for j,ind in enumerate(nc_c_model_weight_indices):
+        try:
+            w = float(row[ind])
+            expert_i_weights.append(w)
+        except:
+            msg = 'Weight for model %s for expert %s is not defined, setting to zero' \
+                % (nc_c_labels[j], exp_ind)
+            expert_i_weights.append(0.0)
+    expert_i_weights = np.array(expert_i_weights)
+    if np.allclose(sum(expert_i_weights), 1, rtol=1e-5):
+        pass
+    else:
+        msg = 'Weights for expert %s do not sum to one, renormalised' % exp_ind
+        print(msg)
+        expert_i_weights = expert_i_weights/sum(expert_i_weights)
+    for j,ind in enumerate(nc_c_model_weight_indices):
+        nc_weights_equal[j] = nc_weights_equal[j] + expert_i_weights[j]/len(lines)
+        nc_weights[j] = nc_weights[j] + expert_i_weights[j]*exp_weights[exp_ind]
+
+# Now do cratonic gmms
+f = open(cratonic_target_file)
+lines = f.readlines()
+f.close()
+for i, line in enumerate(lines):
+    row = line.rstrip('\n').split(',')
+    exp_ind = row[0]
+    expert_i_weights = []
+    expert_i_sigma_weights = []
+    for j,ind in enumerate(nc_c_model_weight_indices):
+        try:
+            w = float(row[ind])
+            expert_i_weights.append(w)
+        except:
+            msg = 'Weight for model %s for expert %s is not defined, setting to zero' \
+                % (nc_c_labels[j], exp_ind)
+            expert_i_weights.append(0.0)
+    expert_i_weights = np.array(expert_i_weights)
+    if np.allclose(sum(expert_i_weights), 1, rtol=1e-5):
+        pass
+    else:
+        msg = 'Weights for expert %s do not sum to one, renormalised' % exp_ind
+        print(msg)
+        expert_i_weights = expert_i_weights/sum(expert_i_weights)
+    for j,ind in enumerate(nc_c_model_weight_indices):
+        c_weights_equal[j] = c_weights_equal[j] + expert_i_weights[j]/len(lines)
+        c_weights[j] = c_weights[j] + expert_i_weights[j]*exp_weights[exp_ind]
+
+
+
+        
+print('\nGMM cutoff weights', gmm_cutoff_w)
+print('\nSigma truncation weights')
+for i, value in enumerate(sigma_truncation_values):
+    print(value, gmm_sigma[i])
+print('\nPlate boundary model weights')        
+for i, label in enumerate(pb_labels):
+    print(label, pb_weights[i])
+print(sum(pb_weights))
+print('\nPlate boundary model weights - equal expert weighting')
+for i, label in enumerate(pb_labels):
+    print(label, pb_weights_equal[i])
+print(sum(pb_weights_equal))
+
+print('\nNon-cratonic model weights')
+for i, label in enumerate(nc_c_labels):
+    print(label, nc_weights[i])
+print(sum(nc_weights))
+print('\nNon-cratonic model weights - equal expert weighting')
+for i, label in enumerate(nc_c_labels):
+    print(label, nc_weights_equal[i])
+print(sum(nc_weights_equal))
+
+print('\nCratonic model weights')
+for i, label in enumerate(nc_c_labels):
+    print(label, c_weights[i])
+print(sum(c_weights))
+print('\nCratonic model weights - equal expert weighting')
+for i, label in enumerate(nc_c_labels):
+    print(label, c_weights_equal[i])
+print(sum(c_weights_equal))
