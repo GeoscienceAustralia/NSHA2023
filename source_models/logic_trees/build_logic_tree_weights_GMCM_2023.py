@@ -257,17 +257,27 @@ print(c_weights)
 c_weights = largest_remainder(c_weights, expected_sum=1, precision=2)
 print(c_weights)
 
+# Write out results 
+f_out = open('./gmm_sigma_trunc_and_cutoff.csv', 'w')
 print('\nGMM cutoff weights', gmm_cutoff_w)
+outline = 'GMM cutoff weight,%.10f\n' % gmm_cutoff_w
+print(outline)
+f_out.write(outline)
 print('\nSigma truncation weights')
 for i, value in enumerate(sigma_truncation_values):
     print(value, gmm_sigma[i])
+    outline = 'Sigma truncation level:%i,%.10f\n' % (value, gmm_sigma[i])
+    print(outline)
+    f_out.write(outline)
+f_out.close()
+
 print('\nPlate boundary model weights')
 f_out =	open('./plate_boundary_weights.csv', 'w')
 for i, label in enumerate(pb_labels):
     print(label, pb_weights[i])
     outline = label +',%.2f\n' % pb_weights[i]
     f_out.write(outline)
-f_out.close
+f_out.close()
 print(sum(pb_weights))
 for i, label in enumerate(pb_labels):
     print(label, pb_weights_equal[i])
@@ -295,8 +305,6 @@ for i, label in enumerate(nc_c_labels):
 f_out.close()
 print(sum(c_weights))
 print('\nCratonic model weights - equal expert weighting')
-
 for i, label in enumerate(nc_c_labels):
     print(label, c_weights_equal[i])
 print(sum(c_weights_equal))
-
