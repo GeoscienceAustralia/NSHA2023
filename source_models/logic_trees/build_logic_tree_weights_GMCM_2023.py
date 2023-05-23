@@ -14,10 +14,10 @@ gmcm_model_weights_filename = 'GMCM_model_weights_2023.csv'
 gmcm_logic_tree_file = 'GMCM_NSHA23_logic_tree.xml'
 
 def largest_remainder(weights, expected_sum=1, precision=0):
-    """Use largest remainder method to round weights such that                                                                                                             
-    the sum to 1.                                                                                                                                                          
-    params weights: The raw weights                                                                                                                                        
-    params expected_sum: The total the weights should sum to                                                                                                               
+    """Use largest remainder method to round weights such that                                                                             
+    the sum to 1.                                                                                                                        
+    params weights: The raw weights                                                                                                        
+    params expected_sum: The total the weights should sum to
     params precision: Number of decimal places to round to                                                                                                                 
     """
     total_number = expected_sum*np.power(10,precision)
@@ -179,16 +179,58 @@ for i, line in enumerate(lines):
         c_weights_equal[j] = c_weights_equal[j] + expert_i_weights[j]/len(lines)
         c_weights[j] = c_weights[j] + expert_i_weights[j]*exp_weights[exp_ind]
 
+# Now we want to remove models with weights less than the cutoff weight
+# This is done iteratively: The lowest weighted model below the cutoff weight
+# is removed and then the weights of the remaining models normalised to sum
+# to one. This is repeated until all remaining models have a weight above
+# the cut-off value
+# Plate-boundary models
+min_w = min(w for w in pb_weights if w > 0)
+while min_w < gmm_cutoff_w:
+    ind = np.argwhere(pb_weights == min_w).flatten()
+    print(ind)
+    # Set lowest non-zero weight to zero
+    for i in ind:
+        pb_weights[i] = 0.0
+    # Renormalise    
+    pb_weights = pb_weights/np.sum(pb_weights)
+    min_w = min(w for w in pb_weights if w > 0)    
 
+# Non-cratonic models
+min_w = min(w for w in nc_weights if w > 0)
+while min_w < gmm_cutoff_w:
+    ind = np.argwhere(nc_weights == min_w).flatten()
+    print(ind)
+    # Set lowest non-zero weight to zero                                                                                                    
+    for i in ind:
+        nc_weights[i] = 0.0
+    # Renormalise                                                                                                                           
+    nc_weights = nc_weights/np.sum(nc_weights)
+    min_w = min(w for w in nc_weights if w > 0)
 
-        
+# Cratonic models
+min_w = min(w for w in c_weights if w > 0)
+while min_w < gmm_cutoff_w:
+    ind = np.argwhere(c_weights == min_w).flatten()
+    print(ind)
+    # Set lowest non-zero weight to zero                                                                                                    
+    for i in ind:
+        c_weights[i] = 0.0
+    # Renormalise                                                                                                                           
+    c_weights = c_weights/np.sum(c_weights)
+    min_w = min(w for w in c_weights if w > 0)
+
 print('\nGMM cutoff weights', gmm_cutoff_w)
 print('\nSigma truncation weights')
 for i, value in enumerate(sigma_truncation_values):
     print(value, gmm_sigma[i])
-print('\nPlate boundary model weights')        
+print('\nPlate boundary model weights')
+f_out =	open('./plate_boundary_weights.csv', 'w')
 for i, label in enumerate(pb_labels):
     print(label, pb_weights[i])
+    outline = label +',%.2f\n' % pb_weights[i]
+    f_out.write(outline)
+f_out.close
 print(sum(pb_weights))
 print('\nPlate boundary model weights - equal expert weighting')
 for i, label in enumerate(pb_labels):
@@ -196,8 +238,12 @@ for i, label in enumerate(pb_labels):
 print(sum(pb_weights_equal))
 
 print('\nNon-cratonic model weights')
+f_out = open('./noncratonic_boundary_weights.csv', 'w')
 for i, label in enumerate(nc_c_labels):
     print(label, nc_weights[i])
+    outline = label +',%.2f\n' % nc_weights[i]
+    f_out.write(outline)
+f_out.close()
 print(sum(nc_weights))
 print('\nNon-cratonic model weights - equal expert weighting')
 for i, label in enumerate(nc_c_labels):
@@ -205,10 +251,15 @@ for i, label in enumerate(nc_c_labels):
 print(sum(nc_weights_equal))
 
 print('\nCratonic model weights')
+f_out = open('./cratonic_boundary_weights.csv', 'w')
 for i, label in enumerate(nc_c_labels):
     print(label, c_weights[i])
+    outline = label +',%.2f\n' % c_weights[i]
+    f_out.write(outline)
+f_out.close()
 print(sum(c_weights))
 print('\nCratonic model weights - equal expert weighting')
 for i, label in enumerate(nc_c_labels):
     print(label, c_weights_equal[i])
 print(sum(c_weights_equal))
+
