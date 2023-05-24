@@ -7,17 +7,7 @@
             <logicTreeBranchSet uncertaintyType="sourceModel"
                                 branchSetID="bs1">
 
-                <!--
-                <logicTreeBranch branchID="b1">
-                    <uncertaintyModel>cuthbertson2018_source_model_banda.xml</uncertaintyModel>
-                    <uncertaintyWeight>0.017</uncertaintyWeight>
-                </logicTreeBranch>
                 
-                <logicTreeBranch branchID="b2">
-                    <uncertaintyModel>Hall2007_2018_banda.xml</uncertaintyModel>
-                    <uncertaintyWeight>0.02</uncertaintyWeight>
-                </logicTreeBranch>
-                -->
                 <logicTreeBranch branchID="b3">
                     <uncertaintyModel>GA_adaptive_smoothing_collapsed_K3_single_corner_completeness_banda.xml</uncertaintyModel>
                     <uncertaintyWeight>0.037</uncertaintyWeight>
@@ -37,17 +27,7 @@
                     <uncertaintyModel>GA_NFSM_adaptive_smoothing_collapsed_K3_single_corner_completeness_banda_nfsm.xml</uncertaintyModel>
                     <uncertaintyWeight>0.106</uncertaintyWeight>
                 </logicTreeBranch>
-                <!--
-                <logicTreeBranch branchID="b7">
-                    <uncertaintyModel>Hall2007_2018_banda_nfsm.xml</uncertaintyModel>
-                    <uncertaintyWeight>0.056</uncertaintyWeight>
-                </logicTreeBranch>
-
-                <logicTreeBranch branchID="b8">
-                    <uncertaintyModel>cuthbertson2018_source_model_banda_nfsm.xml</uncertaintyModel>
-                    <uncertaintyWeight>0.048</uncertaintyWeight>
-                </logicTreeBranch>
-                -->
+                
                 <logicTreeBranch branchID="b9">
                     <uncertaintyModel>AUS6_collapsed.xml</uncertaintyModel>
                     <uncertaintyWeight>0.018</uncertaintyWeight>
