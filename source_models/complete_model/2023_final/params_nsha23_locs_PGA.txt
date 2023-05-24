@@ -7,5 +7,5 @@ model_rel_path = NSHA2023/source_models/complete_model/2023_final
 shared_rel_path = NSHA2023/shared
 gsim_lt_filename = NSHA23_Aus_GMM_logic_tree.xml
 model_output_base = /scratch/w84/NSHA23/2023_final/hazcurves
-job_file = job_nsha23_localities_PGA.ini
+job_file = job_nsha23_localities_PGA_2018_gmms.ini
 job_type = hazcurve
