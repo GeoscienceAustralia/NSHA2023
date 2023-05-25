@@ -1,11 +1,11 @@
-ncpus = 576 
-mem = 1500GB
-walltime = 5:00:00
+ncpus = 672 
+mem = 2600GB
+walltime = 3:30:00
 jobfs = 400GB
 sandpit_path = /home/547/
 model_rel_path = NSHA2023/source_models/zones/2023_mw/SinMcC2016/input/collapsed
 shared_rel_path = NSHA2023/shared
-gsim_lt_filename = NSHA23_alternative_gmm_logic_for_expert_elicitation_ngae.xml
+gsim_lt_filename = NSHA23_Aus_GMM_logic_tree.xml
 model_output_base = /scratch/w84/NSHA23/background/SinMcC2016/SA20
 job_file = job_maps_SA20.ini
 job_type = maps
