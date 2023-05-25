@@ -408,3 +408,31 @@ plt.legend(loc='best')
 plt.ylabel('Weight', fontsize=14)
 plt.tight_layout()
 plt.savefig('plots/sigma_truncation_weights.png')
+
+#Plot expert weights                                                                             
+plt.clf()
+ews = []
+keys = []
+print(exp_weights)
+for key, value in exp_weights.items():
+    keys.append(key)
+    ews.append(float(value))
+exp_weights = np.array(ews)
+print(exp_weights)
+x_vals = np.arange(len(exp_weights))
+fig, ax = plt.subplots()
+ax.bar(x_vals,
+       exp_weights,
+       width, color='0.5', label='Expert weights')
+#ax.set_xlim([0,1.2])                                                                            
+ax.set_ylim([0, 1.0])
+#ax.plot([0,2],[cut_off_w, cut_off_w], linestyle = 'dotted', c = 'r')                            
+#ax.text(0.95, 0.125, 'Cut-off weight')                                                          
+#plt.xticks(x_vals,                                                                              
+#           ('4.0', '4.5', '5.0'),                                                               
+#           fontsize=11)                                                                         
+plt.legend(loc='best')
+plt.ylabel('Weight', fontsize=14)
+plt.tight_layout()
+plt.savefig('plots/GMCM_expert_weights.png')
+exp_weights
