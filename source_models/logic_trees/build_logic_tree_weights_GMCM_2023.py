@@ -389,3 +389,22 @@ f_out = open(xml_filename, 'w')
 f_out.write(outline)
 f_out.close()
 
+# Plot sigma truncation level
+plt.clf()
+width = 0.2
+x_vals = np.array([0.2, 0.6, 1.0, 1.4])
+fig, ax = plt.subplots()
+ax.bar(x_vals,
+       gmm_sigma,
+       width, color='0.5', label='Sigma truncation level')
+ax.set_xlim([0,1.6])
+ax.set_ylim([0, 1.0])
+ax.plot([0,2],[gmm_cutoff_w, gmm_cutoff_w], linestyle = 'dotted', c = 'r')
+ax.text(1.15, 0.095, 'Cut-off weight')
+plt.xticks(x_vals,
+           ('3 sigma', '4 sigma', '5 sigma', '6 sigma'),
+           fontsize=11)
+plt.legend(loc='best')
+plt.ylabel('Weight', fontsize=14)
+plt.tight_layout()
+plt.savefig('plots/sigma_truncation_weights.png')
