@@ -61,7 +61,7 @@ adaptive_ss_w = 0
 fixed_ss_w = 0
 
 f = open(ssc_target_file)
-lines = f.readlines()#[70:]
+lines = f.readlines()
 f.close()
 for line in lines:
     print(line)
@@ -236,6 +236,8 @@ if sm_weights[min_sm_weight_ind] < cut_off_w:
 print('cut_off_w', cut_off_w)
 print('mw_cat_w', mw_cat_w)
 print('combo_cat_w', combo_cat_w)
+print('mw_cat_equal_weights', mw_cat_no_weighting/14)
+print('combo_cat_equal_weights', combo_cat_no_weighting/14)
 print('combo_cat_mw_w', combo_cat_mw_w)
 print('combo_cat_ml_w', combo_cat_ml_w)
 print('decluster_trunc_true', decluster_trunc_true)
@@ -281,3 +283,148 @@ for i, label in enumerate(labels):
     outline = label + ',%.2f\n' % values[i]
     f_out.write(outline)
 f_out.close()
+
+# Now do some plots
+# Catalogue type
+if not os.path.exists('plots'):
+    os.mkdir('plots')
+width = 0.2
+x_vals = np.array([0.2, 0.8])
+fig, ax = plt.subplots()
+n_experts = 14
+ax.bar(x_vals, [mw_cat_no_weighting/n_experts, combo_cat_no_weighting/n_experts],
+       width, fill=False, hatch='///', label='Equal expert weighting',
+       color = '0.7')
+ax.bar(x_vals+width, [mw_cat_w, combo_cat_w] , width, color='0.5', label='Calibrated expert weighting')
+ax.set_xlim([0,1.2])
+ax.set_ylim([0, 1.0])
+ax.plot([0,2],[cut_off_w, cut_off_w], linestyle = 'dotted', c = 'r')#, linewidth=0.5)
+ax.text(0.95, 0.125, 'Cut-off weight')
+plt.xticks(x_vals + width / 2,
+           ('Mw catalogue only', 'Weighted combination\n of Mw and Ml\n catalogues'),
+           fontsize=14)
+# Finding the best position for legends and putting it
+plt.legend(loc='best')
+plt.ylabel('Weight', fontsize=14)
+plt.tight_layout()
+plt.savefig('plots/catalogue_selection.png')
+
+# Catalogue weights
+plt.clf()
+x_vals = np.array([0.5])
+fig, ax = plt.subplots()
+ax.bar(x_vals, [combo_cat_ml_w],
+       width, fill=False, hatch='///', label='Ml catalogue_weight',
+       color = '0.7')
+ax.bar(x_vals+width, [combo_cat_mw_w], width, color='0.5', label='Mw catalogue weight')
+ax.set_xlim([0,1.2])
+ax.set_ylim([0, 1.0])
+ax.plot([0,2],[cut_off_w, cut_off_w], linestyle = 'dotted', c = 'r')#, linewidth=0.5)                                              
+ax.text(0.95, 0.125, 'Cut-off weight')
+#plt.xticks(x_vals + width / 2,
+#           ('Catalogue choice'),
+#           fontsize=14)
+plt.legend(loc='best')
+plt.ylabel('Weight', fontsize=14)
+plt.tight_layout()
+plt.savefig('plots/catalogue_weights.png')
+
+# b-value calculation methods - background zones
+plt.clf()
+x_vals = np.array([0.2, 0.6, 1.0])
+fig, ax = plt.subplots()
+#ax.bar(x_vals, [,
+#       width, fill=False, hatch='///', label='Ml catalogue_weight',
+#       color = '0.7')
+ax.bar(x_vals,
+       [background_b_individ_sz, background_b_aggregate_neodom, background_b_centroid_neodom],
+       width, color='0.5', label='b-value method,\nbackground zones')
+ax.set_xlim([0,1.2])
+ax.set_ylim([0, 1.0])
+ax.plot([0,2],[cut_off_w, cut_off_w], linestyle = 'dotted', c = 'r')#, linewidth=0.5)                                              
+ax.text(0.95, 0.125, 'Cut-off weight')
+plt.xticks(x_vals,
+           ('Individual\nsource zone', 'Aggregated by\nneotectonic domains',
+            'Centroid relative to\nneotectonic domains'),
+           fontsize=11)
+plt.legend(loc='best')
+plt.ylabel('Weight', fontsize=14)
+plt.tight_layout()
+plt.savefig('plots/bvalue_background_weights.png')
+
+# b-value calculation methods - regional zones                                                                                    
+plt.clf()
+x_vals = np.array([0.2, 0.6, 1.0])
+fig, ax = plt.subplots()
+ax.bar(x_vals,
+       [reg_b_individ_sz, reg_b_aggregate_neodom, reg_b_centroid_neodom],
+       width, color='0.5', label='b-value method,\nregional zones')
+ax.set_xlim([0,1.2])
+ax.set_ylim([0, 1.0])
+ax.plot([0,2],[cut_off_w, cut_off_w], linestyle = 'dotted', c = 'r')#, linewidth=0.5)                                              
+ax.text(0.95, 0.125, 'Cut-off weight')
+plt.xticks(x_vals,
+           ('Individual\nsource zone', 'Aggregated by\nneotectonic domains',
+            'Centroid relative to\nneotectonic domains'),
+           fontsize=11)
+plt.legend(loc='best')
+plt.ylabel('Weight', fontsize=14)
+plt.tight_layout()
+plt.savefig('plots/bvalue_regional_weights.png')
+
+# b-value calculation methods - smoothed seismicity models
+plt.clf()
+x_vals = np.array([0.2, 0.6])
+fig, ax = plt.subplots()
+ax.bar(x_vals,
+       [ss_b_neodom, ss_b_superdom],
+       width, color='0.5', label='b-value method,\nsmoothed seismicity')
+ax.set_xlim([0,1.0])
+ax.set_ylim([0, 1.0])
+ax.plot([0,2],[cut_off_w, cut_off_w], linestyle = 'dotted', c = 'r')#, linewidth=0.5)                                                                           
+ax.text(0.75, 0.125, 'Cut-off weight')
+plt.xticks(x_vals,
+           ('Neotectonic domains', 'Neotectonic super domains'),
+           fontsize=11)
+plt.legend(loc='best')
+plt.ylabel('Weight', fontsize=14)
+plt.tight_layout()
+plt.savefig('plots/bvalue_smoothed seismicity_weights.png')
+
+# Smoothed seismicity models method
+plt.clf()
+x_vals = np.array([0.2, 0.6])
+fig, ax = plt.subplots()
+ax.bar(x_vals,
+       [adaptive_ss_w, fixed_ss_w],
+       width, color='0.5', label='Smoothed seismiciy\nmethod')
+ax.set_xlim([0,1.0])
+ax.set_ylim([0, 1.0])
+ax.plot([0,2],[cut_off_w, cut_off_w], linestyle = 'dotted', c = 'r')#, linewidth=0.5)                                                                         
+ax.text(0.75, 0.125, 'Cut-off weight')
+plt.xticks(x_vals,
+           ('Adaptive', 'Fixed'),
+           fontsize=11)
+plt.legend(loc='best')
+plt.ylabel('Weight', fontsize=14)
+plt.tight_layout()
+plt.savefig('plots/smoothed seismicity_method_weights.png')
+
+# Hazard calculation Mmin                                                                                                                           
+plt.clf()
+x_vals = np.array([0.2, 0.6, 1.0])
+fig, ax = plt.subplots()
+ax.bar(x_vals,
+       [mmin_4p0, mmin_4p5, mmin_5p0],
+       width, color='0.5', label='Minimum magnitude\n(for hazard calculations)')
+ax.set_xlim([0,1.2])
+ax.set_ylim([0, 1.0])
+ax.plot([0,2],[cut_off_w, cut_off_w], linestyle = 'dotted', c = 'r')
+ax.text(0.95, 0.125, 'Cut-off weight')
+plt.xticks(x_vals,
+           ('4.0', '4.5', '5.0'),
+           fontsize=11)
+plt.legend(loc='best')
+plt.ylabel('Weight', fontsize=14)
+plt.tight_layout()
+plt.savefig('plots/minimum_magnitude_weights.png')
