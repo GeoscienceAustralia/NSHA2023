@@ -34,7 +34,7 @@ shapefile_faultname_attribute = 'Name'
 shapefile_dip_attribute = 'Dip'
 shapefile_sliprate_attribute = 'SL_RT_LT'
 shapefile_uplift_attribute = 'UP_RT_LT'
-source_model_name = 'National_Fault_Source_Model_2018_Collapsed_AUS6_2018'
+source_model_name = 'National_Fault_Source_Model_2018_Collapsed_AUS6_2023'
 simple_fault_tectonic_region = None # Define based on neotectonic domains
 magnitude_scaling_relation = 'Leonard2014_SCR'
 rupture_aspect_ratio = 1.5
@@ -42,7 +42,8 @@ upper_depth = 0.001
 default_lower_depth = 20.0
 a_value = None
 #b_region_shapefile =  '../zones/shapefiles/Leonard2008/LEONARD08_NSHA18_MFD.shp'
-b_region_shapefile =  '../zones/2018_mw/Domains_single_mc/shapefiles/Domains_NSHA18_MFD.shp'
+#b_region_shapefile =  '../zones/2018_mw/Domains_single_mc/shapefiles/Domains_NSHA18_MFD.shp'
+b_region_shapefile =  'zones/2023_mw/Domains_multi_mc/shapefiles/Domains_NSHA23_MFD.shp'
 default_b = 1.0#None # Get from Leonard 2008 regions
 default_min_mag = 5.5 #4.8
 minimum_allowed_min_mag = 4.4 # Protect against problems with rupture mesh spacing
@@ -52,8 +53,9 @@ output_dir = source_model_name
 #combined_output_dir = 'National_Seismotectonic_Source_Model_2018_Collapsed_NSHA13_2018'
 bin_width = 0.1 # Width of MFD bins in magnitude units
 domains_shapefile = '../zones/shapefiles/NSHA13_Background/NSHA13_Background_NSHA18.shp'
+#domains_shapefile = '../zones/2023_mw/Domains_multi_mc/shapefiles/Domains_NSHA23_MFD.shp'
 
-area_source_model = '../zones/2018_mw/AUS6/input/collapsed/AUS6_collapsed.xml'
+area_source_model = '../zones/2023_mw/AUS6/input/collapsed/AUS6_collapsed.xml'
 #area_source_model = '../zones/2012_mw_ge_4.0/AUS6/input/collapsed/AUS6_collapsed.xml'
 #area_source_model = '../zones/2012_mw_ge_4.0/DIMAUS/input/collapsed/DIMAUS_collapsed.xml'
 area_source_model_name = area_source_model.split('/')[0].rstrip('.xml')
@@ -92,8 +94,9 @@ fault_traces, faultnames, dips, sliprates, fault_lengths = \
 # Get b-value and trt from domains
 trts = shp2nrml.trt_from_domains(fault_traces, domains_shapefile,
                                 default_trt = 'Non_cratonic')
+print(trts)
+#sys.exit()
 trt_list = list(set(trts)) # unique trt values
-print(trt_list)
 b_values = shp2nrml.b_value_from_region(fault_traces, 
                                         b_region_shapefile, 
                                         default_b = 1.0)
@@ -395,6 +398,7 @@ total_mb_weight['Subduction'] = total_mb_weight['Non_cratonic']
 additive_pt_sources_filename =  area_source_model[:-4] + '_pts_add_weighted.xml'
 model_name = area_source_model.split('/')[-1].rstrip('.xml') + '_additive'
 print('Writing %s' % model_name)
+print('Total_add_weight', total_add_weight)
 additive_pt_sources = weighted_pt_source(pt_source_list, total_add_weight,
                                          model_name, additive_pt_sources_filename, 
                                          nrml_version='04')
