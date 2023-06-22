@@ -18,6 +18,10 @@ from openquake.hmtk.parsers.source_model.nrml04_parser import nrmlSourceModelPar
 from openquake.hazardlib.geo.nodalplane import NodalPlane
 from openquake.hazardlib.pmf import PMF
 from openquake.hazardlib.mfd.evenly_discretized import EvenlyDiscretizedMFD
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
 
 from utilities import params_from_shp
 
@@ -101,6 +105,10 @@ def combine_ss_models(filename_stem, domains_shp, params,lt, bval_key, output_di
     # Get mmax values and weights
     mmaxs = {}
     mmaxs_w = {}
+    # For plotting
+    lons = []
+    lats = []
+    mmin_rates = []
     for dom in params:
         print('Processing source %s' % dom['CODE'])
         print(dom['TRT'])
@@ -216,12 +224,26 @@ def combine_ss_models(filename_stem, domains_shp, params,lt, bval_key, output_di
                         mfd = pt.mfd
                         new_mfd = gr2inc_mmax(mfd, mmaxs[dom['CODE']], mmaxs_w[dom['CODE']], weight)
                         pt.mfd = new_mfd
+                        print('pt.mfd', pt.mfd)
                         if pt.source_id in pt_ids:
                             print('Point source %s already exists!' % pt.source_id)
                             print('Skipping this source for trt %s' % dom['TRT'])
                         else:
                             merged_pts.append(pt)
                             pt_ids.append(pt.source_id)
+                            lons.append(pt.location.x)
+                            lats.append(pt.location.y)
+                            mmin_rates.append(pt.mfd.occurrence_rates[0])
+    # Make a plot of the rates of Mmin
+    ax = plt.axes(projection=ccrs.PlateCarree())
+    vmax = 1.0
+    ax.scatter(lons, lats, marker = 's', c = np.log10(mmin_rates),
+                transform=ccrs.PlateCarree(),
+                cmap = plt.cm.coolwarm, zorder=1, lw=0, vmin=-7.0, vmax=vmax)
+    ax.coastlines(zorder=2)
+    figname = "%s_%s.png" % (filename_stem, bval_key)
+    plt.savefig(figname)
+    
     outfile = "%s_%s.xml" % (
             filename_stem, bval_key)
     outfile = os.path.join(output_dir, outfile)
