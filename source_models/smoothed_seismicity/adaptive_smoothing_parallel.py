@@ -28,6 +28,7 @@ from openquake.hmtk.parsers.source_model.nrml04_parser import nrmlSourceModelPar
 
 # Plotting tools
 #from openquake.hmtk.plotting.mapping import HMTKBaseMap
+import cartopy.crs as ccrs
 from openquake.hmtk.plotting.seismicity.completeness import plot_stepp_1972
 from openquake.hmtk.plotting.seismicity.catalogue_plots import plot_magnitude_time_scatter
 from openquake.hmtk.plotting.seismicity.catalogue_plots import plot_depth_histogram
@@ -142,7 +143,16 @@ def run_smoothing(grid_lims, config, catalogue, completeness_table,map_config, r
                fmt=["%.4f", "%.4f", "%.8e"],
                header="longitude,latitude,rate" 
                )
-                                       
+
+    ax = plt.axes(projection=ccrs.PlateCarree())
+    x = smoother.grid[:,0]
+    y = smoother.grid[:,1]
+ #   plt.contourf(x, y, np.log10(smoother.rates), 60,
+ #            transform=ccrs.PlateCarree())
+#    ax.coastlines()
+#    ax.set_extent([map_config['min_lon'], map_config['max_lon'],
+#                    map_config['min_lat'], map_config['max_lat']],
+#                    ccrs.PlateCarree())
     # Creating a basemap - input a cconfiguration and (if desired) a title
 #    title = 'Smoothed seismicity rate for learning \nperiod %i %i, K=%i, Mmin=%.1f' % (
 #        config['learning_start'], config['learning_end'], smoother.config['k'], smoother.config['mmin'])
@@ -154,13 +164,16 @@ def run_smoothing(grid_lims, config, catalogue, completeness_table,map_config, r
     # Adding the smoothed grip to the basemap
 #    sym = (2., 3.,'cx')
 #    x,y = basemap1.m(smoother.grid[:,0], smoother.grid[:,1])
-#    if smoother.config['mmin'] == 3.5:
-#        vmax=-1.0
-#    elif smoother.config['mmin'] == 4.0:
-#        vmax=-2.5
-#    else:
-#        vmax=-1.0
-#    basemap1.m.scatter(x, y, marker = 's', c = np.log10(smoother.rates), cmap = plt.cm.coolwarm, zorder=10, lw=0, vmin=-7.0, vmax=vmax)
+    if smoother.config['mmin'] == 3.5:
+        vmax=-1.0
+    elif smoother.config['mmin'] == 4.0:
+        vmax=-2.5
+    else:
+        vmax=-1.0
+    ax.scatter(x, y, marker = 's', c = np.log10(smoother.rates),
+                transform=ccrs.PlateCarree(),
+                cmap = plt.cm.coolwarm, zorder=1, lw=0, vmin=-7.0, vmax=vmax)
+    ax.coastlines(zorder=2)
 #    basemap1.m.drawcoastlines(linewidth=1, zorder=50) # Add coastline on top
     #basemap1.m.drawmeridians(np.arange(llat, ulat, 5))
     #basemap1.m.drawparallels(np.arange(llon, ulon, 5))
@@ -173,8 +186,8 @@ def run_smoothing(grid_lims, config, catalogue, completeness_table,map_config, r
 
     #(smoother.data[0], smoother.data[1])
     #basemap1.add_catalogue(catalogue_depth_clean, erlay=False)
-#    figname = smoother_filename[:-4] + '_smoothed_rates_map.png'
-#    plt.savefig(figname)
+    figname = smoother_filename[:-4] + '_smoothed_rates_map.png'
+    plt.savefig(figname)
                                        
     source_list = []
     #i=0
@@ -207,7 +220,6 @@ def run_smoothing(grid_lims, config, catalogue, completeness_table,map_config, r
                                    mfd, 2, msr,
                                    2.0, tom, 0.1, 20.0, point,
                                    nodal_plane_dist, hypo_depth_dist)
-        print('trt', point_source.tectonic_region_type)
         source_list.append(point_source)
 
     mod_name = "Australia_Adaptive_K%i_b%.3f" % (smoother.config['k'], smoother.config['bvalue'])
@@ -238,7 +250,7 @@ for config in config_params:
 #sys.exit()
 # Read and clean the catalogue
 parser = CsvCatalogueParser(ifile)
-catalogue = parser.read_file(start_year=1900, end_year=2016)
+catalogue = parser.read_file(start_year=1900, end_year=2021)
 # How many events in the catalogue?
 print("The catalogue contains %g events" % catalogue.get_number_events())
 neq = len(catalogue.data['magnitude'])
@@ -299,11 +311,20 @@ for i in range(0, len(config_params)*3, 1):
         config = {"k": 3,
                   "r_min": 1.0E-6, 
                   "bvalue": bvalue, "mmin": mmin,
-                  "learning_start": 1900, "learning_end": 2016,
-                  "target_start": 2018, "target_end": 2019} # using already optimised parameters
+                  "learning_start": 1900, "learning_end": 2021,
+                  "target_start": 2022, "target_end": 2022} # using already optimised parameters
         ystart = completeness_table[-1][0]
+        print('completeness_table', completeness_table, type(completeness_table))
+#        print('!hardwiring completness table:!')
+#        completeness_table = np.array([[1990.,3.05],
+#                                       [1970.,4.05],
+#                                       [1960.,4.55],
+ #                                      [1905.,6.05],
+#                                       [1880.,6.45]])
+#        print('completeness_table', completeness_table, type(completeness_table))
         # Ensure we aren't training outside completeness model
         if ystart > config['learning_start']:
+            print('ystart', ystart)
             config['learning_start'] = ystart
 
         run_smoothing(grid_lims, config, catalogue_depth_clean, completeness_table, map_config, run)
