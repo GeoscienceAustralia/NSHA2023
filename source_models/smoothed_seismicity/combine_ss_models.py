@@ -23,7 +23,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import cartopy.crs as ccrs
 
-from utilities import params_from_shp
+from NSHA2023.source_models.smoothed_seismicity.utilities import params_from_shp
 
 def gr2inc_mmax(mfd, mmaxs, weights, model_weight=1.):
     """Function to convert a GR distribution to incremental MFD and 
