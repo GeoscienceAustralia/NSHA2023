@@ -38,7 +38,8 @@ from NSHA2023.source_models.smoothed_seismicity.combine_ss_models import gr2inc_
 from NSHA2023.source_models.smoothed_seismicity.utilities import params_from_shp
 from NSHA2023.source_models.logic_trees import logic_tree
 
-source_data_filename = 'abValues_GA.csv'
+#source_data_filename = 'abValues_GA.csv'
+source_data_filename = 'abValues_trunc_GA.csv'
 nrml_version='04'
 msr = Leonard2014_SCR()
 tom = PoissonTOM(50) 
@@ -186,7 +187,8 @@ for dom in params:
                                                 hypo_depth_dist)
                         merged_pts.append(pt_source)
                         pt_ids.append(source_id)
-outfile = 'Hall2007_2023.xml'
+#outfile = 'Hall2007_2023.xml'
+outfile = 'Hall2007_2023_trunc.xml'
 name = outfile.rstrip('.xml')
 if nrml_version == '04':
     nodes = list(map(obj_to_node, merged_pts))
