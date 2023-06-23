@@ -236,12 +236,13 @@ def combine_ss_models(filename_stem, domains_shp, params,lt, bval_key, output_di
                             mmin_rates.append(pt.mfd.occurrence_rates[0])
     # Make a plot of the rates of Mmin
     ax = plt.axes(projection=ccrs.PlateCarree())
-    vmax = 1.0
+    vmax = -2.5
     ax.scatter(lons, lats, marker = 's', c = np.log10(mmin_rates),
                 transform=ccrs.PlateCarree(),
                 cmap = plt.cm.coolwarm, zorder=1, lw=0, vmin=-7.0, vmax=vmax)
     ax.coastlines(zorder=2)
     figname = "%s_%s.png" % (filename_stem, bval_key)
+    figname = os.path.join(output_dir, figname)
     plt.savefig(figname)
     
     outfile = "%s_%s.xml" % (
