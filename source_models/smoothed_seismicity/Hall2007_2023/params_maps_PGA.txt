@@ -1,0 +1,11 @@
+ncpus = 672 
+mem = 2600GB
+walltime = 4:00:00
+jobfs = 500GB
+sandpit_path = /home/547/
+model_rel_path = NSHA2023/source_models/smoothed_seismicity/Hall2007_2023/
+shared_rel_path = NSHA2023/shared
+gsim_lt_filename = NSHA23_Aus_GMM_logic_tree.xml
+model_output_base = /scratch/w84/NSHA23/smoothed_seismicity/Risk_Frontiers/PGA
+job_file = job_maps_PGA.ini
+job_type = maps
