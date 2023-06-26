@@ -127,7 +127,7 @@ def run_smoothing(grid_lims, config, catalogue, completeness_table,map_config, r
     # Exhaustive smoothing
     exhaustive = False
     if exhaustive == True:
-        params, poiss_llh = smoother.exhaustive_smoothing(np.arange(2,10,1), np.arange(1.0e-6,1.0e-5,2.0e-6))
+        params, poiss_llh = smoother.exhaustive_smoothing(np.arange(3,10,1), np.arange(1.0e-6,1.0e-5,2.0e-6))
         print(params, poiss_llh)
         smoother.config["k"] = params[0]
         smoother.config["r_min"] = params[1]
@@ -311,9 +311,9 @@ for i in range(0, len(config_params)*3, 1):
         config = {"k": 3,
                   "r_min": 1.0E-6, 
                   "bvalue": bvalue, "mmin": mmin,
-                  "learning_start": 1900, "learning_end": 2021,
+                 "learning_start": 1900, "learning_end": 2021,
                   "target_start": 2022, "target_end": 2022} # using already optimised parameters
-        ystart = completeness_table[-1][0]
+        ystart = 1965# Hard code completeness_table[-1][0]
         print('completeness_table', completeness_table, type(completeness_table))
 #        print('!hardwiring completness table:!')
 #        completeness_table = np.array([[1990.,3.05],
