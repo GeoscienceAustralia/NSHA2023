@@ -8,63 +8,63 @@
                                 branchSetID="bs1">
 
                 <logicTreeBranch branchID="b1">
-                    <uncertaintyModel>GA_fixed_smoothing_50_3_collapsed_single_corner_completeness_banda.xml</uncertaintyModel>
-                    <uncertaintyWeight>0.0754</uncertaintyWeight>
-                </logicTreeBranch>
-
-                <logicTreeBranch branchID="b2">
-                    <uncertaintyModel>GA_adaptive_smoothing_collapsed_K3_single_corner_completeness_banda.xml</uncertaintyModel>
-                    <uncertaintyWeight>0.0546</uncertaintyWeight>
-                </logicTreeBranch>
-
-                <logicTreeBranch branchID="b3">
                     <uncertaintyModel>NSHA13_BACKGROUND_collapsed.xml</uncertaintyModel>
                     <uncertaintyWeight>0.0203</uncertaintyWeight>
                 </logicTreeBranch>
 
-                <logicTreeBranch branchID="b4">
+                <logicTreeBranch branchID="b2">
                     <uncertaintyModel>Leonard2008_collapsed.xml</uncertaintyModel>
                     <uncertaintyWeight>0.0298</uncertaintyWeight>
                 </logicTreeBranch>
 
-                <logicTreeBranch branchID="b5">
+                <logicTreeBranch branchID="b3">
                     <uncertaintyModel>ARUP_collapsed.xml</uncertaintyModel>
                     <uncertaintyWeight>0.029</uncertaintyWeight>
                 </logicTreeBranch>
 
-                <logicTreeBranch branchID="b6">
+                <logicTreeBranch branchID="b4">
                     <uncertaintyModel>ARUP_Background_collapsed.xml</uncertaintyModel>
                     <uncertaintyWeight>0.029</uncertaintyWeight>
                 </logicTreeBranch>
 
-                <logicTreeBranch branchID="b7">
+                <logicTreeBranch branchID="b5">
                     <uncertaintyModel>Domains_collapsed.xml</uncertaintyModel>
-                    <uncertaintyWeight>0.0518</uncertaintyWeight>
+                    <uncertaintyWeight>0.0519</uncertaintyWeight>
                 </logicTreeBranch>
 
-                <logicTreeBranch branchID="b8">
+                <logicTreeBranch branchID="b6">
                     <uncertaintyModel>NSHA13_collapsed_NFSM.xml</uncertaintyModel>
                     <uncertaintyWeight>0.1997</uncertaintyWeight>
                 </logicTreeBranch>
 
-                <logicTreeBranch branchID="b9">
+                <logicTreeBranch branchID="b7">
                     <uncertaintyModel>AUS6_collapsed_NFSM.xml</uncertaintyModel>
                     <uncertaintyWeight>0.0839</uncertaintyWeight>
                 </logicTreeBranch>
 
-                <logicTreeBranch branchID="b10">
+                <logicTreeBranch branchID="b8">
                     <uncertaintyModel>DIMAUS_collapsed_NFSM.xml</uncertaintyModel>
                     <uncertaintyWeight>0.1065</uncertaintyWeight>
                 </logicTreeBranch>
 
+                <logicTreeBranch branchID="b9">
+                    <uncertaintyModel>Hall2007_2023_banda_nfsm.xml</uncertaintyModel>
+                    <uncertaintyWeight>0.0625</uncertaintyWeight>
+                </logicTreeBranch>
+
+                <logicTreeBranch branchID="b10">
+                    <uncertaintyModel>Hall2007_2023_trunc_banda_nfsm.xml</uncertaintyModel>
+                    <uncertaintyWeight>0.0625</uncertaintyWeight>
+                </logicTreeBranch>
+
                 <logicTreeBranch branchID="b11">
                     <uncertaintyModel>GA_fixed_smoothing_50_3_collapsed_single_corner_completeness_banda_nfsm.xml</uncertaintyModel>
-                    <uncertaintyWeight>0.1856</uncertaintyWeight>
+                    <uncertaintyWeight>0.0865</uncertaintyWeight>
                 </logicTreeBranch>
 
                 <logicTreeBranch branchID="b12">
                     <uncertaintyModel>GA_adaptive_smoothing_collapsed_K3_single_corner_completeness_banda_nfsm.xml</uncertaintyModel>
-                    <uncertaintyWeight>0.1344</uncertaintyWeight>
+                    <uncertaintyWeight>0.2384</uncertaintyWeight>
                 </logicTreeBranch>
 
             </logicTreeBranchSet>
