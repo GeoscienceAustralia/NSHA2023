@@ -121,11 +121,11 @@ else:
     copyfile(sourceXML, targetXML)
     xmllist.append(path.split(targetXML)[-1])
     
-    sourceXML = path.join('..', 'smoothed_seismicity', 'Hall2007_2018', 'Hall2007_2018_banda.xml')
-    targetXML = path.join('..', 'complete_model', destinationPath, 'Hall2007_2018_banda.xml')
+    sourceXML = path.join('..', 'smoothed_seismicity', 'Hall2007_2023', 'Hall2007_2023_banda.xml')
+    targetXML = path.join('..', 'complete_model', destinationPath, 'Hall2007_2023_banda.xml')
     copyfile(sourceXML, targetXML)
     xmllist.append(path.split(targetXML)[-1])
-    '''
+    
     #GA adaptive
     sourceXML = path.join('..', 'smoothed_seismicity', 'GA_adaptive_smoothing_collapsed_K3_single_corner_completeness', \
                           'GA_adaptive_smoothing_collapsed_K3_single_corner_completeness_banda.xml')
@@ -139,7 +139,8 @@ else:
     targetXML = path.join('..', 'complete_model', destinationPath, 'GA_fixed_smoothing_50_3_collapsed_single_corner_completeness_banda.xml')
     copyfile(sourceXML, targetXML)
     xmllist.append(path.split(targetXML)[-1])
-
+    '''
+    print('Skipping Smoothed...')
 
 ###############################################################################
 # copy smoothed seismicity source models with faults
@@ -156,13 +157,17 @@ else:
     targetXML = path.join('..', 'complete_model', destinationPath, 'cuthbertson2018_source_model_banda_nfsm.xml')
     copyfile(sourceXML, targetXML)
     xmllist.append(path.split(targetXML)[-1])
-    
-    sourceXML = path.join('..', 'smoothed_seismicity', 'Hall2007_2018', 'Hall2007_2018_banda_nfsm.xml')
-    targetXML = path.join('..', 'complete_model', destinationPath, 'Hall2007_2018_banda_nfsm.xml')
+    '''
+    sourceXML = path.join('..', 'smoothed_seismicity', 'Hall2007_2023', 'Hall2007_2023_banda_nfsm.xml')
+    targetXML = path.join('..', 'complete_model', destinationPath, 'Hall2007_2023_banda_nfsm.xml')
     copyfile(sourceXML, targetXML)
     xmllist.append(path.split(targetXML)[-1])
-    '''
     
+    sourceXML = path.join('..', 'smoothed_seismicity', 'Hall2007_2023', 'Hall2007_2023_trunc_banda_nfsm.xml')
+    targetXML = path.join('..', 'complete_model', destinationPath, 'Hall2007_2023_trunc_banda_nfsm.xml')
+    copyfile(sourceXML, targetXML)
+    xmllist.append(path.split(targetXML)[-1])
+        
     #GA adaptive
     sourceXML = path.join('..', 'smoothed_seismicity', 'GA_adaptive_smoothing_collapsed_K3_single_corner_completeness', \
                           'GA_adaptive_smoothing_collapsed_K3_single_corner_completeness_banda_nfsm.xml')
@@ -285,6 +290,11 @@ for cls in class_wgts:
                         if mod['name'].startswith('ARUP'):
                            mod_wt = 0.5
                            print('        Modifying ARUP model weight')
+                           
+                        elif mod['name'].startswith('Hall'):
+                           mod_wt = 0.5
+                           print('        Modifying Risk Frontiers model weight')
+                           
                         else:
                            mod_wt = 1.0
                         
