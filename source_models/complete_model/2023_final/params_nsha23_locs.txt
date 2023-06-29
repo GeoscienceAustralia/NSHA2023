@@ -8,4 +8,4 @@ shared_rel_path = NSHA2023/shared
 gsim_lt_filename = NSHA23_Aus_GMM_logic_tree.xml
 model_output_base = /scratch/w84/NSHA23/2023_final/hazcurves
 job_file = job_nsha23_localities.ini
-job_type = uhs_hazcurve
+job_type = uhs_hazcurve_fractiles
