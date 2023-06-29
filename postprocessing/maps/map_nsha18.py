@@ -11,7 +11,7 @@ Usage:
 @author: tallen
 """
 from sys import argv
-from matplotlib.mlab import griddata
+from scipy.interpolate import griddata
 from matplotlib import colors, colorbar #, cm
 from os import path, mkdir, getcwd
 #import matplotlib.pyplot as plt
@@ -82,7 +82,7 @@ keys = line.strip().split(',')[2:]
 # make grid dictionary
 grddict = []
 
-print '\nReading', modelName
+print('\nReading', modelName)
 for line in lines[2:]:
     dat = line.strip().split(',')
     '''
@@ -133,7 +133,7 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     period = period.replace(')','')
     period = period.replace('.','')
     
-    print period
+    print(period)
     
     # get map probability of exceedance
     probFraction = str(float(key.split('-')[-1]))
@@ -141,7 +141,7 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     #probability = str(100*float(key.split('-')[-1]))+'%'
     if probability == '9%':
         probability = '9.5%'
-    print 'Probability', probability
+    print('Probability', probability)
     
     figure = plt.figure(i,figsize=(19,12))
     
@@ -252,13 +252,15 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     m.drawmeridians(arange(0.,360.,xlabel), labels=[0,0,0,1], fontsize=10, dashes=[2, 2], color='0.5', linewidth=0.5)
     
     # first make regular cartesian grid
-    print 'Resampling data...'
+    print('Resampling data...')
     N = 500j
     extent = (minlon-mbuff_l, maxlon+mbuff_r, minlat-mbuff_r, maxlat+0)
     xs,ys = mgrid[extent[0]:extent[1]:N, extent[2]:extent[3]:N]
     	
     #resampled = griddata(lonlist, latlist, log10(hazvals), xs, ys, interp='linear')
-    resampled = griddata(lonlist, latlist, hazvals, xs, ys, interp='linear')
+    #resampled = griddata(lonlist, latlist, hazvals, xs, ys, interp='linear')
+    resampled = griddata((lonlist, latlist), hazvals, (xs, ys), method='linear')
+        
     #resampled = griddata(lonlist, latlist, log10(hazvals), lonlist, latlist, interp='linear') # if this suddenly works, I have no idea why!
     
     # get 1D lats and lons for map transform
@@ -289,7 +291,7 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     else:
         T = period
         
-    print period, T
+    print(period, T)
     
     if probability == '10%' or probability == '9.5%': # kluge to get on same scale
         ncolours = 13
@@ -325,10 +327,10 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
 
             except:
                 ncicptfile = '/Users/tallen/Documents/Geoscience_Australia/NSHA2018/postprocessing/maps/'+ cptfile
-                capfile = '/Users/tallen/Documents/Geoscience_Australia/NSHA2018/shared/capitals_names.csv'
+                capfile = '/Users/trev/Documents/Geoscience_Australia/NSHA2023/shared/capitals_names.csv'
                 cmap, zvals = cpt2colormap(ncicptfile, ncolours, rev=True)
     
-    print 'Making map...'    
+    print('Making map...')
     cmap.set_bad('w', 1.0)
     
     if probability == '10%' or probability == '9.5%':
@@ -446,7 +448,6 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     annotate cities
     ###########################################################################################
     '''
-    capfile = '/nas/active/ops/community_safety/ehp/georisk_earthquake/modelling/sandpits/tallen/NSHA2018/shared/capitals_names.csv'
     
     import matplotlib.patheffects as PathEffects
     pe = [PathEffects.withStroke(linewidth=2.5, foreground="w")]
@@ -457,6 +458,7 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     textoffset = []
     
     # read data
+    capfile = path.join('..', '..', 'shared', 'capitals_names.csv')
     lines = open(capfile).readlines()
     for line in lines:
         llon.append(float(line.strip().split(',')[0]))
@@ -612,7 +614,7 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     # make shapefile of contour lines
     ##########################################################################################
     
-    print 'Masking maritime boundaries...'
+    print('Masking maritime boundaries...')
     if getcwd().startswith('/nas'):
         inshape = '/nas/active/ops/community_safety/ehp/georisk_earthquake/modelling/sandpits/tallen/NSHA2018/postprocessing/maps/shapefiles//au_maritime_boundary_digitised.shp'
     else:
