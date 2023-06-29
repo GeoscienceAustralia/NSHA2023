@@ -351,7 +351,7 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     else:
         if period == 'PGA' or period == 'SA005' or period == 'SA01' or period == 'SA02' \
            or period == 'SA03' or period == 'SA05':
-            bounds = array([0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.16, 0.20, 0.3, 0.5, 0.7, 1.0])
+            bounds = array([0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.16, 0.20, 0.26, 0.34, 0.44, 0.6])
         elif period == 'SA07':
             bounds = array([0, 0.01, 0.015, 0.02, 0.03, 0.04, 0.05, 0.06, 0.08, 0.12, 0.16, 0.24, 0.36])
         elif period == 'SA15' or period == 'SA10':
