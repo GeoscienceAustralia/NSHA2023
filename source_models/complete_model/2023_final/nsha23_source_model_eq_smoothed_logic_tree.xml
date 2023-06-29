@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nrml xmlns:gml="http://www.opengis.net/gml"
+      xmlns="http://openquake.org/xmlns/nrml/0.4">
+
+    <logicTree logicTreeID="lt1">
+        <logicTreeBranchingLevel branchingLevelID="bl1">
+            <logicTreeBranchSet uncertaintyType="sourceModel"
+                                branchSetID="bs1">
+
+                <logicTreeBranch branchID="b1">
+                    <uncertaintyModel>NSHA13_BACKGROUND_collapsed.xml</uncertaintyModel>
+                    <uncertaintyWeight>0.0203</uncertaintyWeight>
+                </logicTreeBranch>
+
+                <logicTreeBranch branchID="b2">
+                    <uncertaintyModel>Leonard2008_collapsed.xml</uncertaintyModel>
+                    <uncertaintyWeight>0.0298</uncertaintyWeight>
+                </logicTreeBranch>
+
+                <logicTreeBranch branchID="b3">
+                    <uncertaintyModel>ARUP_collapsed.xml</uncertaintyModel>
+                    <uncertaintyWeight>0.029</uncertaintyWeight>
+                </logicTreeBranch>
+
+                <logicTreeBranch branchID="b4">
+                    <uncertaintyModel>ARUP_Background_collapsed.xml</uncertaintyModel>
+                    <uncertaintyWeight>0.029</uncertaintyWeight>
+                </logicTreeBranch>
+
+                <logicTreeBranch branchID="b5">
+                    <uncertaintyModel>Domains_collapsed.xml</uncertaintyModel>
+                    <uncertaintyWeight>0.0519</uncertaintyWeight>
+                </logicTreeBranch>
+
+                <logicTreeBranch branchID="b6">
+                    <uncertaintyModel>NSHA13_collapsed_NFSM.xml</uncertaintyModel>
+                    <uncertaintyWeight>0.1997</uncertaintyWeight>
+                </logicTreeBranch>
+
+                <logicTreeBranch branchID="b7">
+                    <uncertaintyModel>AUS6_collapsed_NFSM.xml</uncertaintyModel>
+                    <uncertaintyWeight>0.0839</uncertaintyWeight>
+                </logicTreeBranch>
+
+                <logicTreeBranch branchID="b8">
+                    <uncertaintyModel>DIMAUS_collapsed_NFSM.xml</uncertaintyModel>
+                    <uncertaintyWeight>0.1065</uncertaintyWeight>
+                </logicTreeBranch>
+
+                <logicTreeBranch branchID="b9">
+                    <uncertaintyModel>Hall2007_2023_banda_nfsm.xml</uncertaintyModel>
+                    <uncertaintyWeight>0.075</uncertaintyWeight>
+                </logicTreeBranch>
+
+                <logicTreeBranch branchID="b10">
+                    <uncertaintyModel>Hall2007_2023_trunc_banda_nfsm.xml</uncertaintyModel>
+                    <uncertaintyWeight>0.075</uncertaintyWeight>
+                </logicTreeBranch>
+
+                <logicTreeBranch branchID="b11">
+                    <uncertaintyModel>GA_fixed_smoothing_50_3_collapsed_single_corner_completeness_banda_nfsm.xml</uncertaintyModel>
+                    <uncertaintyWeight>0.15</uncertaintyWeight>
+                </logicTreeBranch>
+
+                <logicTreeBranch branchID="b12">
+                    <uncertaintyModel>GA_adaptive_smoothing_collapsed_K3_single_corner_completeness_banda_nfsm.xml</uncertaintyModel>
+                    <uncertaintyWeight>0.1499</uncertaintyWeight>
+                </logicTreeBranch>
+
+            </logicTreeBranchSet>
+        </logicTreeBranchingLevel>
+    </logicTree>
+</nrml>
