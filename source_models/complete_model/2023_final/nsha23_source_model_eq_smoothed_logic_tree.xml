@@ -64,7 +64,7 @@
 
                 <logicTreeBranch branchID="b12">
                     <uncertaintyModel>GA_adaptive_smoothing_collapsed_K3_single_corner_completeness_banda_nfsm.xml</uncertaintyModel>
-                    <uncertaintyWeight>0.15</uncertaintyWeight>
+                    <uncertaintyWeight>0.1499</uncertaintyWeight>
                 </logicTreeBranch>
 
             </logicTreeBranchSet>
