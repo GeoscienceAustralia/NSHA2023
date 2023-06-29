@@ -110,6 +110,7 @@ def b_value_from_region(fault_traces, region_shapefile, default_b = 1.0):
         # check if region centroid in domains poly
             for point in fault_trace:
                 pt = Point(point[0], point[1])
+                print('pt_within', pt.within(l_poly))
                 if pt.within(l_poly):
                     bval = float(zone_bval)
                     trace_b_list.append(bval)
@@ -132,6 +133,7 @@ def trt_from_domains(fault_traces, domains_shapefile,
     dsf = data_source.GetLayer()
     trt_types = []
     for feature in dsf:
+        print('TRT read as :', feature.GetField('TRT'))
         trt_types.append(feature.GetField('TRT'))
     dsf = shapefile.Reader(domains_shapefile)
     dom_shapes = dsf.shapes()
@@ -140,8 +142,11 @@ def trt_from_domains(fault_traces, domains_shapefile,
         trace_trt_list = []
         for zone_trt, dom_shape in zip(trt_types, dom_shapes):
             dom_poly = Polygon(dom_shape.points)
+            print('dom_poly', dom_poly)
             for point in fault_trace:
-                pt = Point(point[0], point[1])
+                print('point', point)
+                pt = Point(point[1], point[0]) #Order appears to have been swapped to lat, long
+#                pt = Point(point[0], point[1]) 
                 if pt.within(dom_poly):
                     trt = zone_trt
                     trace_trt_list.append(trt)

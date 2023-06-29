@@ -93,7 +93,7 @@ def weighted_pt_source(pt_sources, weights, name,
 #            source_list = []
 #            for source in weighted_point_sources:
 #                source_list.append(source)
-            nodes = list(map(obj_to_node, sorted(weighted_point_sources)))
+            nodes = list(map(obj_to_node, weighted_point_sources))
             source_model = Node("sourceModel", {"name": name}, nodes=nodes)
             with open(source_model_file, 'wb') as f:
                 nrml.write([source_model], f, '%s', xmlns = NAMESPACE)
