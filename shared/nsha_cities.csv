@@ -1,5 +1,4 @@
 138.6,-34.93,Adelaide,
-138.7,-34.75,Adelaide max,
 117.88,-35.02,Albany,
 146.9,-36.06,Albury,
 133.88,-23.7,Alice Springs,
@@ -8,7 +7,6 @@
 149.58,-33.41,Bathurst,
 144.28,-36.75,Bendigo,
 153.02,-27.47,Brisbane,
-153,-27.29,Brisbane max,
 141.46,-31.96,Broken Hill,
 122.23,-17.95,Broome,
 152.35,-24.86,Bundaberg,
@@ -46,7 +44,6 @@
 119.75,-21.16,Marble Bar,
 117.01,-31.63,Meckering,
 144.96,-37.81,Melbourne,
-145.5,-38.07,Melbourne max,
 150.45,-34.45,Mittagong,
 146.4,-38.23,Morwell,
 140.78,-37.83,Mount Gambier,
@@ -58,7 +55,6 @@
 149.1,-33.28,Orange,
 150.7,-33.75,Penrith,
 115.86,-31.95,Perth,
-116.03,-31.89,Perth max,
 137.76,-32.48,Port Augusta,
 118.61,-20.31,Port Hedland,
 135.86,-34.73,Port Lincoln,
@@ -68,7 +64,6 @@
 150.5,-23.38,Rockhampton,
 145.4,-36.38,Shepparton,
 151.2,-33.86,Sydney,
-150.74,-33.59,Sydney max,
 150.93,-31.08,Tamworth,
 152.45,-31.91,Taree,
 134.18,-19.65,Tennant Creek,
@@ -109,3 +104,8 @@
 138.84,-32.97,Peterborough,SA
 138.47,-30.54,Leigh Creek,SA
 146.79,-37.98,Heyfield,VIC
+148.62,-36.42,Jindabyne,NSW
+147.90,-36.20,Corryong,VIC
+138.86,-35.07,Mount Barker,SA
+139.27,-35.12,Murray Bridge,SA
+138.62,-35.55,Victor Harbor,SA
