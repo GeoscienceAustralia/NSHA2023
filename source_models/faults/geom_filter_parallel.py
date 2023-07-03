@@ -34,8 +34,13 @@ geom_pt_sources = read_pt_source(geom_pt_sources_filename)
 
 def chunks(l, n):
     """Yield successive n-sized chunks from l."""
-    for i in range(0, len(l), n):
-        yield l[i:i + n]
+    for i in range(0, int(len(l)), int(n)):
+        print(i, type(i))
+        print(n, type(n))
+        j = int(i + n)
+        print (j, type(j))
+        yield l[i:j]
+#        yield l[i:i + n]
 
 # Split sources
 list_length = len(geom_pt_sources) / (proc*10)
