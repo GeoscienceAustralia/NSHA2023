@@ -43,7 +43,7 @@ default_lower_depth = 20.0
 a_value = None
 #b_region_shapefile =  '../zones/shapefiles/Leonard2008/LEONARD08_NSHA18_MFD.shp'
 #b_region_shapefile =  '../zones/2018_mw/Domains_single_mc/shapefiles/Domains_NSHA18_MFD.shp'
-b_region_shapefile =  'zones/2023_mw/Domains_multi_mc/shapefiles/Domains_NSHA23_MFD.shp'
+b_region_shapefile =  '../zones/2023_mw/Domains_multi_mc/shapefiles/Domains_NSHA23_MFD.shp'
 default_b = 1.0#None # Get from Leonard 2008 regions
 default_min_mag = 5.5 #4.8
 minimum_allowed_min_mag = 4.4 # Protect against problems with rupture mesh spacing
@@ -90,13 +90,15 @@ fault_traces, faultnames, dips, sliprates, fault_lengths = \
                                   shapefile_sliprate_attribute,
                                   shapefile_uplift_attribute=shapefile_uplift_attribute,
                                   slip_units = 'm/ma')
-
+print('fault_traces', fault_traces)
+#sys.exit()
 # Get b-value and trt from domains
 trts = shp2nrml.trt_from_domains(fault_traces, domains_shapefile,
                                 default_trt = 'Non_cratonic')
 print(trts)
-#sys.exit()
 trt_list = list(set(trts)) # unique trt values
+print(trt_list)
+
 b_values = shp2nrml.b_value_from_region(fault_traces, 
                                         b_region_shapefile, 
                                         default_b = 1.0)

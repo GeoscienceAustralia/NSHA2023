@@ -14,7 +14,7 @@ from NSHA2023.source_models.utils.pt2fault_distance import read_pt_source, \
 proc = pypar.size()                # Number of processors as specified by mpirun                     
 myid = pypar.rank()                # Id of of this process (myid in [0, proc-1])                     
 node = pypar.get_processor_name()  # Host name on which current process is running                   
-print('I am proc %d of %d on node %s' % (myid, proc, node))
+print(('I am proc %d of %d on node %s' % (myid, proc, node)))
 #nruns = 320 # currently hard coded - need to improve this                                            
 t0 = pypar.time()
 
@@ -40,7 +40,7 @@ if (len(geom_pt_sources) % proc) > 0:
     list_length +=1
 pt_list = list(chunks(geom_pt_sources, list_length))
 #print pt_list
-print(len(pt_list))
+print((len(pt_list)))
 #sys.exit()
 fsm =  os.path.join(source_model_name, source_model_name + '_geom_filtered.xml')
 fault_sources = read_simplefault_source(fsm, rupture_mesh_spacing = fault_mesh_spacing)
@@ -50,7 +50,7 @@ for i in range(0, len(pt_list), 1):
     if i % proc == myid:
         run = "%03d" % i
         # Apply geometrical filtering                                                                        
-        print('Applying geometrical filtering for run %s' % run)
+        print(('Applying geometrical filtering for run %s' % run))
         geom_filtered_pt_sources = geom_pt_sources_filename.rstrip('.xml') + \
             '_' + run + '.xml'
         try:
@@ -59,7 +59,7 @@ for i in range(0, len(pt_list), 1):
                               buffer_distance = 50.,
                               name=source_model_name)
         except IndexError:
-            print('List index %i out of range' % i)
+            print(('List index %i out of range' % i))
 
 
 pypar.barrier()
@@ -85,9 +85,9 @@ if myid == 0:
     m = (ss % 3600) / 60
     s = (ss % 3600) % 60
     print("--------------------------------------------------------")
-    print('P0: Total time (%i seconds): %s:%s:%s (hh:mm:ss)' % (ss,
+    print(('P0: Total time (%i seconds): %s:%s:%s (hh:mm:ss)' % (ss,
                                                                 string.zfill(h, 2),
                                                                 string.zfill(m, 2),
-                                                                string.zfill(s,2)))
+                                                                string.zfill(s,2))))
     print("--------------------------------------------------------")
 pypar.finalize()

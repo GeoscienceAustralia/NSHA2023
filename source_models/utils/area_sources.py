@@ -150,6 +150,7 @@ def area2pt_source(area_source_file, sources = None, investigation_time=50,
         else:
             pt_sources = []
             for pt in source:
+                print(pt, type(pt))
                 pt_sources.append(pt)
 #            pt_sources = area_to_point_sources(source)
 #            pt_source = source.convert_pointSource()

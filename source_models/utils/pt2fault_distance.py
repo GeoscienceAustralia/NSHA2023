@@ -207,18 +207,33 @@ def write_combined_faults_points(point_sources, fault_sources,
 def read_simplefault_source(simplefault_source_file, rupture_mesh_spacing = 10):
     """Read nrml source model into simpmle fault objects
     """
-    converter = SourceConverter(50, rupture_mesh_spacing, width_of_mfd_bin=0.1,
+#    converter = SourceConverter(50, rupture_mesh_spacing, width_of_mfd_bin=0.1,
+#                                area_source_discretization=200.)
+    converter = SourceConverter(50, 2, width_of_mfd_bin=0.1,
                                 area_source_discretization=200.)
-    parser = SourceModelParser(converter)
-    try:
-        sources = parser.parse_sources(simplefault_source_file)
-    except AttributeError: # Handle version 2.1 and above
-        sources = []
-        groups = parser.parse_src_groups(simplefault_source_file)
-        for group in groups:
-            for source in group:
-                sources.append(source)
-    for fault in sources:
+    source_models=nrml.read_source_models([simplefault_source_file], converter)
+    source_list = []
+    faults = []
+    for source in source_models:
+        source_list.append(source)
+        print('source list', source_list)
+    for sourcegroup in source_list:
+        for source in sourcegroup:
+            for fs in source:
+                faults.append(fs)
+    sm = faults
+
+#Old
+#    parser = SourceModelParser(converter)
+#    try:
+#        sources = parser.parse_sources(simplefault_source_file)
+#    except AttributeError: # Handle version 2.1 and above
+#        sources = []
+#        groups = parser.parse_src_groups(simplefault_source_file)
+#        for group in groups:
+#            for source in group:
+#                sources.append(source)
+#    for fault in faults:
        # print [method for method in dir(fault)]
        # print [method for method in dir(fault.mfd)]
 
@@ -230,8 +245,8 @@ def read_simplefault_source(simplefault_source_file, rupture_mesh_spacing = 10):
 #            min_mag, max_mag = fault.mfd.get_min_max_mag()
 #            fault.mfd.max_mag = max_mag
 #            print fault.mfd.max_mag
-        pass
-    return sources
+#        pass
+    return sm # sources
 
 def pt2fault_distance(pt_sources, fault_sources, min_distance = 5.0,
                       filename = 'source_model.xml',
