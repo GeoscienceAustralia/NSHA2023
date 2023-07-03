@@ -6,26 +6,30 @@ import time
 from time import localtime, strftime, gmtime
 import string
 import numpy as np
-import pypar
+from mpi4py import MPI
 from NSHA2023.source_models.utils.pt2fault_distance import read_pt_source, \
     read_simplefault_source, pt2fault_distance, combine_pt_sources
 
 # Set up paralell
-proc = pypar.size()                # Number of processors as specified by mpirun                     
-myid = pypar.rank()                # Id of of this process (myid in [0, proc-1])                     
-node = pypar.get_processor_name()  # Host name on which current process is running                   
-print(('I am proc %d of %d on node %s' % (myid, proc, node)))
-#nruns = 320 # currently hard coded - need to improve this                                            
-t0 = pypar.time()
-
+# Set up paralell                                                                                                                   
+comm = MPI.COMM_WORLD
+proc = comm.Get_size()               # Number of processors as specified by mpirun                                                  
+myid = comm.Get_rank()            # Id of of this process (myid in [0, proc-1])                                                     
+#node = pypar.get_processor_name()  # Host name on which current process is running                                                 
+#print('I am proc %d of %d on node %s' % (myid, proc, node))                                                                        
+if myid ==0:
+    t0 = MPI.Wtime()
+    print("Start time" + str(t0))
+    
 fault_mesh_spacing = 2 #2 Fault source mesh                     
 rupture_mesh_spacing = 2 #10 # Area source mesh                                                         
 area_source_discretisation = 15 #20 
-source_model_name = 'National_Fault_Source_Model_2018_Collapsed_DIMAUS_2018'
-#area_source_model = '../zones/2018_mw/NSHA13/input/collapsed/NSHA13_collapsed.xml'
-#area_source_model = '../zones/2018_mw/NSHA13/input/collapsed/NSHA13_collapsed.xml'
-area_source_model = '../zones/2018_mw/DIMAUS/input/collapsed/DIMAUS_collapsed.xml'
+source_model_name = 'National_Fault_Source_Model_2018_Collapsed_AUS6_2023'
+#area_source_model = '../zones/2023_mw/NSHA13/input/collapsed/NSHA13_collapsed.xml'
+area_source_model = '../zones/2023_mw/AUS6/input/collapsed/AUS6_collapsed.xml'
+#area_source_model = '../zones/2023_mw/DIMAUS/input/collapsed/DIMAUS_collapsed.xml'
 geom_pt_sources_filename =  area_source_model[:-4] + '_pts_geom_weighted.xml'
+print('Reading ', geom_pt_sources_filename)
 geom_pt_sources = read_pt_source(geom_pt_sources_filename)
 
 def chunks(l, n):
@@ -61,8 +65,8 @@ for i in range(0, len(pt_list), 1):
         except IndexError:
             print(('List index %i out of range' % i))
 
+comm.Barrier()
 
-pypar.barrier()
 if myid == 0:
     tmp_pt_source_filename_list = []
     tmp_pt_source_list = []
@@ -78,16 +82,15 @@ if myid == 0:
     model_name = geom_pt_sources_filename.rstrip('.xml')
     combine_pt_sources(tmp_pt_source_list, merged_filename, model_name, nrml_version = '04',
                        id_location_flag=None)
-#
-#if myid == 0:
-    ss = int(pypar.time() - t0)
-    h = ss / 3600
-    m = (ss % 3600) / 60
+
+    ss = int(MPI.Wtime() - t0)
+    h = ss // 3600
+    m = (ss % 3600) // 60
     s = (ss % 3600) % 60
     print("--------------------------------------------------------")
-    print(('P0: Total time (%i seconds): %s:%s:%s (hh:mm:ss)' % (ss,
-                                                                string.zfill(h, 2),
-                                                                string.zfill(m, 2),
-                                                                string.zfill(s,2))))
+    print('P0: Total time (%i seconds): %s:%s:%s (hh:mm:ss)' % (ss,
+                                                                str(h).zfill(2),
+                                                                str(m).zfill(2),
+                                                                str(s).zfill(2)))
     print("--------------------------------------------------------")
-pypar.finalize()
+

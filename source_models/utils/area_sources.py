@@ -64,10 +64,12 @@ def weighted_pt_source(pt_sources, weights, name,
         scaled by weights
     """
     weighted_point_sources = []
+    trt_list = []
     for pt in pt_sources:
         new_pt = copy.deepcopy(pt) # Copy sources to avoid messing with original data
         mfd_type = type(pt.mfd).__name__
         trt = pt.tectonic_region_type
+        trt_list.append(trt)
         weight = weights[trt]
         if mfd_type == 'TruncatedGRMFD':
             b_val = pt.mfd.b_val
@@ -94,6 +96,9 @@ def weighted_pt_source(pt_sources, weights, name,
 #            for source in weighted_point_sources:
 #                source_list.append(source)
             nodes = list(map(obj_to_node, weighted_point_sources))
+            # now we need to add back in tectonic_region type                                                                      
+            for i, node in enumerate(nodes):
+                node.__setitem__('tectonicRegion', trt_list[i])
             source_model = Node("sourceModel", {"name": name}, nodes=nodes)
             with open(source_model_file, 'wb') as f:
                 nrml.write([source_model], f, '%s', xmlns = NAMESPACE)
@@ -174,10 +179,16 @@ def area2pt_source(area_source_file, sources = None, investigation_time=50,
     if filename is not None:
         if nrml_version == '04':
             source_list = []
+            trt_list = []
             for trt, sources in new_pt_sources.items():
                 for source in sources:
                     source_list.append(source)
+                    print('trt', trt)
+                    trt_list.append(trt)
             nodes = list(map(obj_to_node, source_list))
+            # now we need to add back in tectonic_region type                                                                     
+            for i, node in enumerate(nodes):
+                node.__setitem__('tectonicRegion', trt_list[i])
             source_model = Node("sourceModel", {"name": name}, nodes=nodes)
             with open(nrml_pt_file, 'wb') as f:
                 nrml.write([source_model], f, '%s', xmlns = NAMESPACE)
