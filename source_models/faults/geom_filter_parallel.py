@@ -24,7 +24,7 @@ if myid ==0:
 fault_mesh_spacing = 2 #2 Fault source mesh                     
 rupture_mesh_spacing = 2 #10 # Area source mesh                                                         
 area_source_discretisation = 15 #20 
-source_model_name = 'National_Fault_Source_Model_2018_Collapsed_AUS6_2023'
+source_model_name = 'National_Fault_Source_Model_2023_Collapsed_AUS6_2023'
 #area_source_model = '../zones/2023_mw/NSHA13/input/collapsed/NSHA13_collapsed.xml'
 area_source_model = '../zones/2023_mw/AUS6/input/collapsed/AUS6_collapsed.xml'
 #area_source_model = '../zones/2023_mw/DIMAUS/input/collapsed/DIMAUS_collapsed.xml'

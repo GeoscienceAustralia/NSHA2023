@@ -29,12 +29,12 @@ from openquake.hazardlib.sourceconverter import SourceConverter, \
     SourceGroup
 
 # Basic parameters
-shapefile = 'FSM/FSD_simple_faults.shp'
+shapefile = 'FSM/FSM22_simple_faults.shp'
 shapefile_faultname_attribute = 'Name'
 shapefile_dip_attribute = 'Dip'
 shapefile_sliprate_attribute = 'SL_RT_LT'
 shapefile_uplift_attribute = 'UP_RT_LT'
-source_model_name = 'National_Fault_Source_Model_2018_Collapsed_AUS6_2023'
+source_model_name = 'National_Fault_Source_Model_2023_Collapsed_NSHA13_2023'
 simple_fault_tectonic_region = None # Define based on neotectonic domains
 magnitude_scaling_relation = 'Leonard2014_SCR'
 rupture_aspect_ratio = 1.5
@@ -55,7 +55,9 @@ bin_width = 0.1 # Width of MFD bins in magnitude units
 domains_shapefile = '../zones/shapefiles/NSHA13_Background/NSHA13_Background_NSHA18.shp'
 #domains_shapefile = '../zones/2023_mw/Domains_multi_mc/shapefiles/Domains_NSHA23_MFD.shp'
 
-area_source_model = '../zones/2023_mw/AUS6/input/collapsed/AUS6_collapsed.xml'
+area_source_model = '../zones/2023_mw/NSHA13/input/collapsed/NSHA13_collapsed.xml'
+#area_source_model = '../zones/2023_mw/AUS6/input/collapsed/AUS6_collapsed.xml'
+#area_source_model = '../zones/2023_mw/DIMAUS/input/collapsed/DIMAUS_collapsed.xml'
 #area_source_model = '../zones/2012_mw_ge_4.0/AUS6/input/collapsed/AUS6_collapsed.xml'
 #area_source_model = '../zones/2012_mw_ge_4.0/DIMAUS/input/collapsed/DIMAUS_collapsed.xml'
 area_source_model_name = area_source_model.split('/')[0].rstrip('.xml')
@@ -90,14 +92,15 @@ fault_traces, faultnames, dips, sliprates, fault_lengths = \
                                   shapefile_sliprate_attribute,
                                   shapefile_uplift_attribute=shapefile_uplift_attribute,
                                   slip_units = 'm/ma')
-print('fault_traces', fault_traces)
+for i,name in enumerate(faultnames):
+     print('Fault %s has slip rate %.8f' % (name, sliprates[i]))
 #sys.exit()
 # Get b-value and trt from domains
 trts = shp2nrml.trt_from_domains(fault_traces, domains_shapefile,
                                 default_trt = 'Non_cratonic')
-print(trts)
+#print(trts)
 trt_list = list(set(trts)) # unique trt values
-print(trt_list)
+#print(trt_list)
 
 b_values = shp2nrml.b_value_from_region(fault_traces, 
                                         b_region_shapefile, 
@@ -152,7 +155,8 @@ for i, fault_trace in enumerate(fault_traces):
      trt = trts[i]
      faultname = faultnames[i]
      b_value = b_values[i]
-     print('Calculating rates for %s in domain %s' % (faultname, trt))
+     slip_rt = sliprates[i]
+     print('Calculating rates for %s in domain %s with sliprate %.8f mm/a' % (faultname, trt, slip_rt)) 
      # Calculate M_max from scaling relations
      #scalrel = Leonard2014_SCR()
      max_mag = scalerel.get_median_mag(fault_area, float(rake))

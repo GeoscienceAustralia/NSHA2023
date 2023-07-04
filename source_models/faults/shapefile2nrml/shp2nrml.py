@@ -74,10 +74,10 @@ def parse_line_shapefile(shapefile,shapefile_faultname_attribute,
         sliprates.append(sliprate)
         line = [list([pts[1], pts[0]]) for pts in line] # Double checked and this is correct for now to be lat, lon
 #        line = [list([pts[0], pts[1]]) for pts in line] # Order appears to have changed
-        print(line)
+#        print(line)
         fault_length = 0
         for i in range(len(line)):
-            print(line[i])
+#            print(line[i])
             if i == len(line) -1:
                 break
             else:
@@ -112,8 +112,8 @@ def b_value_from_region(fault_traces, region_shapefile, default_b = 1.0):
             for point in fault_trace:
                 pt = Point(point[1], point[0]) # Order appears to have been swapped
        #         pt = Point(point[0], point[1])
-                print(point[1], point[0])
-                print('pt_within', pt.within(l_poly))
+                #print(point[1], point[0])
+                #print('pt_within', pt.within(l_poly))
                 if pt.within(l_poly):
                     bval = float(zone_bval)
                     trace_b_list.append(bval)

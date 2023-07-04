@@ -37,7 +37,7 @@ def read_pt_source(pt_source_file):
     pts = []
     for source in source_models:
         source_list.append(source)
-        print('source list', source_list)
+#        print('source list', source_list)
     for sourcegroup in source_list:
         for source in sourcegroup:
             for pt in source:
@@ -106,8 +106,6 @@ def combine_pt_sources(point_source_list, filename, name, nrml_version='04',
                                                   list(new_rates))
                             source_model.remove(pt_source)
                     elif id_location_flag == 'location':
-                        #print type(pt_source)
-                        #print type(pt)
                         # Check if location and nodal planes are the same
                         if pt_source.location.x == pt.location.x and \
                                 pt_source.location.y == pt.location.y:
@@ -216,7 +214,6 @@ def read_simplefault_source(simplefault_source_file, rupture_mesh_spacing = 10):
     faults = []
     for source in source_models:
         source_list.append(source)
-        print('source list', source_list)
     for sourcegroup in source_list:
         for source in sourcegroup:
             for fs in source:

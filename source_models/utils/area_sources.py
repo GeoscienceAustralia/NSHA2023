@@ -27,7 +27,7 @@ def nrml2sourcelist(area_source_file, investigation_time=50,
     sources = []
     for source in source_models:
         source_list.append(source)
-        print(source_list)
+        #print(source_list)
     for source_model in source_list:
         for sourcegroup in source_model:
             for source in sourcegroup:
@@ -155,7 +155,7 @@ def area2pt_source(area_source_file, sources = None, investigation_time=50,
         else:
             pt_sources = []
             for pt in source:
-                print(pt, type(pt))
+                #print(pt, type(pt))
                 pt_sources.append(pt)
 #            pt_sources = area_to_point_sources(source)
 #            pt_source = source.convert_pointSource()
@@ -183,7 +183,7 @@ def area2pt_source(area_source_file, sources = None, investigation_time=50,
             for trt, sources in new_pt_sources.items():
                 for source in sources:
                     source_list.append(source)
-                    print('trt', trt)
+                    #print('trt', trt)
                     trt_list.append(trt)
             nodes = list(map(obj_to_node, source_list))
             # now we need to add back in tectonic_region type                                                                     
