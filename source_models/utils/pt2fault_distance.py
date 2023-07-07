@@ -147,6 +147,7 @@ def write_combined_faults_points(point_sources, fault_sources,
     ps_id_index = 1
     fs_id_index = 1
     if nrml_version == '04':
+        trt_list = []
         if type(point_sources) == dict:
             source_list = []
             for trt, sources in point_sources.items():
@@ -154,11 +155,13 @@ def write_combined_faults_points(point_sources, fault_sources,
                     source.source_id = 'PS_%i' % ps_id_index
                     source_list.append(source)
                     ps_id_index += 1
+                    trt_list.append(trt)
 #                    id_index = max(id_index, source.source_id)
         elif type(point_sources) == list:
             source_list = copy.deepcopy(point_sources)
             for source in source_list:
                 source.source_id = 'PS_%i' % ps_id_index
+                trt_list.append(source.tectonic_region_type)
 #                source_list.append(source)
                 ps_id_index += 1
 #                id_index = max(id_index, source.source_id)
@@ -167,10 +170,14 @@ def write_combined_faults_points(point_sources, fault_sources,
             fault_source.source_id = "FS_%i" % fs_id_index
             fs_id_index += 1
             source_list.append(fault_source)
+            trt_list.append(fault_source.tectonic_region_type)
         if area_sources is not None:
             for area_source in area_sources:
                 source_list.append(area_source)
+                trt_list.append(area_source.tectonic_region_type)
         nodes = list(map(obj_to_node, source_list))
+        for i, node in enumerate(nodes):
+                node.__setitem__('tectonicRegion', trt_list[i])
         source_model = Node("sourceModel", {"name": name}, nodes=nodes)
         with open(filename, 'wb') as f:
             nrml.write([source_model], f, '%s', xmlns = NAMESPACE)
@@ -439,10 +446,15 @@ def pt2fault_distance(pt_sources, fault_sources, min_distance = 5.0,
     print('Writing to source model file %s' % source_model_file) 
     if nrml_version == '04':
         source_list = []
+        trt_list = []
         for trt, sources in revised_point_sources.items():
             for source in sources:
                 source_list.append(source)
+                trt_list.append(trt)
         nodes = list(map(obj_to_node, source_list))
+        # Add back in the trts
+        for i, node in enumerate(nodes):
+                node.__setitem__('tectonicRegion', trt_list[i])
         source_model = Node("sourceModel", {"name": name}, nodes=nodes)
         with open(source_model_file, 'wb') as f:
             nrml.write([source_model], f, '%s', xmlns = NAMESPACE)
