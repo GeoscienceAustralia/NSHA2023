@@ -57,7 +57,7 @@ modelName = argv[2]
 # add contours?
 addContours = argv[3] # True or False
 
-# which probability - acceptable values are: 2 (2%), 9 (9.5%) or 10 (10%)
+# which probability - acceptable values are: 2 (2%), 3 (3.3%), 9 (9.5%) or 10 (10%)
 pltProbability = argv[4]
 
 # plt GSHAP colours 
@@ -141,6 +141,9 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     #probability = str(100*float(key.split('-')[-1]))+'%'
     if probability == '9%':
         probability = '9.5%'
+        
+    if probability == '3%':
+        probability = '3.3%'
     print('Probability', probability)
     
     figure = plt.figure(i,figsize=(19,12))
@@ -195,7 +198,7 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     idx = array(range(0, len(lonlist), 1))
     lonlist = array(lonlist)[idx]
     latlist = array(latlist)[idx]
-    hazvals = array(hazvals)[idx]
+    hazvals = array(hazvals)[idx] # * (2/3)
     
     # delete zero hazvals
     idx =where(hazvals==0)[0]
@@ -333,7 +336,7 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     print('Making map...')
     cmap.set_bad('w', 1.0)
     
-    if probability == '10%' or probability == '9.5%':
+    if probability == '10%' or probability == '3.3%': # or probability == '2%':
         if pltGSHAP == 'True':
             bounds = array([0., 0.2, 0.4, 0.8, 1.6, 2.4, 3.2, 4.0, 4.8, 6.0])
             #ncolours = 9
@@ -369,7 +372,7 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     ##########################################################################################
     if addContours == 'True':
         x, y = m(xs, ys)
-        if probability == '10%':
+        if probability == '10%' or probability == '3.3%':
             '''
             levels = arange(0.02, 0.3, 0.02)
             levels = arange(0.05, 0.3, 0.05)
@@ -507,7 +510,7 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
         imoff = 0.02
         #logo_bbox = mpl.transforms.Bbox(array([[map_bbox[0]+imoff,map_bbox[1]+imoff],[0.15,0.15]]))
         #logo_bbox = [map_bbox[0]+0.11,map_bbox[1]-0.005,0.15,0.15]
-        logo_bbox = [map_bbox[0]+0.14,map_bbox[1]-0.075,0.25,0.25]
+        logo_bbox = [map_bbox[0]+0.01,map_bbox[1]-0.075,0.25,0.25]
         newax = figure.add_axes(logo_bbox) #, zorder=-1)
         newax.imshow(im)
         newax.axis('off')
