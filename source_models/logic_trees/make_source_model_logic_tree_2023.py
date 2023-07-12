@@ -175,12 +175,25 @@ else:
     copyfile(sourceXML, targetXML)
     xmllist.append(path.split(targetXML)[-1])
     
+    sourceXML = path.join('..', 'smoothed_seismicity', 'GA_adaptive_smoothing_collapsed_K3_single_corner_completeness_trunc_decluster', \
+                          'GA_adaptive_smoothing_collapsed_K3_single_corner_completeness_trunc_decluster_banda_nfsm.xml')
+    targetXML = path.join('..', 'complete_model', destinationPath, 'GA_adaptive_smoothing_collapsed_K3_single_corner_completeness_trunc_decluster_banda_nfsm.xml')
+    copyfile(sourceXML, targetXML)
+    xmllist.append(path.split(targetXML)[-1])
+    
     #GA fixed kernel 
     sourceXML = path.join('..', 'smoothed_seismicity', 'GA_fixed_smoothing_50_3_collapsed_single_corner_completeness', \
                           'GA_fixed_smoothing_50_3_collapsed_single_corner_completeness_banda_nfsm.xml')
     targetXML = path.join('..', 'complete_model', destinationPath, 'GA_fixed_smoothing_50_3_collapsed_single_corner_completeness_banda_nfsm.xml')
     copyfile(sourceXML, targetXML)
     xmllist.append(path.split(targetXML)[-1])
+    
+    sourceXML = path.join('..', 'smoothed_seismicity', 'GA_fixed_smoothing_50_3_collapsed_single_corner_completeness_trunc_declustered', \
+                          'GA_fixed_smoothing_50_3_collapsed_single_corner_completeness_trunc_declustered_banda_nfsm.xml')
+    targetXML = path.join('..', 'complete_model', destinationPath, 'GA_fixed_smoothing_50_3_collapsed_single_corner_completeness_trunc_declustered_banda_nfsm.xml')
+    copyfile(sourceXML, targetXML)
+    xmllist.append(path.split(targetXML)[-1])
+    
     
 ###############################################################################
 # parse weights file
@@ -286,17 +299,25 @@ for cls in class_wgts:
                     
                     # else, add file to list
                     else:
+                        mod_wt = 1.0
+                        
                         # multiply ARUP models by 0.5
                         if mod['name'].startswith('ARUP'):
                            mod_wt = 0.5
                            print('        Modifying ARUP model weight')
                            
-                        elif mod['name'].startswith('Hall'):
+                        if mod['name'].startswith('Hall'):
                            mod_wt = 0.5
                            print('        Modifying Risk Frontiers model weight')
                            
-                        else:
-                           mod_wt = 1.0
+                        if mod['name'].startswith('GA_adaptive'):
+                           mod_wt = 0.5
+                           print('        Modifying GA_adaptive model weight')
+                           
+                        if mod['name'].startswith('GA_fixed'):
+                           mod_wt = 0.5
+                           print('        Modifying GA_fixed model weight')
+                           
                         
                         # append weights within source type
                         src_wts.append(mod_wt * mod['wgt'] * cls['wgt'])
