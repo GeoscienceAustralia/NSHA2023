@@ -224,7 +224,7 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     m = Basemap(llcrnrlon=llcrnrlon,llcrnrlat=llcrnrlat, \
                 urcrnrlon=urcrnrlon,urcrnrlat=urcrnrlat,
                 projection='lcc',lat_1=lat_1,lat_2=lat_2,lon_0=lon_0,
-                resolution=res,area_thresh=2000.)
+                resolution=res,area_thresh=1000.)
                 
     #m.drawmapboundary(fill_color='lightgray')
     #m.fillcontinents(color='white',lake_color='lightgray',zorder=0)
@@ -394,7 +394,7 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     # get land & lake polygons for masking
     ##########################################################################################
     # mask non-AU polygons
-    nonmask = [0, 2, 3, 4, 6, 7, 11, 13, 16, 17] # polygon number
+    nonmask = [0, 2, 3, 4, 6, 7, 11, 13, 16, 17, 21, 25, 26, 19, 20] # polygon number
     landpolys = []
     for pidx, polygon in enumerate(m.landpolygons):
         maskPoly = True
@@ -405,17 +405,24 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
             poly = polygon.get_coords()
             plt.fill(poly[:,0], poly[:,1], 'w')
         
+            '''
+            print(pidx)
+            print(poly[:,1][0])
+            print(poly[:,0][0])
+            '''
+            	
     #mask_outside_polygon(polys[1][::-1], ax=None)
     polys = get_map_polygons(m)
     mask_outside_polygons(polys, '0.9', plt)
     
     # get lake ploygons
+    '''
     polygons = []
     for polygon in m.lakepolygons:
         poly = polygon.get_coords()
         plt.fill(poly[:,0], poly[:,1], '0.9')
         polygons.append(poly)
-    
+    '''
     ##########################################################################################
     # format main axis
     ##########################################################################################
