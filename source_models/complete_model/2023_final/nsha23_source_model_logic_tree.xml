@@ -29,7 +29,7 @@
 
                 <logicTreeBranch branchID="b5">
                     <uncertaintyModel>Domains_collapsed.xml</uncertaintyModel>
-                    <uncertaintyWeight>0.0519</uncertaintyWeight>
+                    <uncertaintyWeight>0.0518</uncertaintyWeight>
                 </logicTreeBranch>
 
                 <logicTreeBranch branchID="b6">
@@ -59,12 +59,22 @@
 
                 <logicTreeBranch branchID="b11">
                     <uncertaintyModel>GA_fixed_smoothing_50_3_collapsed_single_corner_completeness_banda_nfsm.xml</uncertaintyModel>
-                    <uncertaintyWeight>0.0865</uncertaintyWeight>
+                    <uncertaintyWeight>0.0433</uncertaintyWeight>
                 </logicTreeBranch>
 
                 <logicTreeBranch branchID="b12">
+                    <uncertaintyModel>GA_fixed_smoothing_50_3_collapsed_single_corner_completeness_trunc_declustered_banda_nfsm.xml</uncertaintyModel>
+                    <uncertaintyWeight>0.0433</uncertaintyWeight>
+                </logicTreeBranch>
+
+                <logicTreeBranch branchID="b13">
                     <uncertaintyModel>GA_adaptive_smoothing_collapsed_K3_single_corner_completeness_banda_nfsm.xml</uncertaintyModel>
-                    <uncertaintyWeight>0.2384</uncertaintyWeight>
+                    <uncertaintyWeight>0.1192</uncertaintyWeight>
+                </logicTreeBranch>
+
+                <logicTreeBranch branchID="b14">
+                    <uncertaintyModel>GA_adaptive_smoothing_collapsed_K3_single_corner_completeness_trunc_decluster_banda_nfsm.xml</uncertaintyModel>
+                    <uncertaintyWeight>0.1192</uncertaintyWeight>
                 </logicTreeBranch>
 
             </logicTreeBranchSet>
