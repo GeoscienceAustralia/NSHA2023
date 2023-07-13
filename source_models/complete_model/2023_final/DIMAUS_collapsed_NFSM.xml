@@ -7598,7 +7598,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="22" name="Yallourn Monocline" tectonicRegion="Extended">
+      <simpleFaultSource id="22" name="Yallourn Monocline" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -7637,7 +7637,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="23" name="Haunted Hills Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="23" name="Haunted Hills Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -7663,7 +7663,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="24" name="Morwell Monocline" tectonicRegion="Extended">
+      <simpleFaultSource id="24" name="Morwell Monocline" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -7698,7 +7698,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="25" name="Snake Ridge Monocline" tectonicRegion="Extended">
+      <simpleFaultSource id="25" name="Snake Ridge Monocline" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -7727,7 +7727,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="26" name="Rosedale Monocline" tectonicRegion="Extended">
+      <simpleFaultSource id="26" name="Rosedale Monocline" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -7757,7 +7757,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="27" name="Yarram Monocline" tectonicRegion="Extended">
+      <simpleFaultSource id="27" name="Yarram Monocline" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -7799,7 +7799,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="28" name="Waratah Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="28" name="Waratah Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -7829,7 +7829,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="29" name="Kongwak Monocline" tectonicRegion="Extended">
+      <simpleFaultSource id="29" name="Kongwak Monocline" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -7861,7 +7861,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="30" name="Bass Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="30" name="Bass Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -7898,7 +7898,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="31" name="Yarragon Monocline" tectonicRegion="Extended">
+      <simpleFaultSource id="31" name="Yarragon Monocline" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -7931,7 +7931,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="32" name="Darnum Monocline" tectonicRegion="Extended">
+      <simpleFaultSource id="32" name="Darnum Monocline" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -7961,7 +7961,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="33" name="Heath Hill Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="33" name="Heath Hill Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -7987,7 +7987,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="34" name="Selwyn Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="34" name="Selwyn Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -8017,7 +8017,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="35" name="Beaumaris Monocline" tectonicRegion="Extended">
+      <simpleFaultSource id="35" name="Beaumaris Monocline" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -8040,7 +8040,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="36" name="Doomburrin Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="36" name="Doomburrin Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -8067,7 +8067,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="37" name="Budgeree Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="37" name="Budgeree Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -8092,7 +8092,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="38" name="Tarwin Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="38" name="Tarwin Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -8124,7 +8124,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="39" name="Koorooman Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="39" name="Koorooman Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -8151,7 +8151,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="40" name="Geliondale Monocline" tectonicRegion="Extended">
+      <simpleFaultSource id="40" name="Geliondale Monocline" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -8189,7 +8189,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="41" name="Tap Tap Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="41" name="Tap Tap Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -8213,7 +8213,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="42" name="Napier Monocline" tectonicRegion="Extended">
+      <simpleFaultSource id="42" name="Napier Monocline" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -8240,7 +8240,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="43" name="Darriman Monocline" tectonicRegion="Extended">
+      <simpleFaultSource id="43" name="Darriman Monocline" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -8274,7 +8274,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="44" name="Currajung Monocline" tectonicRegion="Extended">
+      <simpleFaultSource id="44" name="Currajung Monocline" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -8297,7 +8297,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="45" name="Toora Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="45" name="Toora Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -8323,7 +8323,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="46" name="Castle Cove Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="46" name="Castle Cove Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -8348,7 +8348,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="47" name="Johanna Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="47" name="Johanna Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -8375,7 +8375,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="48" name="Bambra Fault Zone2" tectonicRegion="Extended">
+      <simpleFaultSource id="48" name="Bambra Fault Zone2" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -8408,7 +8408,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="49" name="Pirron Yallock Monocline" tectonicRegion="Extended">
+      <simpleFaultSource id="49" name="Pirron Yallock Monocline" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -8440,7 +8440,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="50" name="Colac Monocline" tectonicRegion="Extended">
+      <simpleFaultSource id="50" name="Colac Monocline" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -8485,7 +8485,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="51" name="Bambra Fault Zone" tectonicRegion="Extended">
+      <simpleFaultSource id="51" name="Bambra Fault Zone" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -8515,7 +8515,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="52" name="Fergusson Hill Anticline" tectonicRegion="Extended">
+      <simpleFaultSource id="52" name="Fergusson Hill Anticline" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -8554,7 +8554,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="53" name="Coradjil Anticline" tectonicRegion="Extended">
+      <simpleFaultSource id="53" name="Coradjil Anticline" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -8587,7 +8587,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="54" name="Simpson Anticline" tectonicRegion="Extended">
+      <simpleFaultSource id="54" name="Simpson Anticline" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -8623,7 +8623,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="55" name="Barrabool Monocline" tectonicRegion="Extended">
+      <simpleFaultSource id="55" name="Barrabool Monocline" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -8648,7 +8648,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="56" name="Winchelsea Scarp" tectonicRegion="Extended">
+      <simpleFaultSource id="56" name="Winchelsea Scarp" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -8676,7 +8676,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="57" name="Lovelybanks Monocline" tectonicRegion="Extended">
+      <simpleFaultSource id="57" name="Lovelybanks Monocline" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -8753,7 +8753,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="59" name="Avalon Scarp" tectonicRegion="Extended">
+      <simpleFaultSource id="59" name="Avalon Scarp" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -9222,7 +9222,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="74" name="Love Creek Monocline" tectonicRegion="Extended">
+      <simpleFaultSource id="74" name="Love Creek Monocline" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -11592,7 +11592,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="147" name="Curdie Monocline" tectonicRegion="Extended">
+      <simpleFaultSource id="147" name="Curdie Monocline" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -11619,7 +11619,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="148" name="Woolsthorpe Scarp" tectonicRegion="Extended">
+      <simpleFaultSource id="148" name="Woolsthorpe Scarp" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -11649,7 +11649,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="149" name="Kanawinka Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="149" name="Kanawinka Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -15523,7 +15523,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="268" name="Badgingarra Scarp" tectonicRegion="Extended">
+      <simpleFaultSource id="268" name="Badgingarra Scarp" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -15548,7 +15548,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="269" name="Bishop Hill Scarp" tectonicRegion="Extended">
+      <simpleFaultSource id="269" name="Bishop Hill Scarp" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -15698,7 +15698,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="273" name="Wandana Scarp 1" tectonicRegion="Extended">
+      <simpleFaultSource id="273" name="Wandana Scarp 1" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -15736,7 +15736,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="274" name="Wandana Scarp 2" tectonicRegion="Extended">
+      <simpleFaultSource id="274" name="Wandana Scarp 2" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -15761,7 +15761,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="275" name="Hardabut Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="275" name="Hardabut Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -15808,7 +15808,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="276" name="Toolonga Scarp 1" tectonicRegion="Extended">
+      <simpleFaultSource id="276" name="Toolonga Scarp 1" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -15855,7 +15855,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="277" name="Toolonga Scarp 2" tectonicRegion="Extended">
+      <simpleFaultSource id="277" name="Toolonga Scarp 2" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -15886,7 +15886,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="278" name="Toolonga Scarp 3" tectonicRegion="Extended">
+      <simpleFaultSource id="278" name="Toolonga Scarp 3" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -15933,7 +15933,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="279" name="Kalbarri Scarps" tectonicRegion="Extended">
+      <simpleFaultSource id="279" name="Kalbarri Scarps" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -15960,7 +15960,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="280" name="Zuytdorp Cliffs" tectonicRegion="Extended">
+      <simpleFaultSource id="280" name="Zuytdorp Cliffs" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -15988,7 +15988,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="281" name="Wagoe Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="281" name="Wagoe Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -16011,7 +16011,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="282" name="Kennedy Range Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="282" name="Kennedy Range Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -16048,7 +16048,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="283" name="Middalya Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="283" name="Middalya Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -16075,7 +16075,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="284" name="Wandagee Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="284" name="Wandagee Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -16107,7 +16107,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="285" name="Round Hill Scarp" tectonicRegion="Extended">
+      <simpleFaultSource id="285" name="Round Hill Scarp" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -16143,7 +16143,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="286" name="Dirk Hartog Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="286" name="Dirk Hartog Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -16167,7 +16167,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="287" name="Cape Peron Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="287" name="Cape Peron Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -16192,7 +16192,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="288" name="Carbla North Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="288" name="Carbla North Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -16215,7 +16215,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="289" name="Carbla South Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="289" name="Carbla South Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -16238,7 +16238,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="290" name="Cape Cuvier Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="290" name="Cape Cuvier Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -16262,7 +16262,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="291" name="Giralia Range Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="291" name="Giralia Range Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -16287,7 +16287,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="292" name="Rough Range Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="292" name="Rough Range Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -16313,7 +16313,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="293" name="Cape Range Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="293" name="Cape Range Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -17941,7 +17941,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="347" name="Badaminna Shear Zone group (Dunsborough Fault)" tectonicRegion="Extended">
+      <simpleFaultSource id="347" name="Badaminna Shear Zone group (Dunsborough Fault)" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -17974,7 +17974,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="348" name="Badaminna Shear Zone 2" tectonicRegion="Extended">
+      <simpleFaultSource id="348" name="Badaminna Shear Zone 2" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -18007,7 +18007,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="349" name="Badaminna Shear Zone (Felix Fault)" tectonicRegion="Extended">
+      <simpleFaultSource id="349" name="Badaminna Shear Zone (Felix Fault)" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -18031,7 +18031,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="350" name="Badaminna Shear Zone 3" tectonicRegion="Extended">
+      <simpleFaultSource id="350" name="Badaminna Shear Zone 3" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -18054,7 +18054,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="351" name="Badaminna Shear Zone 4" tectonicRegion="Extended">
+      <simpleFaultSource id="351" name="Badaminna Shear Zone 4" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -18079,7 +18079,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="352" name="Badaminna Shear Zone 5" tectonicRegion="Extended">
+      <simpleFaultSource id="352" name="Badaminna Shear Zone 5" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -18105,7 +18105,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="353" name="Badaminna Shear Zone 6" tectonicRegion="Extended">
+      <simpleFaultSource id="353" name="Badaminna Shear Zone 6" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -18130,7 +18130,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="354" name="Badaminna Shear Zone 7" tectonicRegion="Extended">
+      <simpleFaultSource id="354" name="Badaminna Shear Zone 7" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -18156,7 +18156,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="355" name="Badaminna Shear Zone 8" tectonicRegion="Extended">
+      <simpleFaultSource id="355" name="Badaminna Shear Zone 8" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -18184,7 +18184,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="356" name="Badaminna Shear Zone 9" tectonicRegion="Extended">
+      <simpleFaultSource id="356" name="Badaminna Shear Zone 9" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -18207,7 +18207,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="357" name="Badaminna Shear Zone 1" tectonicRegion="Extended">
+      <simpleFaultSource id="357" name="Badaminna Shear Zone 1" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -18238,7 +18238,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="358" name="Badaminna Shear Zone 10" tectonicRegion="Extended">
+      <simpleFaultSource id="358" name="Badaminna Shear Zone 10" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -18261,7 +18261,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="359" name="West Australian Shear Zone (Long Island Fault)" tectonicRegion="Extended">
+      <simpleFaultSource id="359" name="West Australian Shear Zone (Long Island Fault)" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -18290,7 +18290,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="360" name="West Australian Shear Zone (Flinders Fault)" tectonicRegion="Extended">
+      <simpleFaultSource id="360" name="West Australian Shear Zone (Flinders Fault)" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -18344,7 +18344,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="362" name="West Australian Shear Zone (Barrow Is Flt)" tectonicRegion="Extended">
+      <simpleFaultSource id="362" name="West Australian Shear Zone (Barrow Is Flt)" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -18367,7 +18367,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="363" name="West Australian Shear Zone (Dampier Flt NS)" tectonicRegion="Extended">
+      <simpleFaultSource id="363" name="West Australian Shear Zone (Dampier Flt NS)" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -18392,7 +18392,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="364" name="West Australian Shear Zone (Inner basin SZ)" tectonicRegion="Extended">
+      <simpleFaultSource id="364" name="West Australian Shear Zone (Inner basin SZ)" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -18417,7 +18417,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="365" name="West Australian Shear Zone (Outer Shelf FZ Nth)" tectonicRegion="Extended">
+      <simpleFaultSource id="365" name="West Australian Shear Zone (Outer Shelf FZ Nth)" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -18446,7 +18446,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="366" name="West Australian Shear Zone (Inner Shelf FZ Nth)" tectonicRegion="Extended">
+      <simpleFaultSource id="366" name="West Australian Shear Zone (Inner Shelf FZ Nth)" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -18496,7 +18496,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="368" name="West Australian Shear Zone (Outer Shelf FZ Sth)" tectonicRegion="Extended">
+      <simpleFaultSource id="368" name="West Australian Shear Zone (Outer Shelf FZ Sth)" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -20020,7 +20020,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="403" name="Wonwron Monocline" tectonicRegion="Extended">
+      <simpleFaultSource id="403" name="Wonwron Monocline" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -20054,7 +20054,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="404" name="Bellarine Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="404" name="Bellarine Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -20082,7 +20082,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="405" name="Torquay Fault" tectonicRegion="Extended">
+      <simpleFaultSource id="405" name="Torquay Fault" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -20125,7 +20125,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="406" name="Crowes Anticline" tectonicRegion="Extended">
+      <simpleFaultSource id="406" name="Crowes Anticline" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -20240,7 +20240,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="409" name="WASZ (Inner Shelf FZ Sth, Segment 3)" tectonicRegion="Extended">
+      <simpleFaultSource id="409" name="WASZ (Inner Shelf FZ Sth, Segment 3)" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -20288,7 +20288,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="410" name="WASZ (Inner Shelf FZ Sth, Segment 4)" tectonicRegion="Extended">
+      <simpleFaultSource id="410" name="WASZ (Inner Shelf FZ Sth, Segment 4)" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
@@ -20336,7 +20336,7 @@
           <rake>90</rake>
         </simpleFaultSource>
     
-      <simpleFaultSource id="411" name="West Australian Shear Zone (Dampier Flt SS)" tectonicRegion="Extended">
+      <simpleFaultSource id="411" name="West Australian Shear Zone (Dampier Flt SS)" tectonicRegion="Non_cratonic">
           <simpleFaultGeometry>
               <gml:LineString>
                 <gml:posList>
