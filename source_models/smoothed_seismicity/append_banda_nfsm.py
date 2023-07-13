@@ -42,7 +42,7 @@ for line in lines:
         if appendNFSM == True:
  
             aust_fault_file = path.join('..', 'faults', 'National_Fault_Source_Model_2023_Collapsed_NSHA13_2023', \
-                                        'National_Fault_Source_Model_2018_Collapsed_NSHA13_all_methods_collapsed_inc_cluster_gmm_trt.xml')
+                                        'National_Fault_Source_Model_2023_Collapsed_NSHA13_2023_all_methods_collapsed_inc_cluster.xml')
 
             flines = open(aust_fault_file).readlines()[3:-2]
             for fline in flines:
