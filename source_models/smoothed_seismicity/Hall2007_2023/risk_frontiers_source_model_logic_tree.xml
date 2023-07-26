@@ -8,7 +8,7 @@
                                 branchSetID="bs1">
 
                 <logicTreeBranch branchID="b1">
-                    <uncertaintyModel>Hall2007_2023_banda_nfsm.xml</uncertaintyModel>
+                    <uncertaintyModel>Hall2007_2023_banda.xml</uncertaintyModel>
                     <uncertaintyWeight>1.0</uncertaintyWeight>
                 </logicTreeBranch>
 
