@@ -200,12 +200,13 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     latlist = array(latlist)[idx]
     hazvals = array(hazvals)[idx]
     
+    '''
     # for AS1170.4 adhustments
     hazvals = array(hazvals)[idx]  * (2/3) * 0.6
     
     for i, hv in  enumerate(hazvals):
         hazvals[i] = max([hv, 0.079])
-        
+    '''    
     
     # delete zero hazvals
     idx =where(hazvals==0)[0]
@@ -343,7 +344,7 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     print('Making map...')
     cmap.set_bad('w', 1.0)
     
-    if probability == '10%' or probability == '3.3%' or probability == '2%':
+    if probability == '10%' or probability == '3.3%': # or probability == '2%':
         if pltGSHAP == 'True':
             bounds = array([0., 0.2, 0.4, 0.8, 1.6, 2.4, 3.2, 4.0, 4.8, 6.0])
             #ncolours = 9
