@@ -63,17 +63,17 @@
                 </logicTreeBranch>
 
                 <logicTreeBranch branchID="b12">
-                    <uncertaintyModel>NFSM_NSHA13_National_Fault_Source_Model_2018_Collapsed_NSHA13_2018__all_methods_collapsed_inc_cluster.xml</uncertaintyModel>
+                    <uncertaintyModel>NSHA13_collapsed_NFSM.xml</uncertaintyModel>
                     <uncertaintyWeight>0.205</uncertaintyWeight>
                 </logicTreeBranch>
 
                 <logicTreeBranch branchID="b13">
-                    <uncertaintyModel>NFSM_DIMAUS_National_Fault_Source_Model_2018_Collapsed_DIMAUS_2018__all_methods_collapsed_inc_cluster.xml</uncertaintyModel>
+                    <uncertaintyModel>DIMAUS_collapsed_NFSM.xml</uncertaintyModel>
                     <uncertaintyWeight>0.109</uncertaintyWeight>
                 </logicTreeBranch>
 
                 <logicTreeBranch branchID="b14">
-                    <uncertaintyModel>NFSM_AUS6_National_Fault_Source_Model_2018_Collapsed_AUS6_2018__all_methods_collapsed_inc_cluster.xml</uncertaintyModel>
+                    <uncertaintyModel>AUS6_collapsed_NFSM.xml</uncertaintyModel>
                     <uncertaintyWeight>0.086</uncertaintyWeight>
                 </logicTreeBranch>
 
