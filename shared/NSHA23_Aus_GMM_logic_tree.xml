@@ -108,6 +108,36 @@ power of 0.4 and a 75th percentile cut-off to remove lowly weighted branches -->
            </logicTreeBranchSet>
 
         </logicTreeBranchingLevel>
+        
+        <logicTreeBranchingLevel branchingLevelID="bl4">
+
+            <logicTreeBranchSet uncertaintyType="gmpeModel" branchSetID="bs4"
+                    applyToTectonicRegionType="Extended">
+
+                <logicTreeBranch branchID="Allen2012_SS14">
+                    <uncertaintyModel>Allen2012_SS14</uncertaintyModel>
+                    <uncertaintyWeight>0.30</uncertaintyWeight>
+                </logicTreeBranch>
+
+                <logicTreeBranch branchID="AtkinsonBoore2006">
+                    <uncertaintyModel>AtkinsonBoore2006</uncertaintyModel>
+                    <uncertaintyWeight>0.15</uncertaintyWeight>
+                </logicTreeBranch>
+
+                <logicTreeBranch branchID="DrouetBrazil2015">
+                    <uncertaintyModel>DrouetBrazil2015</uncertaintyModel>
+                    <uncertaintyWeight>0.19</uncertaintyWeight>
+                </logicTreeBranch>
+
+                <logicTreeBranch branchID="SomervilleEtAl2009NonCratonic_SS14">
+                    <uncertaintyModel>SomervilleEtAl2009NonCratonic_SS14</uncertaintyModel>
+                    <uncertaintyWeight>0.36</uncertaintyWeight>
+                </logicTreeBranch>
+
+           </logicTreeBranchSet>
+
+        </logicTreeBranchingLevel>
+
 
     </logicTree>
 </nrml>
