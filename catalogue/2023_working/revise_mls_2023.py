@@ -133,12 +133,19 @@ for i, mc in enumerate(mcdat):
                    targetML = 'GG91'
                    add_GG91_HV_corr = True
                    
-            # fix Antelope & SCP bugs
-            elif mc['DATETIME'] >= UTCDateTime(2008,7,1):
+            # fix Antelope & SCP bugs - before recalculation
+            elif mc['DATETIME'] >= UTCDateTime(2008,7,1) \
+                and mc['DATETIME'] < UTCDateTime(2010,1,1)::
                 legacyML = 'null'
                 targetML = 'null'
                 add_GG91_HV_corr = True
                 add_W_A_correction = True
+                
+            # fix SCP bugs for period after recalculation
+            elif mc['DATETIME'] >= UTCDateTime(2010,1,1)::
+                legacyML = 'null'
+                targetML = 'null'
+                add_GG91_HV_corr = True
                 
             elif mc['DATETIME'] < UTCDateTime(1990,1,1):
                 legacyML = 'R35'
