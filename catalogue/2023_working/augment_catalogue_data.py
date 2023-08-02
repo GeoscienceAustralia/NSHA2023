@@ -16,8 +16,8 @@ from obspy import UTCDateTime
 # parse Phil's merged catalogue with revised MLs
 ###############################################################################
 
-#mcdf = pd.read_csv('Merged_Catalogue_Test.csv')
-mcdf = pd.read_csv('Merged_Catalogue.csv')
+#mcdf = pd.read_csv('Merged_Catalogue.csv')
+mcdf = pd.read_csv('Catalog2020-2021_WithMisseGA_WA2800.csv')
 
 # get GA IDs
 mc_gaid = array(mcdf.GA_EventID)
@@ -93,7 +93,7 @@ print('append additional neac mags here') # but maybe not, as MLs not great
 #####################################################################        
 
 # parse mw data
-mwfile = 'combined_au_mw.dat'
+mwfile = 'combined_au_mw.csv'
 lines = open(mwfile).readlines()[1:]
 
 mwdat = []
