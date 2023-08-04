@@ -261,7 +261,7 @@ def combine_ss_models(filename_stem, domains_shp, params,lt, bval_key, output_di
             
 if __name__ == "__main__":
 
-    output_dir = 'GA_adaptive_smoothing_collapsed_K3_single_corner_completeness'
+    output_dir = 'GA_adaptive_smoothing_collapsed_K3_single_corner_completeness_trunc_decluster'
 #    point_source_names = ['Australia_Adaptive_K3_BVAL_BEST.xml',
 #                         'Australia_Adaptive_K3_BVAL_UPPER.xml',
 #                         'Australia_Adaptive_K3_BVAL_LOWER.xml']

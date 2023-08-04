@@ -1042,8 +1042,12 @@ class GridProbabilities(object):
         # Total rate
         total_rate = float(np.sum(self.obs_rates))
         # Rate per km^2
+        print('self.obs_rates', self.obs_rates)
         idx = self.obs_rates > 0.
+        print('idx', idx)
         forecast_rate = self.rates[idx] / self.area[idx]
+        print('self.rates[idx]', self.rates[idx])
+        print('self.area[idx]', self.area[idx])
         rate_per_km2 = total_rate / np.sum(self.area)
         print('total rate', total_rate)
         print('rate_per_km2', rate_per_km2)
