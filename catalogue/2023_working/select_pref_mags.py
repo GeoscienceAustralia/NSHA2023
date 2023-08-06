@@ -10,6 +10,7 @@ from os import remove, path
 from numpy import arange, array, delete, isnan, nan, where, loadtxt
 import matplotlib.pyplot as plt
 from obspy import UTCDateTime
+from mag_tools import get_au_ml_zone
 #from misc_tools import dictlist2array
 import matplotlib as mpl
 mpl.style.use('classic')
@@ -141,6 +142,15 @@ for i, mc in enumerate(mcdat_old):
 ###############################################################################
 
 for i, mc in enumerate(mcdat):
+    #if nnot available, get ML region
+    ml_zone = get_au_ml_zone([mcdat[i]['LON']], [mcdat[i]['LAT']])
+    if ml_zone[0].endswith('Australia') or ml_zone[0].endswith('A'):
+        mcdat[i]['MLREGION'] = ml_zone[0].strip('ustralia')
+        if mcdat[i]['MLREGION'] == 'SWA':
+            mcdat[i]['MLREGION'] = 'WA'
+    else:
+        mcdat[i]['MLREGION'] = 'Other'
+        
     
     if mc['PREFMLSRC'] == 'Allen (unpublished)':
         mcdat[i]['PREFML_2023'] = mc['REVML_2023'] # adjusted for W-A sensitivity
@@ -185,6 +195,11 @@ for i, mc in enumerate(mcdat):
     elif isnan(mc['PREFML']) == False:
         mcdat[i]['PREFML_2023'] = mc['PREFML']
         mcdat[i]['PREFMLSRC_2023'] = mc['PREFMLSRC']
+        
+    # else use SCP3 ML
+    elif isnan(mc['SeiscompML']) == False:
+        mcdat[i]['PREFML_2023'] = mc['SeiscompML']
+        mcdat[i]['PREFMLSRC_2023'] = 'SeiscompML'
         
     # else, set to nan
     else:

@@ -43,12 +43,12 @@ def flag_dependent_events(catalogue, flagvector, doAftershocks, method):
         max_time_foreshock = 10**((catalogue.data['magnitude']-1.85)*0.69)
         max_time_aftershock = 10**((catalogue.data['magnitude']-2.70)*1.1) + 4.0
         
-        # set max time to ~5.5 yrs (2000 days) max foreshock to 3 yrs
+        # set max time to ~7.5 yrs (2750 days) max foreshock to 3 yrs
         if max_time_ceil == True:
-            idx = max_time_aftershock > 5000. 
-            max_time_aftershock[idx] = 5000.
-            idx = max_time_foreshock > 1000.
-            max_time_foreshock[idx] = 1000.
+            idx = max_time_aftershock > 2750. 
+            max_time_aftershock[idx] = 2750.
+            idx = max_time_foreshock > 500.
+            max_time_foreshock[idx] = 500.
         
     elif method == 'Stien08':
         max_time_foreshock = 10**((catalogue.data['magnitude']-2.70)*1.1) + 4.0
