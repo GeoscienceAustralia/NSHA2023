@@ -31,6 +31,7 @@ mw_cat_no_weighting = 0 #Record raw responses without expert calibration
 combo_cat_no_weighting = 0
 
 cut_off_w = 0 # Drop models with weights less that this
+cut_off_w_equal_experts = 0 # See what it is if we weight everyone equally
 combo_cat_mw_w = 0 # Weight for mw catalogue if both used
 combo_cat_ml_w = 0 # Weight for ml catalogue if both used
 
@@ -69,6 +70,7 @@ for line in lines:
     exp_ind = row[0]
     print(exp_ind)
     cut_off_w += float(row[3])*exp_weights[exp_ind]
+    cut_off_w_equal_experts += float(row[3])
     if row[5] == 'Only the homgenised moment magnitude catalogue developed by Geoscience Australia':
         mw_cat_w += exp_weights[exp_ind]
         mw_cat_no_weighting += 1
@@ -234,6 +236,7 @@ if sm_weights[min_sm_weight_ind] < cut_off_w:
 
 
 print('cut_off_w', cut_off_w)
+print('cut_off_w_equal_weighting', cut_off_w_equal_experts/14)
 print('mw_cat_w', mw_cat_w)
 print('combo_cat_w', combo_cat_w)
 print('mw_cat_equal_weights', mw_cat_no_weighting/14)
@@ -300,6 +303,7 @@ ax.set_xlim([0,1.2])
 ax.set_ylim([0, 1.0])
 ax.plot([0,2],[cut_off_w, cut_off_w], linestyle = 'dotted', c = 'r')#, linewidth=0.5)
 ax.text(0.95, 0.125, 'Cut-off weight')
+ax.plot([0,2],[cut_off_w_equal_experts, cut_off_w_equal_experts], linestyle = 'dotted', c = 'b')
 plt.xticks(x_vals + width / 2,
            ('Mw catalogue only', 'Weighted combination\n of Mw and Ml\n catalogues'),
            fontsize=14)

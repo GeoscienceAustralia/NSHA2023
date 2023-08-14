@@ -1,8 +1,8 @@
 #PBS -P w84
 #PBS -q hugemem
-#PBS -l walltime=32:00:00
+#PBS -l walltime=24:00:00
 #PBS -l ncpus=32
-#PBS -l mem=1400GB
+#PBS -l mem=1040GB
 #PBS -l wd
 
 module load geos/3.8.0

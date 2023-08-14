@@ -18,4 +18,4 @@ export PYTHONPATH=.::/home/547/jdg547/:${PYTHONPATH}
 export PYTHONPATH=.::/home/547/jdg547/modelling/oq-engine/:${PYTHONPATH}
 export PYTHONPATH=.::/scratch/w84/jdg547/:${PYTHONPATH}
 
-python build_national_fsm_collapsed_rates.py >&build_fsm.log 
+python3 build_national_fsm_collapsed_rates.py >&build_fsm.log 
