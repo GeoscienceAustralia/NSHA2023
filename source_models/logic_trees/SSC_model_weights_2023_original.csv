@@ -5,7 +5,7 @@ Combined catalogues Mw weight,0.86
 Combined catalogues Ml weight,0.14
 Decluter truncation = True,0.48
 Decluster truncation = False,0.52
-Decluster truncation value,12.87
+Decluster truncation value,26.34
 Bg b individual source zone,0.18
 Bg b aggregated domains,0.52
 Bg b centroid domains,0.30
@@ -22,5 +22,5 @@ Regional class weight,0.00
 Seismotectonic class weight,0.39
 Smoothed seismicity class weight,0.13
 Smoothed seismicity FSM class weight,0.32
-Adaptive SS weight,0.37
-Fixed SS weight,0.63
+Adaptive SS weight,0.42
+Fixed SS weight,0.58

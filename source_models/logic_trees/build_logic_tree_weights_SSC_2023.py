@@ -7,7 +7,8 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 ssc_expert_weights = '/home/547/jdg547/Expert_elicitation/SSC_expert_weights.csv'
-ssc_target_file = '/home/547/jdg547/Expert_elicitation/SSC Target Questions for NSHA23 Responses.csv'
+ssc_target_file = '/home/547/jdg547/Expert_elicitation/SSC_Target_Questions_revised.csv' # Weights after second round of EE
+#ssc_target_file = '/home/547/jdg547/Expert_elicitation/SSC Target Questions for NSHA23 Responses.csv'
 ssc_model_weights_filename = 'SSC_model_weights_2023.csv'
 
 exp_weights = {}
@@ -15,6 +16,7 @@ f = open(ssc_expert_weights, 'r')
 lines = f.readlines()[1:]
 f.close()
 for line in lines:
+    print(line)
     row = line.rstrip('\n').split(',')
     exp_weights[row[0]] = float(row[1])
 print(exp_weights)

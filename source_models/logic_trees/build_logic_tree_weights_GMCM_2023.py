@@ -8,10 +8,10 @@ import matplotlib.pyplot as plt
 
 gmcm_expert_weights = '/home/547/jdg547/Expert_elicitation/GMCM_expert_weights.csv'
 cratonic_target_file = '/home/547/jdg547/Expert_elicitation/GMCM Target Questions for NSHA23 - Cratonic sources.csv'
-noncratonic_target_file = '/home/547/jdg547/Expert_elicitation/GMCM Target Questions for NSHA23 - Non-cratonic sources.csv'
+#noncratonic_target_file = '/home/547/jdg547/Expert_elicitation/GMCM Target Questions for NSHA23 - Non-cratonic sources.csv'
+noncratonic_target_file = '/home/547/jdg547/Expert_elicitation/GMCM Target Questions for NSHA23 - Non-cratonic sources_Revised.csv'
 plate_boundary_target_file = '/home/547/jdg547/Expert_elicitation/GMCM Target Questions for NSHA23 - plate-margin sources and other questions.csv'
 gmcm_model_weights_filename = 'GMCM_model_weights_2023.csv'
-gmcm_logic_tree_file = 'GMCM_NSHA23_logic_tree.xml'
 
 def largest_remainder(weights, expected_sum=1, precision=0):
     """Use largest remainder method to round weights such that                                                                             
