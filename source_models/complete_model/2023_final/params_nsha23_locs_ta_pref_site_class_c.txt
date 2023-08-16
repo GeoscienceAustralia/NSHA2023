@@ -1,6 +1,6 @@
 ncpus = 384 
 mem = 1024GB
-walltime = 6:00:00
+walltime = 7:00:00
 jobfs = 400GB
 sandpit_path = /home/547/
 model_rel_path = NSHA2023/source_models/complete_model/2023_final
