@@ -173,13 +173,10 @@ for i, mc in enumerate(mcdat):
             mcdat[i]['PREFML_2023'] = mc['MLa01_net']
             mcdat[i]['PREFMLSRC_2023'] = 'Cummins (recalc)'
             
-        # take whatever is left
+        # take GA mag - some weirdness in phils results
         else:
-            if mc['MLa075_nob'] >= mc['MLa05_nob']:
-                mcdat[i]['PREFML_2023'] = mc['MLa075_net']
-            else:
-                mcdat[i]['PREFML_2023'] = mc['MLa05_net']
-            mcdat[i]['PREFMLSRC_2023'] = 'Cummins (recalc)'
+            mcdat[i]['PREFML_2023'] = mc['PREFML']
+            mcdat[i]['PREFMLSRC_2023'] = mc['PREFMLSRC']
             
         # add V-H correction to WA records - this is not double counting - Phil does not do this
         if mcdat[i]['MLREGION'] == 'WA' or mcdat[i]['MLREGION'] == 'WCA':

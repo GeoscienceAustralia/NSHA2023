@@ -10,14 +10,14 @@ from datetime import timedelta
 ###############################################################################
 
 # parse NSHA-Cat catalogue
-hmtk_csv = path.join('NSHA18CAT_V0.1_hmtk_mx_orig.csv')
+hmtk_csv = path.join('NSHA23CAT_V0.1_hmtk_mx_orig.csv')
 
 
 nshaCat, full_neq = parse_hmtk_cat(hmtk_csv)
 nshaMaxYear = toYearFraction(nshaCat[-1]['datetime'])
 
 # parse ISC-GEM catalogue
-hmtk_csv = path.join('ISC-GEM_V4_hmtk_full.csv')
+hmtk_csv = path.join('ISC-GEM_V9.1_hmtk_full.csv')
 iscCat, crust_neq = parse_hmtk_cat(hmtk_csv)
 iscMaxYear = toYearFraction(iscCat[-1]['datetime'])
 
@@ -41,5 +41,5 @@ for ig in iscCat:
            print 'Adding:', ig['datetime']
 
 # write to HMTK
-mergedCatCSV = 'merged_NSHA18-ISCGEM_hmtk.csv'
+mergedCatCSV = 'merged_NSHA23-ISCGEM_hmtk.csv'
 ggcat2hmtk_csv(allCat, mergedCatCSV, 'mw')

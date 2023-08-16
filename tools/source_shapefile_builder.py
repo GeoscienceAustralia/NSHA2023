@@ -160,8 +160,8 @@ def get_completeness_model_vertex(src_codes, src_shapes, domains, singleCorner):
                                 
             # use approx ISC-GEM completeness
             else:
-                tmp_ycomp = '1975;1964;1904'
-                tmp_mcomp = '5.75;6.25;7.5'
+                tmp_ycomp = '2005;1975;1964;1904'
+                tmp_mcomp = '5.55;5.75;6.25;7.5'
                 
             
         ycomp.append(tmp_ycomp)

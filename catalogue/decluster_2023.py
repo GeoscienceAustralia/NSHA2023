@@ -45,8 +45,8 @@ def flag_dependent_events(catalogue, flagvector, doAftershocks, method):
         
         # set max time to ~7.5 yrs (2750 days) max foreshock to 3 yrs
         if max_time_ceil == True:
-            idx = max_time_aftershock > 2750. 
-            max_time_aftershock[idx] = 2750.
+            idx = max_time_aftershock > 4700.  # as per EE revison (2023-08-16)
+            max_time_aftershock[idx] = 4700.
             idx = max_time_foreshock > 500.
             max_time_foreshock[idx] = 500.
         
@@ -287,7 +287,7 @@ def decluster_GK74(catalogue):
 
 leonard = True
 deblastOnly = False # remove blasts and coal events - if True, does not decluster
-max_time_ceil = False # set max aftershock window to ~5.5 yrs (2000 days) & max foreshock to 3 yrs
+max_time_ceil = True # set max aftershock window to ~5.5 yrs (2000 days) & max foreshock to 3 yrs
 
 #########################################################################
 # parse calalogue & convert to HMTK
