@@ -231,6 +231,7 @@ def combine_ss_models(filename_stem, domains_shp, params,lt, bval_key, output_di
 if __name__ == "__main__":
 #    filedict = {'Non_cratonic': 'source_model_adelaide_pts.xml'}
     output_dir = 'GA_fixed_smoothing_50_3_collapsed_single_corner_completeness'
+#    output_dir = 'GA_fixed_smoothing_50_3_collapsed_single_corner_completeness'
 #    point_source_names = ['Australia_Fixed_50_3_BVAL_BEST.xml',
 #                          'Australia_Fixed_50_3_BVAL_UPPER.xml',
 #                          'Australia_Fixed_50_3_BVAL_LOWER.xml']

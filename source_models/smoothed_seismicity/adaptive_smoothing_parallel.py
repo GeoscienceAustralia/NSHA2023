@@ -89,8 +89,8 @@ print("Everything Imported OK!")
 domains_shp = '../zones/2023_mw/Domains_multi_mc/shapefiles/Domains_NSHA23_MFD.shp'
 #ifile = "../../catalogue/data/NSHA18CAT_V0.1_hmtk_declustered.csv" #Used for NSHA18
 #ifile = "../../catalogue/data/NSHA18CAT_V0.2_hmtk_declustered.csv"
-#ifile = "../../catalogue/data/NSHA23CAT_V0.1_hmtk_declustered.csv"
-ifile = "../../catalogue/data/NSHA23CAT_V0.1_hmtk_trunc_declustered.csv"
+ifile = "../../catalogue/data/NSHA23CAT_V0.1_hmtk_declustered.csv"
+#ifile = "../../catalogue/data/NSHA23CAT_V0.1_hmtk_trunc_declustered.csv"
 #ifile = "../../catalogue/data/AUSTCAT_V0.12_hmtk_mx_orig.csv"
 # Flag for whether to overwrite exiting .xml source model 
 # files with the same b value and completeness combination.

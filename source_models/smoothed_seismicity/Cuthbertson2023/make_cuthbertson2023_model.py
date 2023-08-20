@@ -47,7 +47,7 @@ trt = 'Non_cratonic'
 
 #############################################
 # Parse original data
-original_source_data = 'CUTH_23_1_rates_and_area.txt'
+original_source_data = 'CUTH_23_2_rates_and_area.txt'
 print('Reading data from %s' % original_source_data)
 data = np.genfromtxt(original_source_data, delimiter = '\t', 
                      skip_header = 1, dtype='unicode')# ("|S24", float, float, int)) #("|S24", float, float, int))
