@@ -3,9 +3,6 @@
       xmlns="http://openquake.org/xmlns/nrml/0.4">
     <logicTree logicTreeID="lt1">
 
-<!-- GMM selection and weights defined through expert elicitation process, using calibration
-power of 0.4 and a 75th percentile cut-off to remove lowly weighted branches -->
-
         <logicTreeBranchingLevel branchingLevelID="bl1">
 
             <logicTreeBranchSet uncertaintyType="gmpeModel" branchSetID="bs1"
@@ -13,7 +10,7 @@ power of 0.4 and a 75th percentile cut-off to remove lowly weighted branches -->
 
                 <logicTreeBranch branchID="Allen2012_SS14">
                     <uncertaintyModel>Allen2012_SS14</uncertaintyModel>
-                    <uncertaintyWeight>0.30</uncertaintyWeight>
+                    <uncertaintyWeight>0.29</uncertaintyWeight>
                 </logicTreeBranch>
 
                 <logicTreeBranch branchID="AtkinsonBoore2006">
@@ -23,12 +20,19 @@ power of 0.4 and a 75th percentile cut-off to remove lowly weighted branches -->
 
                 <logicTreeBranch branchID="DrouetBrazil2015">
                     <uncertaintyModel>DrouetBrazil2015</uncertaintyModel>
-                    <uncertaintyWeight>0.19</uncertaintyWeight>
+                    <uncertaintyWeight>0.17</uncertaintyWeight>
+                </logicTreeBranch>
+
+                <logicTreeBranch branchID="NGAEastGMPE">
+                    <uncertaintyModel>
+                        [GMPETable]
+                         gmpe_table = "../../../../gmm_tables/NGA-East_Backbone_Model.geometric.hdf5"                    </uncertaintyModel>
+                    <uncertaintyWeight>0.10</uncertaintyWeight>
                 </logicTreeBranch>
 
                 <logicTreeBranch branchID="SomervilleEtAl2009NonCratonic_SS14">
                     <uncertaintyModel>SomervilleEtAl2009NonCratonic_SS14</uncertaintyModel>
-                    <uncertaintyWeight>0.36</uncertaintyWeight>
+                    <uncertaintyWeight>0.29</uncertaintyWeight>
                 </logicTreeBranch>
 
            </logicTreeBranchSet>
@@ -63,7 +67,7 @@ power of 0.4 and a 75th percentile cut-off to remove lowly weighted branches -->
                 <logicTreeBranch branchID="NGAEastGMPE">
                     <uncertaintyModel>
                         [GMPETable]
-                         gmpe_table = "../../../../gmm_tables/NGA-East_Backbone_Model.geometric.760.mps.hdf5"
+                         gmpe_table = "../../../../gmm_tables/NGA-East_Backbone_Model.geometric.hdf5"
                     </uncertaintyModel>
                     <uncertaintyWeight>0.09</uncertaintyWeight>
                 </logicTreeBranch>
@@ -100,7 +104,7 @@ power of 0.4 and a 75th percentile cut-off to remove lowly weighted branches -->
                 <logicTreeBranch branchID="NGAEastGMPE">
                     <uncertaintyModel>
                         [GMPETable]
-                         gmpe_table = "../../../../gmm_tables/NGA-East_Backbone_Model.geometric.760.mps.hdf5"
+                         gmpe_table = "../../../../gmm_tables/NGA-East_Backbone_Model.geometric.hdf5"
                     </uncertaintyModel>
                     <uncertaintyWeight>0.09</uncertaintyWeight>
                 </logicTreeBranch>
@@ -108,36 +112,6 @@ power of 0.4 and a 75th percentile cut-off to remove lowly weighted branches -->
            </logicTreeBranchSet>
 
         </logicTreeBranchingLevel>
-        
-        <logicTreeBranchingLevel branchingLevelID="bl4">
-
-            <logicTreeBranchSet uncertaintyType="gmpeModel" branchSetID="bs4"
-                    applyToTectonicRegionType="Extended">
-
-                <logicTreeBranch branchID="Allen2012_SS14">
-                    <uncertaintyModel>Allen2012_SS14</uncertaintyModel>
-                    <uncertaintyWeight>0.30</uncertaintyWeight>
-                </logicTreeBranch>
-
-                <logicTreeBranch branchID="AtkinsonBoore2006">
-                    <uncertaintyModel>AtkinsonBoore2006</uncertaintyModel>
-                    <uncertaintyWeight>0.15</uncertaintyWeight>
-                </logicTreeBranch>
-
-                <logicTreeBranch branchID="DrouetBrazil2015">
-                    <uncertaintyModel>DrouetBrazil2015</uncertaintyModel>
-                    <uncertaintyWeight>0.19</uncertaintyWeight>
-                </logicTreeBranch>
-
-                <logicTreeBranch branchID="SomervilleEtAl2009NonCratonic_SS14">
-                    <uncertaintyModel>SomervilleEtAl2009NonCratonic_SS14</uncertaintyModel>
-                    <uncertaintyWeight>0.36</uncertaintyWeight>
-                </logicTreeBranch>
-
-           </logicTreeBranchSet>
-
-        </logicTreeBranchingLevel>
-
 
     </logicTree>
 </nrml>

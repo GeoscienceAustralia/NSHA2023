@@ -17,7 +17,8 @@ from obspy import UTCDateTime
 ###############################################################################
 
 #mcdf = pd.read_csv('Merged_Catalogue.csv')
-mcdf = pd.read_csv('Catalog2020-2021_WithMisseGA_WA2800.csv')
+#mcdf = pd.read_csv('Catalog2020-2021_WithMisseGA_WA2800.csv')
+mcdf = pd.read_csv('Merged_Catalog_WithMissedGA_WA2800.csv')
 
 # get GA IDs
 mc_gaid = array(mcdf.GA_EventID)
