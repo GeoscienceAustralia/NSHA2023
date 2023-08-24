@@ -206,16 +206,17 @@ def nsha2hmtk_csv(nsha_dict, hmtkfile, prefmag):
             # try alt ml2mw version
             try:
                 line = ','.join((datestr, checkstr(nd['DATETIME'].year), checkstr(nd['DATETIME'].month),checkstr(nd['DATETIME'].day), \
-                             checkstr(nd['DATETIME'].hour).zfill(2),checkstr(nd['DATETIME'].minute).zfill(2),checkstr(nd['DATETIME'].second),checkstr(nd['lon']),checkstr(nd['lat']), \
-                             checkstr(nd['DEP']),checkstr(nd['PREFMX_2023']),checkstr(nd['mx_origType']),nd['auth'], flag, \
-                             checkstr(nd['mx_origML']), checkstr(nd['mx_origType']), checkstr(nd['mx_revML']), checkstr(nd['prefmag']), \
+                             checkstr(nd['DATETIME'].hour).zfill(2),checkstr(nd['DATETIME'].minute).zfill(2),checkstr(nd['DATETIME'].second), \
+                             checkstr(nd['LON']),checkstr(nd['LAT']), checkstr(nd['DEP']), \
+                             checkstr(nd['PREFMX_2023']),checkstr(nd['PREFMXTYPE_2023']),nd['PREFMWSRC_2023'], flag, \
+                             checkstr(nd['PREFMX_2023']), checkstr(nd['PREFMXTYPE_2023']), checkstr(nd['PREFMX_2023']), checkstr(nd['PREFMX_2023']), \
                              checkstr(nd['ml2mw_qd']),checkstr(nd['ml2mw_bl'])))
-                             
+                                             
             except:
-                line = ','.join((datestr, checkstr(nd['year']), checkstr(nd['month']),checkstr(nd['day']), \
-                             checkstr(nd['hour']).zfill(2),checkstr(nd['min']).zfill(2),checkstr(nd['sec']),checkstr(nd['lon']),checkstr(nd['lat']), \
-                             checkstr(nd['dep']),checkstr(nd['mx_origML']),checkstr(nd['mx_origType']),nd['auth'], flag, \
-                             checkstr(nd['mx_origML']), checkstr(nd['mx_origType']), checkstr(nd['mx_revML']), checkstr(nd['prefmag'])))
+                line = ','.join((datestr, checkstr(nd['DATETIME'].year), checkstr(nd['DATETIME'].month),checkstr(nd['DATETIME'].day), \
+                             checkstr(nd['DATETIME'].hour).zfill(2),checkstr(nd['DATETIME'].minute).zfill(2),checkstr(nd['DATETIME'].second), \
+                             checkstr(nd['LON']),checkstr(nd['LAT']), checkstr(nd['DEP']), \
+                             checkstr(nd['PREFMX_2023']),checkstr(nd['PREFMXTYPE_2023']),nd['PREFMXSRC_2023'], flag))  
         
         # else use pref mw
         else:

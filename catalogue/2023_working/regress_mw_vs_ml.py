@@ -33,7 +33,7 @@ mw = dictlist2array(mcdat, 'PREFMW')
 evdt = dictlist2array(mcdat, 'DATETIME')
 mwref = dictlist2array(mcdat, 'PREFMWSRC')
 
-# remove data < 1963
+# remove data < 1963 - don't trust they're ML
 idx = evdt < UTCDateTime(1990,1,1)
 ml_2800 = delete(ml_2800, idx)
 mw = delete(mw, idx)
@@ -44,11 +44,11 @@ mwref = delete(mwref, idx)
 # add data from recent events
 ###############################################################################
 # events: 2021 Marble Bar, 2022 Arthur River
-newml = array([5.55+0.13, 4.753+0.13, 5.0+0.13]) # last one just a guess
-newmw = array([5.323, 4.5, 4.69268914])
+newml = array([5.55+0.13, 4.753+0.13, 5.0+0.13, 5.66831172+0.13]) # last one just a guess
+newmw = array([5.323, 4.5, 4.69268914, 4.96665012])
 newdt = array([UTCDateTime('2021-11-13T13:05:52.663'), UTCDateTime('2022-01-24T21:24:47.666'), \
-              UTCDateTime('2023-04-17T09:02:57.386')])
-newref = array(['AUST', 'AUST', 'AUST'])
+              UTCDateTime('2023-04-17T09:02:57.386'), UTCDateTime('2023-08-05T21:34:42.000')])
+newref = array(['AUST', 'AUST', 'AUST', 'AUST'])
 
 # load W-A correction coeffs
 fn = loadtxt('wa_sensitivity_coeffs.csv', delimiter=',', skiprows=1)

@@ -140,9 +140,20 @@ for i, mc in enumerate(mcdat_old):
 ###############################################################################
 # set pref ML logic
 ###############################################################################
+ignore_phils_mags = ['ga2013lgzaru', 'ga2021ptpeur', 'ga2021ptxjrd']
 
 for i, mc in enumerate(mcdat):
-    #if nnot available, get ML region
+    ignore = False
+    
+    for ipm in ignore_phils_mags:
+        if mc['GA_EventID'] == ipm:
+            ignore = True
+            
+    # also ignore if difference too big
+    if abs(mc['MLa075_net'] - mc['SeiscompML']) > 1.25:
+        ignore = True
+    
+    #if not available, get ML region
     ml_zone = get_au_ml_zone([mcdat[i]['LON']], [mcdat[i]['LAT']])
     if ml_zone[0].endswith('Australia') or ml_zone[0].endswith('A'):
         mcdat[i]['MLREGION'] = ml_zone[0].strip('ustralia')
@@ -159,17 +170,17 @@ for i, mc in enumerate(mcdat):
     # if available - use recalculated/filtered ML
     elif isnan(mc['MLa05_net']) == False or isnan(mc['MLa075_net']) == False:
         # use corner filter of 0.75 Hz less than ML 4.0
-        if mc['MLa075_net'] < 4.0 and mc['MLa075_nob'] >= 3:
+        if mc['MLa075_net'] < 4.0 and mc['MLa075_nob'] >= 3 and ignore == False:
             mcdat[i]['PREFML_2023'] = mc['MLa075_net']
             mcdat[i]['PREFMLSRC_2023'] = 'Cummins (recalc)'
         
         # then use 0.5 Hz filter
-        elif mc['MLa05_net'] < 6.0 and mc['MLa05_nob'] >= 3:
+        elif mc['MLa05_net'] < 6.0 and mc['MLa05_nob'] >= 3 and ignore == False:
             mcdat[i]['PREFML_2023'] = mc['MLa05_net']
             mcdat[i]['PREFMLSRC_2023'] = 'Cummins (recalc)'
             
         # then use 0.1 Hz filter
-        elif mc['MLa01_nob'] >= 3:
+        elif mc['MLa01_nob'] >= 3 and ignore == False:
             mcdat[i]['PREFML_2023'] = mc['MLa01_net']
             mcdat[i]['PREFMLSRC_2023'] = 'Cummins (recalc)'
             

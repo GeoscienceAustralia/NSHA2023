@@ -98,7 +98,7 @@ mwref = delete(mwref, idx)
 newmb = array([5.699, 4.9, 4.9]) # last 2 from USGS
 newmw = array([5.323, 4.5, 4.69268914])
 newdt = array([UTCDateTime('2021-11-13T13:05:52.663'), UTCDateTime('2022-01-24T21:24:47.666'), \
-              UTCDateTime('2023-04-17T09:02:57.386')])
+              UTCDateTime('2023-04-17T09:02:57.386')]) #, UTCDateTime('2023-08-05T21:34:42.000')])
 newref = array(['AUST', 'AUST', 'AUST'])
 
 # concat
