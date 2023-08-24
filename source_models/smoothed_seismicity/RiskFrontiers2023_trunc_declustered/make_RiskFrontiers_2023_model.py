@@ -47,7 +47,7 @@ tom = PoissonTOM(50)
 #source_data = shapefile.Reader(source_data_filename)
 #shapes = source_data.shapes()
 source_data = np.genfromtxt(source_data_filename, delimiter=',',
-                            usecols = (0,1,2,4,5), skip_header=1)#,
+                            usecols = (0,2,3,5,6), skip_header=1)#,
 #                            dtype=[int, float, float, float, float])
 print(source_data)
 a_values = source_data[:,1] #get_field_data(source_data, 'aVal', 'float')
