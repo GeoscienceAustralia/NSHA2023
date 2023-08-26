@@ -26,7 +26,7 @@
                 <logicTreeBranch branchID="NGAEastGMPE">
                     <uncertaintyModel>
                         [GMPETable]
-                         gmpe_table = "../../../../gmm_tables/NGA-East_Backbone_Model.geometric.hdf5"                    </uncertaintyModel>
+                         gmpe_table = "../../../../gmm_tables/NGA-East_Backbone_Model.geometric.hdf5"</uncertaintyModel>
                     <uncertaintyWeight>0.10</uncertaintyWeight>
                 </logicTreeBranch>
 

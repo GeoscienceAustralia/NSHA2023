@@ -186,6 +186,7 @@ else:
 
 # parse NSHA-Cat catalogue
 hmtk_csv = path.join('..','..','catalogue','data','NSHA23CAT_V0.1_hmtk_declustered.csv')
+#hmtk_csv = path.join('..','..','catalogue','data','NSHA23CAT_V0.1_hmtk_trunc_declustered.csv')
 nshaCat, full_neq = parse_hmtk_cat(hmtk_csv)
 nshaMaxYear = toYearFraction(nshaCat[-1]['datetime'])
 

@@ -167,6 +167,10 @@ for i, src_code in enumerate(src_codes):
     
     # now match zone class based on lookup table
     zone_class[i] =  aggregate_intraslab_sources(src_code, zone_class[i])
+    
+    # print zones
+    if zone_class[i] <= 9:
+        print(str(i)+' '+src_code)
 
 # supplant new source codes
 del src_codes
@@ -243,6 +247,7 @@ for i in range(0,len(trt)):
 
 min_rmag[70] = 3. 
 min_rmag[72] = 3. 
+min_rmag[76] = 3.4 
 min_rmag[84] = 3.5 # SEOB
 min_rmag[63] = 3.8 # Zone38
 min_rmag[66] = 3.2 # Z001
