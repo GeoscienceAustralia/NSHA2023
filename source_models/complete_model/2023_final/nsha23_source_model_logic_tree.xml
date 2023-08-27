@@ -48,33 +48,43 @@
                 </logicTreeBranch>
 
                 <logicTreeBranch branchID="b9">
-                    <uncertaintyModel>Hall2007_2023_banda_nfsm.xml</uncertaintyModel>
-                    <uncertaintyWeight>0.0625</uncertaintyWeight>
+                    <uncertaintyModel>RiskFrontiers_2023_banda_nfsm.xml</uncertaintyModel>
+                    <uncertaintyWeight>0.0583</uncertaintyWeight>
                 </logicTreeBranch>
 
                 <logicTreeBranch branchID="b10">
-                    <uncertaintyModel>Hall2007_2023_trunc_banda_nfsm.xml</uncertaintyModel>
-                    <uncertaintyWeight>0.0625</uncertaintyWeight>
+                    <uncertaintyModel>RiskFrontiers_2023_trunc_declustered_banda_nfsm.xml</uncertaintyModel>
+                    <uncertaintyWeight>0.0583</uncertaintyWeight>
                 </logicTreeBranch>
 
                 <logicTreeBranch branchID="b11">
                     <uncertaintyModel>GA_fixed_smoothing_50_3_collapsed_single_corner_completeness_banda_nfsm.xml</uncertaintyModel>
-                    <uncertaintyWeight>0.0433</uncertaintyWeight>
+                    <uncertaintyWeight>0.0371</uncertaintyWeight>
                 </logicTreeBranch>
 
                 <logicTreeBranch branchID="b12">
                     <uncertaintyModel>GA_fixed_smoothing_50_3_collapsed_single_corner_completeness_trunc_declustered_banda_nfsm.xml</uncertaintyModel>
-                    <uncertaintyWeight>0.0433</uncertaintyWeight>
+                    <uncertaintyWeight>0.0371</uncertaintyWeight>
                 </logicTreeBranch>
 
                 <logicTreeBranch branchID="b13">
-                    <uncertaintyModel>GA_adaptive_smoothing_collapsed_K3_single_corner_completeness_banda_nfsm.xml</uncertaintyModel>
-                    <uncertaintyWeight>0.1192</uncertaintyWeight>
+                    <uncertaintyModel>cuthbertson2023_source_model_banda_nfsm.xml</uncertaintyModel>
+                    <uncertaintyWeight>0.0464</uncertaintyWeight>
                 </logicTreeBranch>
 
                 <logicTreeBranch branchID="b14">
+                    <uncertaintyModel>cuthbertson2023_trunc_declustered_source_model_banda_nfsm.xml</uncertaintyModel>
+                    <uncertaintyWeight>0.0464</uncertaintyWeight>
+                </logicTreeBranch>
+
+                <logicTreeBranch branchID="b15">
+                    <uncertaintyModel>GA_adaptive_smoothing_collapsed_K3_single_corner_completeness_banda_nfsm.xml</uncertaintyModel>
+                    <uncertaintyWeight>0.0832</uncertaintyWeight>
+                </logicTreeBranch>
+
+                <logicTreeBranch branchID="b16">
                     <uncertaintyModel>GA_adaptive_smoothing_collapsed_K3_single_corner_completeness_trunc_decluster_banda_nfsm.xml</uncertaintyModel>
-                    <uncertaintyWeight>0.1192</uncertaintyWeight>
+                    <uncertaintyWeight>0.0832</uncertaintyWeight>
                 </logicTreeBranch>
 
             </logicTreeBranchSet>

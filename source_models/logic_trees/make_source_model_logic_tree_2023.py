@@ -8,7 +8,7 @@ from os import path, getcwd, walk
 from tools.make_nsha_oq_inputs import make_logic_tree
 #from logic_tree import LogicTree
 from source_models.utils.utils import largest_remainder
-from numpy import array, hstack, unique
+from numpy import array, around, hstack, unique
 from shutil import copyfile
 
 xmllist = []
@@ -20,7 +20,7 @@ weighted_smoothing = False # for weighting two adaptive with different Mmin
 
 relpath = path.join('..', 'zones', '2023_mw')
 faultpath = path.join('..', 'faults')
-destinationPath = '2023_final'
+destinationPath = '2023_final_zip'
 
 #print '\n!!! Using Original Magnitudes !!!\n'
 #relpath = path.join('..', 'zones', '2012_mx_ge_4.0')
@@ -152,19 +152,24 @@ if weighted_smoothing == True:
 
 # Use four smoothed models with faults
 else:
-    '''
-    sourceXML = path.join('..', 'smoothed_seismicity', 'Cuthbertson2018', 'cuthbertson2018_source_model_banda_nfsm.xml')
-    targetXML = path.join('..', 'complete_model', destinationPath, 'cuthbertson2018_source_model_banda_nfsm.xml')
-    copyfile(sourceXML, targetXML)
-    xmllist.append(path.split(targetXML)[-1])
-    '''
-    sourceXML = path.join('..', 'smoothed_seismicity', 'Hall2007_2023', 'Hall2007_2023_banda_nfsm.xml')
-    targetXML = path.join('..', 'complete_model', destinationPath, 'Hall2007_2023_banda_nfsm.xml')
+    
+    sourceXML = path.join('..', 'smoothed_seismicity', 'Cuthbertson2023', 'cuthbertson2023_source_model_banda_nfsm.xml')
+    targetXML = path.join('..', 'complete_model', destinationPath, 'cuthbertson2023_source_model_banda_nfsm.xml')
     copyfile(sourceXML, targetXML)
     xmllist.append(path.split(targetXML)[-1])
     
-    sourceXML = path.join('..', 'smoothed_seismicity', 'Hall2007_2023', 'Hall2007_2023_trunc_banda_nfsm.xml')
-    targetXML = path.join('..', 'complete_model', destinationPath, 'Hall2007_2023_trunc_banda_nfsm.xml')
+    sourceXML = path.join('..', 'smoothed_seismicity', 'Cuthbertson2023_trunc_declustered', 'cuthbertson2023_trunc_declustered_source_model_banda_nfsm.xml')
+    targetXML = path.join('..', 'complete_model', destinationPath, 'cuthbertson2023_trunc_declustered_source_model_banda_nfsm.xml')
+    copyfile(sourceXML, targetXML)
+    xmllist.append(path.split(targetXML)[-1])
+    
+    sourceXML = path.join('..', 'smoothed_seismicity', 'RiskFrontiers2023', 'RiskFrontiers_2023_banda_nfsm.xml')
+    targetXML = path.join('..', 'complete_model', destinationPath, 'RiskFrontiers_2023_banda_nfsm.xml')
+    copyfile(sourceXML, targetXML)
+    xmllist.append(path.split(targetXML)[-1])
+    
+    sourceXML = path.join('..', 'smoothed_seismicity', 'RiskFrontiers2023_trunc_declustered', 'RiskFrontiers_2023_trunc_declustered_banda_nfsm.xml')
+    targetXML = path.join('..', 'complete_model', destinationPath, 'RiskFrontiers_2023_trunc_declustered_banda_nfsm.xml')
     copyfile(sourceXML, targetXML)
     xmllist.append(path.split(targetXML)[-1])
         
@@ -291,10 +296,10 @@ for cls in class_wgts:
                     elif mod['name'] == 'Cuthbertson' and mod['class'] == 'Smoothed_faults' and xl.endswith('banda.xml'):
                         print('Not adding '+xl+' to '+mod['class']+' set')
                         
-                    elif mod['name'] == 'Hall' and mod['class'] == 'Smoothed_seismicity' and xl.endswith('nfsm.xml'):
+                    elif mod['name'] == 'RiskFrontiers' and mod['class'] == 'Smoothed_seismicity' and xl.endswith('nfsm.xml'):
                         print('Not adding '+xl+' to '+mod['class']+' set')
                     
-                    elif mod['name'] == 'Hall' and mod['class'] == 'Smoothed_faults' and xl.endswith('banda.xml'):
+                    elif mod['name'] == 'RiskFrontiers' and mod['class'] == 'Smoothed_faults' and xl.endswith('banda.xml'):
                         print('Not adding '+xl+' to '+mod['class']+' set')
                     
                     # else, add file to list
@@ -306,7 +311,8 @@ for cls in class_wgts:
                            mod_wt = 0.5
                            print('        Modifying ARUP model weight')
                            
-                        if mod['name'].startswith('Hall'):
+                        if mod['name'].startswith('RiskFrontiers'):
+                           
                            mod_wt = 0.5
                            print('        Modifying Risk Frontiers model weight')
                            
@@ -318,10 +324,13 @@ for cls in class_wgts:
                            mod_wt = 0.5
                            print('        Modifying GA_fixed model weight')
                            
-                        
+                        if mod['name'].startswith('Cuthbertson'):
+                           mod_wt = 0.5
+                           print('        Modifying GA_fixed model weight')
+                           
                         # append weights within source type
-                        src_wts.append(mod_wt * mod['wgt'] * cls['wgt'])
-                        print(mod_wt * mod['wgt'] * cls['wgt'])
+                        src_wts.append(around(mod_wt * mod['wgt'] * cls['wgt'], decimals=4))
+                        print(around(mod_wt * mod['wgt'] * cls['wgt'], decimals=4))
                         
                         # append branch file
                         branch_xml.append(xl)
