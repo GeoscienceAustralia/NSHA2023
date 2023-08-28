@@ -66,19 +66,9 @@ depth = 10.0
 ###############################################################################
 # load domains shp
 domains_shapefile = '../../zones/2018_mw/Domains_single_mc/shapefiles/Domains_NSHA18_MFD.shp'
-#os.path.join('..','..','zones','shapefiles','Domains','Domains_NSHA18_single_Mc.shp')
 dsf = shapefile.Reader(domains_shapefile)
 lt  = logic_tree.LogicTree('../../../shared/seismic_source_model_weights_rounded_p0.4.csv')
 params = params_from_shp(domains_shapefile, trt_ignore=['Interface', 'Active', 'Oceanic', 'Intraslab'])
-#print params
-# get domains
-#neo_doms  = get_field_data(dsf, 'DOMAIN', 'float')
-#dom_mmax = get_field_data(dsf, 'MMAX_BEST', 'float')
-#dom_trt  = get_field_data(dsf, 'GMM_TRT', 'str')
-#dom_dep  = get_field_data(dsf, 'DEP_BEST', 'float')
-
-# get domain polygons
-#dom_shapes = dsf.shapes()
 
 print(a_values)
 # Loop over each cell (defined as a polygon/square, so we extract centroid)
@@ -162,9 +152,7 @@ for dom in params:
    
             dom_poly = Polygon(dom_shape.shape.points)
             for i,ID in enumerate(ids):
-#                centroid = get_shp_centroid(shape.points)
                 shapely_pt = shapely.geometry.Point(lons[i], lats[i])
-                #print centroid
                 if shapely_pt.within(dom_poly):
                     pt = Point(lons[i], lats[i], depth) # Openquake geometry Point
                     tectonic_region_type = dom['GMM_TRT']
@@ -188,12 +176,10 @@ for dom in params:
                         merged_pts.append(pt_source)
                         pt_ids.append(source_id)
 outfile = 'RiskFrontiers_2023.xml'
-#outfile = 'Hall2007_2023_trunc.xml'
+
 name = outfile.rstrip('.xml')
 if nrml_version == '04':
     nodes = list(map(obj_to_node, merged_pts))
-#    source_model = Node("sourceModel", {"name": name}, nodes=nodes)
-    # now we need to add back in tectonic_region type                                                                                                                              
     for i,node in enumerate(nodes):
         node.__setitem__('tectonicRegion', merged_pts[i].tectonic_region_type)
     source_model = Node("sourceModel", {"name": name}, nodes=nodes)

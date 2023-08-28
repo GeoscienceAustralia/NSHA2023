@@ -44,7 +44,9 @@ min_mag = 4.5
 max_mag = 7.2
 depth = 10.0
 trt = 'Non_cratonic'
-
+msr = Leonard2014_SCR()
+tom = PoissonTOM(50)
+nrml_version = '04'
 #############################################
 # Parse original data
 original_source_data = 'CUTH_23_3_rates_and_area.txt'
@@ -176,32 +178,9 @@ source_list = []
 source_models = [] # Use later for logic tree
 degoff = np.arange(-0.2,0.3,0.1) # loc offset for distributing rates
 
-# Interpolation of a values
-#rates_split = a_vals /  25. # Normalisation
-#rates_split = rates/25.
-#new_lons = []
-#new_lats = []
-#a_split=[]
-#for lon,lat,rate in zip(lons,lats,rates):
-#    for dlo in degoff:
-#        for dla in degoff:
-#            new_lons.append(lon+dlo)
-#            new_lats.append(lat+dla)
-           # a_split.append(np.log10(rate/25.))
-#print len(lons)
-#print len(lats)
-#print len(rates_split)
-#a_split = np.log10((10**a_vals) /  25.) # Normalisation
-##print a_split
-#interp_fn = interpolate.interp2d(lons, lats, a_split, kind='linear', fill_value=1.)
-#interp_rates = interp_fn(new_lons,new_lats)
-#print interp_rates
-#sys.exit
-#a_split = np.log10((10**a_vals) /  25.) # Normalisation
-
-
 print(param_index)
 cont=False
+source_list = []
 for j in range(len(lons)):
     identifier = 'RC_' + str(j)
     name = 'Cuthbertson_' + str(j)
@@ -236,8 +215,8 @@ for j in range(len(lons)):
     for dlo in degoff:
         for dla in degoff:
             inc += 1
-            splitIdentifier = identifier+'-'+str(inc)
-            
+            splitIdentifier = identifier+'_'+str(inc)
+            name = splitIdentifier
             # set lola offset
             lo = lons[j]+dlo
             la = lats[j]+dla
@@ -258,22 +237,34 @@ for j in range(len(lons)):
 #                                    (0.2, NodalPlane(270, 30, 90))])
             nodal_plane_dist =  params[k]['NP_DIST']
 #            print nodal_plane_dist
-            point_source = mtkPointSource(splitIdentifier, name, geometry=point, mfd=new_mfd,
-                                   mag_scale_rel = 'Leonard2014_SCR', rupt_aspect_ratio=1.5,
-                                   upper_depth = 0.1, lower_depth = 20.0,
-                                   trt = trt, nodal_plane_dist = nodal_plane_dist,
-                                   hypo_depth_dist = hypo_depth_dist)
-            
-            source_list.append(point_source)
+#            point_source = mtkPointSource(splitIdentifier, name, geometry=point, mfd=new_mfd,
+#                                   mag_scale_rel = 'Leonard2014_SCR', rupt_aspect_ratio=1.5,
+#                                   upper_depth = 0.1, lower_depth = 20.0,
+#                                   trt = trt, nodal_plane_dist = nodal_plane_dist,
+#                                   hypo_depth_dist = hypo_depth_dist)
+            pt_source = PointSource(splitIdentifier, name, trt,
+                                    new_mfd, 2, msr, 1.5,
+                                    tom, 0.1, 20.0, point,
+                                    nodal_plane_dist,
+                                    hypo_depth_dist)
+            source_list.append(pt_source)
 
-source_model = mtkSourceModel(identifier=0, name='Cuthbertson2023',
-                              sources = source_list)
+#source_model = mtkSourceModel(identifier=0, name='Cuthbertson2023',
+#                              sources = source_list)
 
 print('Writing to NRML')
 outbase = 'cuthbertson2023_trunc_declustered'
-source_model_filename = outbase + '_source_model.xml'
-source_model.serialise_to_nrml(source_model_filename)
-source_models.append(source_model)
+outfile = outbase + '_source_model.xml'
+if nrml_version == '04':
+    nodes = list(map(obj_to_node, source_list))
+    for i,node in enumerate(nodes):
+        node.__setitem__('tectonicRegion', source_list[i].tectonic_region_type)
+    source_model = Node("sourceModel", {"name": name}, nodes=nodes)
+    with open(outfile, 'wb') as f:
+        nrml.write([source_model], f, '%s', xmlns = NAMESPACE)
+f.close()
+#source_model.serialise_to_nrml(source_model_filename)
+#source_models.append(source_model)
 
 ######################################
 # Now write the source model logic tree file
