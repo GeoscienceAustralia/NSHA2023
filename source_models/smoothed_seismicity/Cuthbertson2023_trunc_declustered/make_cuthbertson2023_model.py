@@ -13,6 +13,8 @@ import os, sys
 import glob
 import numpy as np 
 from scipy import interpolate
+import matplotlib
+from matplotlib import pyplot as plt
 # To build source model
 import shapefile
 from shapely.geometry import Polygon
@@ -61,8 +63,10 @@ for location in data[:,0]:
     location = location.split('_')
     lons.append(float(location[1]))
     lats.append(float(location[2]))
-rates = data[:,1].astype(float)/4.
-a_vals = np.log10(data[:,1].astype(float)/4.) # Divide by 4 as cells are overlapping
+#rates = data[:,1].astype(float)/4.
+#a_vals = np.log10(data[:,1].astype(float)/4.) # Divide by 4 as cells are overlapping
+rates = data[:,1].astype(float)
+a_vals = np.log10(data[:,1].astype(float))
 b_vals = data[:,2].astype(float)
 print('b_vals', b_vals)
 
@@ -178,6 +182,10 @@ source_list = []
 source_models = [] # Use later for logic tree
 degoff = np.arange(-0.2,0.3,0.1) # loc offset for distributing rates
 
+mag_increments = np.arange(min_mag+0.05, 7.85, 0.1)
+mag_increments = np.flip(mag_increments)
+cum_rates = np.zeros(len(mag_increments))
+
 print(param_index)
 cont=False
 source_list = []
@@ -228,20 +236,15 @@ for j in range(len(lons)):
 #            print params[k]['MMAXS']
 #            print params[k]['CODE']
             new_mfd = gr2inc_mmax(mfd, params[k]['MMAXS'], params[k]['MMAX_WEIGHTS'], weight)
-            
+            cum_rate = 0
+            num_bins = len(new_mfd.occurrence_rates) # Number of bins will depend on mmax
+            i_offset = len(cum_rates) - num_bins # Ensure values with lower mmax end up in the right bin
+            for i,rt in enumerate(np.flip(new_mfd.occurrence_rates)):
+                cum_rate += rt
+                cum_rates[i+i_offset] += cum_rate
+            # Add to cumulative moment rate for checking
             hypo_depth_dist = params[k]['DEPTH_DIST'] #PMF([(1.0, depth)])
-#            print hypo_depth_dist
-#            nodal_plane_dist = PMF([(0.3, NodalPlane(0, 30, 90)),
-#                                    (0.2, NodalPlane(90, 30, 90)),
-#                                    (0.3, NodalPlane(180, 30, 90)),
-#                                    (0.2, NodalPlane(270, 30, 90))])
             nodal_plane_dist =  params[k]['NP_DIST']
-#            print nodal_plane_dist
-#            point_source = mtkPointSource(splitIdentifier, name, geometry=point, mfd=new_mfd,
-#                                   mag_scale_rel = 'Leonard2014_SCR', rupt_aspect_ratio=1.5,
-#                                   upper_depth = 0.1, lower_depth = 20.0,
-#                                   trt = trt, nodal_plane_dist = nodal_plane_dist,
-#                                   hypo_depth_dist = hypo_depth_dist)
             pt_source = PointSource(splitIdentifier, name, trt,
                                     new_mfd, 2, msr, 1.5,
                                     tom, 0.1, 20.0, point,
@@ -295,3 +298,13 @@ outxml = outbase + '_source_model_logic_tree.xml'
 f = open(outxml,'w')
 f.write(newxml)
 f.close()
+
+# Plot cumulative rates up
+print(mag_increments)
+print(cum_rates)
+plt.semilogy(mag_increments, cum_rates)
+plt.grid(True, which="both", ls="-")
+plt.xlabel('Magnitude')
+plt.ylabel('Cumulative number / year')
+figname = 'Cuthbertson_2023_cumulative_rates_trunc_declustered.png'         
+plt.savefig(figname)
