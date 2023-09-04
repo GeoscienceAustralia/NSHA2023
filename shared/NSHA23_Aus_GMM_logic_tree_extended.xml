@@ -148,6 +148,8 @@
                 </logicTreeBranch>
 
            </logicTreeBranchSet>
+           
+       </logicTreeBranchingLevel>
 
     </logicTree>
 </nrml>
