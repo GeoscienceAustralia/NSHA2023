@@ -455,7 +455,7 @@ def get_mfds(mvect, mxvect, tvect, dec_tvect, ev_dict, mcomps, ycomps, ymax, mrn
     
     err_up, err_lo = get_confidence_intervals(n_obs, cum_rates)
         
-    return bval, beta, sigb, sigbeta, fn0, cum_rates, ev_out, err_up, err_lo
+    return bval, beta, sigb, sigbeta, fn0, cum_rates, ev_out, err_up, err_lo, len(mvect)
 
 ###############################################################################
 # just fit a-value

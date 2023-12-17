@@ -421,16 +421,16 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
             	
     #mask_outside_polygon(polys[1][::-1], ax=None)
     polys = get_map_polygons(m)
-    mask_outside_polygons(polys, '0.9', plt)
+    mask_outside_polygons(polys, '0.9', plt) # comment out for Dan
     
     # get lake ploygons
-    '''
+    
     polygons = []
     for polygon in m.lakepolygons:
         poly = polygon.get_coords()
         plt.fill(poly[:,0], poly[:,1], '0.9')
         polygons.append(poly)
-    '''
+    
     ##########################################################################################
     # format main axis
     ##########################################################################################
@@ -636,7 +636,7 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     if getcwd().startswith('/nas'):
         inshape = '/nas/active/ops/community_safety/ehp/georisk_earthquake/modelling/sandpits/tallen/NSHA2018/postprocessing/maps/shapefiles//au_maritime_boundary_digitised.shp'
     else:
-        inshape = '/Users/tallen/Documents/Geoscience_Australia/NSHA2018/postprocessing/maps/shapefiles/au_maritime_boundary_digitised.shp'
+        inshape = '/Users/trev/Documents/Geoscience_Australia/NSHA2023/postprocessing/maps/shapefiles/au_maritime_boundary_digitised.shp'
     
     sf = shapefile.Reader(inshape)
     sf = sf.shapes()
@@ -662,11 +662,12 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     for levels, levelName in zip(allLevels, levelNames):
         
         # setup shapefile
-        outshp = path.join('contours', '_'.join((modelName.replace(' ','_'), key, \
-                           levelName, 'contours.shp')))
+        outshp = path.join('contours', '_'.join((modelName, key, \
+                           levelName, 'contours'))).replace('-','_').replace('(','').replace(')','').replace('.','')
     
         # set shapefile to write to
-        w = shapefile.Writer(shapefile.POLYLINE)
+        w = shapefile.Writer(outshp)
+        	
         w.field('LEVELS','F', 5, 3)
             
         # have to re-contour using un-transformed lat/lons
@@ -685,12 +686,12 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
                 for vert in cnt.vertices:
                     point = Point(vert)
                     if point.within(poly) == True:
-                        newcnt.append(vert)
+                        newcnt.append(list(vert))
                     
                     # add polyline to shapefile
                     elif point.within(poly) == False and len(newcnt) > 0:
                         #w.line(parts=[newcnt.vertices], shapeType=shapefile.POLYLINE)
-                        w.line(parts=array([newcnt]), shapeType=shapefile.POLYLINE)                        
+                        w.line([newcnt])
                         # add level attribute
                         w.record(lev)
                         
@@ -698,16 +699,18 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
                         
                 # do final addition of contours
                 if len(newcnt) > 0:
-                    w.line(parts=array([newcnt]), shapeType=shapefile.POLYLINE)
+                    #w.poly(parts=array([newcnt]))
+                    w.line([newcnt])
                     # add level attribute
                     w.record(lev)
                 
         # now save area shapefile
-        w.save(outshp)
+        #w.save(outshp)
+        w.close()
         
         # write projection file
         prjfile = outshp.strip().split('.shp')[0]+'.prj'
-        f = open(prjfile, 'wb')
+        f = open(prjfile, 'w')
         f.write('GEOGCS["GCS_WGS_1984",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]]')
         f.close()
         

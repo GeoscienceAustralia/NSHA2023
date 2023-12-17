@@ -43,7 +43,6 @@ from sys import argv
 from os import sep, path, mkdir, system, getcwd
 from numpy import array, mgrid, nan, shape, hstack, isinf, log, exp, interp
 from scipy.interpolate import griddata
-#from matplotlib.mlab import griddata
 from osgeo import osr, gdal
 import shapefile	
 from shapely.geometry import Point, Polygon
@@ -129,7 +128,7 @@ print 'BBOX', '/'.join((str(minlon), str(maxlon), str(minlat), str(maxlat)))
 resolution = 0.05 # degrees
 invres = int(1./resolution)
 keys = ['P0.0021', 'P0.000404'] # probabilities
-pc50 = ['0.1', '0.02']
+pc50 = ['0.1', '0.033', '0.02']
 for key, p50 in zip(keys, pc50):
     print 'Making', key, 'grid mesh...'
     
@@ -154,7 +153,7 @@ for key, p50 in zip(keys, pc50):
     if getcwd().startswith('/nas'):
         inshape = '/nas/active/ops/community_safety/ehp/georisk_earthquake/modelling/sandpits/tallen/NSHA2018/postprocessing/maps/shapefiles//au_maritime_boundary_digitised.shp'
     else:
-        inshape = '/Users/tallen/Documents/Geoscience_Australia/NSHA2018/postprocessing/maps/shapefiles/au_maritime_boundary_digitised.shp'
+        inshape = '/Users/trev/Documents/Geoscience_Australia/NSHA2018/postprocessing/maps/shapefiles/au_maritime_boundary_digitised.shp'
     
     sf = shapefile.Reader(inshape)
     sf = sf.shapes()

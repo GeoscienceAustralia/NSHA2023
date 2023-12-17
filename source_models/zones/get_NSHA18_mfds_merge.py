@@ -185,8 +185,9 @@ else:
 ###############################################################################
 
 # parse NSHA-Cat catalogue
-hmtk_csv = path.join('..','..','catalogue','data','NSHA23CAT_V0.1_hmtk_declustered.csv')
+#hmtk_csv = path.join('..','..','catalogue','data','NSHA23CAT_V0.1_hmtk_declustered.csv')
 #hmtk_csv = path.join('..','..','catalogue','data','NSHA23CAT_V0.1_hmtk_trunc_declustered.csv')
+print(hmtk_csv)
 nshaCat, full_neq = parse_hmtk_cat(hmtk_csv)
 nshaMaxYear = toYearFraction(nshaCat[-1]['datetime'])
 
@@ -207,6 +208,8 @@ unique_sub_classes = unique(array(src_class_num))
 
 sup_class_bval = []
 sup_class_bval_sig = []
+sup_class_nevs = []
+sup_class_n4 = []
 class_bval = []
 class_bval_sig = []
 class_cum_rates = []
@@ -347,7 +350,7 @@ for uclass in unique_sup_classes:
     #if uclass == 7.:
 
     # get bval for combined zones data - uses new MW estimates ("total_mvect") to do cleaning
-    bval, beta, sigb, sigbeta, fn0, cum_rates, ev_out, err_up, err_lo = \
+    bval, beta, sigb, sigbeta, fn0, cum_rates, ev_out, err_up, err_lo, nevents = \
           get_mfds(total_mvect, total_mxvect, total_tvect, total_dec_tvect, total_ev_dict, \
                    mcomps, ycomps, year_max, mrng, class_mmax, class_mmin_reg, \
                    fixed_bval, fixed_bval_sig, bin_width, poly)
@@ -355,10 +358,38 @@ for uclass in unique_sup_classes:
     # only keep b-values for super-classes
     sup_class_bval.append(bval)
     sup_class_bval_sig.append(sigb)
+    sup_class_nevs.append(nevents)
+    
+    
+    # get N4 cum rates
+    n4 = nan
+    idx = where((mrng > 3.94) & (mrng <3.96))[0]
+    if len(idx) > 0:
+        n4 = cum_rates[idx]
+    sup_class_n4.append(n4)
+    print(n4)
+
 
 sup_class_bval = array(sup_class_bval)
 sup_class_bval_sig = array(sup_class_bval_sig)
+sup_class_nevs = array(sup_class_nevs)
 unique_sub_classes = array(unique_sub_classes)
+sup_class_n4 = array(sup_class_n4)
+
+# outfile
+classtxt = ''
+for i, uclass in enumerate(unique_sup_classes):
+   classtxt += ','.join((str(uclass), str('%0.3f' % sup_class_bval[i]), \
+                         str('%0.3f' % sup_class_bval_sig[i]), str('%0.2f' % sup_class_n4[i]), \
+                         str(sup_class_nevs[i]))) +'\n'
+
+classfile = paramfile[:-6]+'_class.out'
+
+f = open(classfile, 'w')
+f.write(classtxt)
+f.close()	
+
+crash
 
 ###############################################################################
 # now, assign sub-class rates with super-class b-values
@@ -509,7 +540,7 @@ for uclass in unique_sub_classes:
     
     # get bval for combined zones data - uses new MW estimates ("total_mvect") to do cleaning
     # do this to get stats (e.g. err_up, err_lo)
-    bval, beta, sigb, sigbeta, fn0, cum_rates, ev_out, err_up, err_lo = \
+    bval, beta, sigb, sigbeta, fn0, cum_rates, ev_out, err_up, err_lo, nevents = \
           get_mfds(total_mvect, total_mxvect, total_tvect, total_dec_tvect, total_ev_dict, \
                    mcomps, ycomps, year_max, mrng, class_mmax, class_mmin_reg, \
                    sup_bval, sup_bval_sig, bin_width, poly)

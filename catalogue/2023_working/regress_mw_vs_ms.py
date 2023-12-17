@@ -126,6 +126,7 @@ odr.set_job(fit_type=0) #if set fit_type=2, returns the same as least squares
 out = odr.run()
 c0 = out.beta[0]
 c1 = out.beta[1]
+out.pprint()
 
 # write regression coeffs
 outtxt = ','.join((str(c0), str(c1)))

@@ -5,7 +5,7 @@ Created on Wed Feb 15 15:14:25 2023
 @author: u56903
 """
 import pickle
-from numpy import arange, array, delete, isnan, where, loadtxt, zeros_like, hstack
+from numpy import arange, array, delete, isnan, where, loadtxt, zeros_like, hstack, nanstd
 from obspy import UTCDateTime
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FormatStrFormatter
@@ -124,6 +124,8 @@ out = odr.run()
 c0 = out.beta[0]
 c1 = out.beta[1]
 c2 = out.beta[2]
+print('\nQuad')
+out.pprint()
 
 # write regression coeffs
 outtxt = ','.join((str(c0), str(c1), str(c2)))
@@ -144,6 +146,8 @@ lqc1 = out.beta[1]
 lqc2 = out.beta[2]
 lqc3 = out.beta[3]
 lqc4 = out.beta[4]
+print('\nLin to Quad')
+out.pprint()
 
 '''
 # first get linear section
@@ -198,7 +202,7 @@ d6 = plt.plot(ml_2800[idx6], mw[idx6], 'h', ms=6, c=cols[5], alpha=1.0) #, label
 
 leg1 = plt.legend([d1[0], d2[0], d3[0], d4[0], d5[0], d6[0]], \
                   ['Allen et al. (2006)', 'Allen (2012)', 'Ghasemi et al. (2017)', 'AUST', 'GCMT', 'Other'], \
-                  loc=4, numpoints=3, fontsize=14)
+                  loc=4, numpoints=1, fontsize=14)
 
 #plt.plot(ml_2800[idx], mw[idx], 'o', ms=6, c='#606f74', alpha=0.5, label='Data')
 #plt.plot(ml_legacy_2018, ml_rev_2018, 'x', ms=6, c='0.75', label='2018 Rev')
@@ -248,8 +252,16 @@ ax.xaxis.set_major_formatter(FormatStrFormatter('%.1f'))
 ax.yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
 plt.xlim([2,7])
 plt.ylim([2,7])
-plt.legend(loc=2, numpoints=3, fontsize=14)
+plt.legend(loc=2, numpoints=1, fontsize=14)
 plt.gca().add_artist(leg1)
 
 plt.savefig('mw-ml.png', fmt='png', dpi=300, bbox_inches='tight')
 plt.show()
+
+#######################
+# get std of 2023 simulated
+
+mw2023 = s0 * ml_2800**2 + s1 * ml_2800 + s2
+mwres = mw - mw2023
+print('\n2023 Simulated')
+print(nanstd(mwres))
