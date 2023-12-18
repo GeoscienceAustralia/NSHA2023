@@ -85,7 +85,7 @@ gridDict, imls, investigation_time = return_annualised_haz_curves(hazCurveGridFi
 ##############################################################################
 
 # set grid return periods for hazard curve
-probs = array([0.02,0.01375,0.01,0.00445,0.002,0.0021,0.001,0.0005,0.000404,0.0002,0.0001])
+probs = array([0.02,0.01375,0.01,0.00445,0.002,0.0021,0.001,0.0005,0.000671,0.000404,0.0002,0.0001])
 
 grddict = []
 alon = []
@@ -120,17 +120,17 @@ for site in gridDict:
     if tmpdict['lat'] < minlat:
         minlat = tmpdict['lat']
 
-print 'BBOX', '/'.join((str(minlon), str(maxlon), str(minlat), str(maxlat)))
+print('BBOX', '/'.join((str(minlon), str(maxlon), str(minlat), str(maxlat))))
 ##############################################################################
 # make mesh
 ##############################################################################
 
 resolution = 0.05 # degrees
 invres = int(1./resolution)
-keys = ['P0.0021', 'P0.000404'] # probabilities
+keys = ['P0.0021', 'P0.000671', 'P0.000404'] # probabilities
 pc50 = ['0.1', '0.033', '0.02']
 for key, p50 in zip(keys, pc50):
-    print 'Making', key, 'grid mesh...'
+    print('Making', key, 'grid mesh...')
     
     # first make z data array
     ahaz = []
@@ -149,11 +149,11 @@ for key, p50 in zip(keys, pc50):
     
     
     # mask grid points outside defined grid to avoid extrapolation
-    print 'Masking', key, 'grid...'
+    print('Masking', key, 'grid...')
     if getcwd().startswith('/nas'):
         inshape = '/nas/active/ops/community_safety/ehp/georisk_earthquake/modelling/sandpits/tallen/NSHA2018/postprocessing/maps/shapefiles//au_maritime_boundary_digitised.shp'
     else:
-        inshape = '/Users/trev/Documents/Geoscience_Australia/NSHA2018/postprocessing/maps/shapefiles/au_maritime_boundary_digitised.shp'
+        inshape = '/Users/trev/Documents/Geoscience_Australia/NSHA2023/postprocessing/maps/shapefiles/au_maritime_boundary_digitised.shp'
     
     sf = shapefile.Reader(inshape)
     sf = sf.shapes()
@@ -164,7 +164,7 @@ for key, p50 in zip(keys, pc50):
     flat_z = grid_z.flatten()
     
     # now loop through points
-    print 'Cropping points...'
+    print('Cropping points...')
     for i in range(0, len(flat_x)):
         point = Point(flat_x[i], flat_y[i])
         if point.within(poly) == False:
@@ -177,7 +177,7 @@ for key, p50 in zip(keys, pc50):
     '''
     write mesh
     '''
-    print 'Writing', key, 'geoTIFF...'
+    print('Writing', key, 'geoTIFF...')
     output_file = path.join('geotiff', '_'.join(('nsha18',period, p50+'.tiff')))
     
     # Create gtif
@@ -207,18 +207,31 @@ for key, p50 in zip(keys, pc50):
     ##############################################################################
     
     # set bounds for colours
-    if p50 == '0.1' or p50 == '0.0952':
-        if period == 'PGA' or period == 'SA005' or period == 'SA01' or period == 'SA02' \
+    if p50 == '0.1' or p50 == '0.033':
+        crash - i'm broken on next line
+        if period == 'PGA':
+            if p50 == '0.033':
+                bounds = array([0, 0.01, 0.02, 0.03, 0.04, 0.06, 0.08, 0.10, 0.14, 0.20, 0.26, 0.32, 0.4])
+            else:
+                bounds = array([0, 0.005, 0.01, 0.015, 0.02, 0.03, 0.04, 0.05, 0.06, 0.08, 0.12, 0.16, 0.24])
+        elif period == 'SA005' or period == 'SA01'  \
            or period == 'SA03' or period == 'SA05':
             bounds = array([0, 0.005, 0.01, 0.015, 0.02, 0.03, 0.04, 0.05, 0.06, 0.08, 0.12, 0.16, 0.24])
         elif  period == 'SA07'  or period == 'SA10':
             bounds = array([0, 0.002, 0.004, 0.007, 0.01, 0.015, 0.02, 0.025, 0.03, 0.04, 0.05, 0.06, 0.08])
+        elif period == 'SA02':
+            if p50 == '0.033':
+                bounds = array([0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.16, 0.20, 0.26, 0.36, 0.48, 0.6])
+            else:
+                bounds = array([0, 0.005, 0.01, 0.015, 0.02, 0.03, 0.04, 0.05, 0.06, 0.08, 0.12, 0.16, 0.24])
         else:
             bounds = array([0, 0.001, 0.002, 0.004, 0.007, 0.01, 0.015, 0.02, 0.025, 0.03, 0.035, 0.045, 0.06])
     else:
-        if period == 'PGA' or period == 'SA005' or period == 'SA01' or period == 'SA02' \
+        if period == 'PGA' or period == 'SA005' or period == 'SA01'  \
            or period == 'SA03' or period == 'SA05':
-            bounds = array([0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.16, 0.20, 0.3, 0.5, 0.7, 1.0])
+            bounds = array([0, 0.01, 0.02, 0.03, 0.04, 0.06, 0.08, 0.12, 0.16, 0.22, 0.30, 0.40, 0.5])
+        elif period == 'SA02':
+            bounds = array([0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.16, 0.20, 0.26, 0.36, 0.48, 0.6])
         elif period == 'SA07':
             bounds = array([0, 0.01, 0.015, 0.02, 0.03, 0.04, 0.05, 0.06, 0.08, 0.12, 0.16, 0.24, 0.36])
         elif period == 'SA15' or period == 'SA10':
@@ -227,19 +240,25 @@ for key, p50 in zip(keys, pc50):
             bounds = array([0, 0.001, 0.002, 0.003, 0.004, 0.005, 0.007, 0.015, 0.03, 0.04, 0.05, 0.06, 0.1, 0.16])
     ncolours = 13
     
+       
     if getcwd().startswith('/nas'):
         cptfile = '/nas/active/ops/community_safety/ehp/georisk_earthquake/modelling/sandpits/tallen/NSHA2018/postprocessing/maps/cw1-013_mod.cpt'
     else:
-        cptfile = '/Users/tallen/Documents/Geoscience_Australia/NSHA2018/postprocessing/maps/cw1-013_mod.cpt'
+        cptfile = '/Users/trev/Documents/Geoscience_Australia/NSHA2023/postprocessing/maps/cw1-013_mod.cpt'
     cmap, zvals = cpt2colormap(cptfile, ncolours, rev=True)
     rgbTable = cmap2rgb(cmap, ncolours)[0] * 255
     
     # make gdal cpt file
     cpttxt = ''
-    for bound, rgb in zip(bounds, rgbTable):
+    i = 0
+    for bound, rgb in zip(bounds[:-1], rgbTable[:-1]):
         cpttxt += '\t'.join((str(bound), str(rgb[0]), str(rgb[1]), str(rgb[2]))) + '\n'
+        cpttxt += '\t'.join((str(bounds[i+1]-0.0000001), str(rgb[0]), str(rgb[1]), str(rgb[2]))) + '\n'
+        i += 1
+    cpttxt += '\t'.join((str(bounds[-1]), str(rgbTable[-1]), str(rgbTable[-1]), str(rgbTable[-1])))
+    
         
-    f = open('gdal_cpt.dat', 'wb')
+    f = open('gdal_cpt.dat', 'w')
     f.write(cpttxt)
     f.close()
     

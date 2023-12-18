@@ -310,7 +310,8 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     elif probability == '2%':
         ncolours = 13       
     
-    ncolours = 13
+    elif probability == '3.3%':
+        ncolours = 13
     try:
         cmap, zvals = cpt2colormap(cptfile, ncolours, rev=True)
     except:
@@ -350,19 +351,34 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
             #ncolours = 9
             #norm = colors.Normalize(vmin=0,vmax=10)
         else:
-            if period == 'PGA' or period == 'SA005' or period == 'SA01' or period == 'SA02' \
+            if period == 'PGA':
+                if probability == '3.3%':
+                    bounds = array([0, 0.01, 0.02, 0.03, 0.04, 0.06, 0.08, 0.10, 0.14, 0.20, 0.26, 0.32, 0.4])
+                else:
+                    bounds = array([0, 0.005, 0.01, 0.015, 0.02, 0.03, 0.04, 0.05, 0.06, 0.08, 0.12, 0.16, 0.24])
+            elif period == 'SA005' or period == 'SA01'  \
                or period == 'SA03' or period == 'SA05':
                 bounds = array([0, 0.005, 0.01, 0.015, 0.02, 0.03, 0.04, 0.05, 0.06, 0.08, 0.12, 0.16, 0.24])
             elif  period == 'SA07'  or period == 'SA10':
                 bounds = array([0, 0.002, 0.004, 0.007, 0.01, 0.015, 0.02, 0.025, 0.03, 0.04, 0.05, 0.06, 0.08])
+            elif period == 'SA02':
+                if probability == '3.3%':
+                    bounds = array([0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.16, 0.20, 0.26, 0.36, 0.48, 0.6])
+                else:
+                    bounds = array([0, 0.005, 0.01, 0.015, 0.02, 0.03, 0.04, 0.05, 0.06, 0.08, 0.12, 0.16, 0.24])
             else:
                 bounds = array([0, 0.001, 0.002, 0.004, 0.007, 0.01, 0.015, 0.02, 0.025, 0.03, 0.035, 0.045, 0.06])
+            
+                
+            
             ncolours = 12
             norm = colors.BoundaryNorm(boundaries=bounds, ncolors=ncolours)
     else:
-        if period == 'PGA' or period == 'SA005' or period == 'SA01' or period == 'SA02' \
+        if period == 'PGA' or period == 'SA005' or period == 'SA01'  \
            or period == 'SA03' or period == 'SA05':
-            bounds = array([0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.16, 0.20, 0.26, 0.34, 0.44, 0.6])
+            bounds = array([0, 0.01, 0.02, 0.03, 0.04, 0.06, 0.08, 0.12, 0.16, 0.22, 0.30, 0.40, 0.5])
+        elif period == 'SA02':
+            bounds = array([0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.16, 0.20, 0.26, 0.36, 0.48, 0.6])
         elif period == 'SA07':
             bounds = array([0, 0.01, 0.015, 0.02, 0.03, 0.04, 0.05, 0.06, 0.08, 0.12, 0.16, 0.24, 0.36])
         elif period == 'SA15' or period == 'SA10':
@@ -615,9 +631,11 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     # check to see if maps exists
     if path.isdir('maps') == False:
         mkdir('maps')
+    
+    siteClass = path.split(gridfile)[0][-4:]
         
     # now save png file
-    plt.savefig(path.join('maps', 'hazard_map_'+modelName.replace(' ','_')+'.'+period+'.'+probFraction+'.png'), \
+    plt.savefig(path.join('maps', 'hazard_map_'+modelName.replace(' ','_')+'.'+period+'.'+probFraction+'.'+siteClass+'.png'), \
                 dpi=300, format='png', bbox_inches='tight')
     
     # save pdf file
@@ -663,7 +681,7 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
         
         # setup shapefile
         outshp = path.join('contours', '_'.join((modelName, key, \
-                           levelName, 'contours'))).replace('-','_').replace('(','').replace(')','').replace('.','')
+                           siteClass, 'contours'))).replace('-','_').replace('(','').replace(')','').replace('.','')
     
         # set shapefile to write to
         w = shapefile.Writer(outshp)
