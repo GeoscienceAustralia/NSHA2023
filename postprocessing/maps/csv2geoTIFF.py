@@ -7,6 +7,7 @@ Created on Tue May 12 15:07:46 2015
 # https://gis.stackexchange.com/questions/130199/changing-color-of-raster-images-based-on-their-data-values-gdal
 #from pyrate.shared import Ifg, DEM
 #import subprocess
+print('\nUse: conda activate gdal\n')
 import sys
 import os
 import tempfile
@@ -75,7 +76,9 @@ if path.isdir('geotiff') == False:
     mkdir('geotiff')
     
 # make out geoTIFF    
-period = hazCurveGridFile.split(sep)[-2].split('_')[-1]
+period = hazCurveGridFile.split(sep)[-2].split('_')[-3]
+
+siteClass = 'SC_' + hazCurveGridFile.split(sep)[-2].split('_')[-1]
 
 # parse grid file
 gridDict, imls, investigation_time = return_annualised_haz_curves(hazCurveGridFile)
@@ -178,7 +181,8 @@ for key, p50 in zip(keys, pc50):
     write mesh
     '''
     print('Writing', key, 'geoTIFF...')
-    output_file = path.join('geotiff', '_'.join(('nsha18',period, p50+'.tiff')))
+    #output_file = path.join('geotiff', '_'.join(('nsha18',period, p50+'.tiff')))
+    output_file = path.join('geotiff', '_'.join(('nsha23',period, siteClass, p50+'.tiff')))
     
     # Create gtif
     nbands = 1
@@ -208,7 +212,7 @@ for key, p50 in zip(keys, pc50):
     
     # set bounds for colours
     if p50 == '0.1' or p50 == '0.033':
-        crash - i'm broken on next line
+
         if period == 'PGA':
             if p50 == '0.033':
                 bounds = array([0, 0.01, 0.02, 0.03, 0.04, 0.06, 0.08, 0.10, 0.14, 0.20, 0.26, 0.32, 0.4])
@@ -255,7 +259,8 @@ for key, p50 in zip(keys, pc50):
         cpttxt += '\t'.join((str(bound), str(rgb[0]), str(rgb[1]), str(rgb[2]))) + '\n'
         cpttxt += '\t'.join((str(bounds[i+1]-0.0000001), str(rgb[0]), str(rgb[1]), str(rgb[2]))) + '\n'
         i += 1
-    cpttxt += '\t'.join((str(bounds[-1]), str(rgbTable[-1]), str(rgbTable[-1]), str(rgbTable[-1])))
+    cpttxt += '\t'.join((str(bounds[-1]), str(rgbTable[-1][0]), str(rgbTable[-1][1]), str(rgbTable[-1][2]))) + '\n'
+    cpttxt += '\t'.join(('nv','0','0','0','0'))
     
         
     f = open('gdal_cpt.dat', 'w')
@@ -263,8 +268,12 @@ for key, p50 in zip(keys, pc50):
     f.close()
     
     # recolour geoTiff
-    intiff = path.join('geotiff', '_'.join(('nsha18',period, p50+'.tiff')))
-    outtiff = intiff[0:-4]+'_colour.tiff'
+    intiff = path.join('geotiff', '_'.join(('nsha23',period, siteClass, p50+'.tiff')))
+    outtiff = intiff[0:-5]+'_colour.tiff'
+    	
+    # set nan values to no data
+    gdaledit_cmd = ' '.join(('/Users/trev/opt/miniconda3/envs/py37/bin/gdal_edit.py -a_nodata -nan',intiff))
+    system(gdaledit_cmd)
     
     gdaldem_cmd = ' '.join(('gdaldem color-relief', intiff, 'gdal_cpt.dat', outtiff))
     #gdaldem color-relief jotunheimen.tif color_relief.txt jotunheimen_colour_relief.tif
