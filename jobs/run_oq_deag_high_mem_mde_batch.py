@@ -115,7 +115,9 @@ for i,param_file in enumerate(param_file_list):
 
     # Build run_<model>.sh
     outlines = '#PBS -P w84\n'
-    outlines += '#PBS -q normalbw\n' # for high-memory jobs
+    outlines += '#PBS -q normal\n' # for high-memory jobs
+    #outlines += '#PBS -l storage=normal/w84\n'
+    outlines += '#PBS -l storage=gdata/a00+scratch/a00\n'
     outlines += '#PBS -l walltime=%s\n' % params['walltime']
     outlines += '#PBS -l ncpus=%s\n' % params['ncpus']
     outlines += '#PBS -l mem=%s\n' % params['mem']
@@ -123,12 +125,13 @@ for i,param_file in enumerate(param_file_list):
     outlines += '#PBS -N oq512c512ht\n'
     outlines += '#PBS -l jobfs=%s\n' % params['jobfs']
     outlines += '#PBS -l other=hyperthread\n\n'
-    
+
     #outlines += 'module load openquake/2.1.1\n'
     #outlines += 'module load openquake/2.4\n'
-    #outlines += 'module load openquake/3.1\n' # used for NSHA18
-    #outlines += 'module load openquake/3.3.1\n'
-    outlines += 'module load openquake/3.6\n'
+    #outlines += 'module load openquake/3.1\n' # used in the NSHA18
+    #outlines += 'module load openquake/3.6\n'
+    #outlines += 'module load openquake/3.7.1\n'
+    outlines += 'module load openquake/3.16.1\n'
     outlines += 'oq-ini.all.sh\n'
     outlines += 'oq engine --run %s --exports csv >&  parjob.log\n' % params['job_file']
     outlines += 'oq-end.sh\n'
@@ -141,9 +144,6 @@ for i,param_file in enumerate(param_file_list):
     f_out.close()
 
     # clean working directory after copying job files.  
-    
-
-
 
 # Change to output directory and submit job
 # batch jobs needs to go into ALL the folders and run the coresponding scripts

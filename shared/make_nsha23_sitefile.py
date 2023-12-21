@@ -1,6 +1,6 @@
 from shapely.geometry import Point, Polygon
 import shapefile
-from numpy import array
+from numpy import array, random
 from mapping_tools import distance, reckon, get_line_parallels
 
 # set outer bbox
@@ -65,8 +65,10 @@ lons = array(lons)
 lats = array(lats)
 
 # down sample lo/la for outsite AU polygon
-dlon = lons[range(0, len(lons), 21)]
-dlat = lats[range(0, len(lats), 21)]
+size = int(len(lons)/15)
+keepidx = random.randint(0,len(lons)-1, size=size)
+dlon = lons[keepidx]
+dlat = lats[keepidx]
     
 #parese shapefile
 print('Reading source shapefile...')
