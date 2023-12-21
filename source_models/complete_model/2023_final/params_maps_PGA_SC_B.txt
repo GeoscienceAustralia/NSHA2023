@@ -8,4 +8,4 @@ shared_rel_path = NSHA2023/shared
 gsim_lt_filename = NSHA23_Aus_GMM_logic_tree_class_b.xml
 model_output_base = /scratch/w84/NSHA23/2023_final/maps
 job_file = job_maps_PGA_SC_B.ini
-job_type = maps
+job_type = B_PGA_maps
