@@ -7,7 +7,7 @@ Created on Tue May 12 15:07:46 2015
 # https://gis.stackexchange.com/questions/130199/changing-color-of-raster-images-based-on-their-data-values-gdal
 #from pyrate.shared import Ifg, DEM
 #import subprocess
-print('\nUse: conda activate gdal\n')
+#print('\nUse: conda activate gdal\n')
 import sys
 import os
 import tempfile
