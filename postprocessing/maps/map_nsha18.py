@@ -13,17 +13,20 @@ Usage:
 from sys import argv
 from scipy.interpolate import griddata
 from matplotlib import colors, colorbar #, cm
-from os import path, mkdir, getcwd
+from os import path, mkdir, getcwd, system
 #import matplotlib.pyplot as plt
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
-from numpy import arange, array, log10, mean, mgrid, ogrid, percentile, ma, isnan, nan, where, delete, floor
+from numpy import arange, array, log10, mean, mgrid, ogrid, percentile, ma, isnan, nan, where, delete, floor, asarray, hstack, savetxt
 from tools.mapping_tools import get_map_polygons, mask_outside_polygons, cpt2colormap # drawshapepoly, labelpolygon, 
 import shapefile
 from scipy.constants import g
-from misc_tools import remove_last_cmap_colour
+from gmt_tools import remove_last_cmap_colour, remove_first_cmap_colour
 from shapely.geometry import Point, Polygon
+import matplotlib.patheffects as PathEffects
+path_effects=[PathEffects.withStroke(linewidth=0, foreground="w")]
+
 import warnings
 warnings.filterwarnings("ignore")
 #from gmt_tools import cpt2colormap
@@ -63,6 +66,20 @@ pltProbability = argv[4]
 # plt GSHAP colours 
 pltGSHAP = argv[5]  # True or False
 
+def set_cmap(cptfile):
+    if cptfile == 'ch05m151008.cpt':
+        ncolours = 13
+        suffix = '.colour-vision_friendly'
+        cmap, zvals = cpt2colormap(cptfile, ncolours, rev=False)
+        #cmap = remove_first_cmap_colour(remove_first_cmap_colour(cmap))
+        
+    else:
+        ncolours = 13
+        suffix = ''
+        cmap, zvals = cpt2colormap(cptfile, ncolours, rev=False)
+        
+    return cmap, suffix
+    
 ##############################################################################
 # parse hazard map file
 ##############################################################################
@@ -116,6 +133,7 @@ for i, key in enumerate(keys):
     keyProb = str(int(floor(100*float(key.split('-')[-1]))))
     if keyProb == pltProbability:
         mapidx = i
+
 
 ##############################################################################    
 # now make maps
@@ -199,6 +217,12 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     lonlist = array(lonlist)[idx]
     latlist = array(latlist)[idx]
     hazvals = array(hazvals)[idx]
+    
+    # write data to temp csv for later
+    grdarray = hstack((lonlist.reshape(len(lonlist),1), \
+                      latlist.reshape(len(latlist),1), \
+                      hazvals.reshape(len(hazvals),1)))
+    savetxt("grid.csv", grdarray, delimiter=",")
     
     '''
     # for AS1170.4 adhustments
@@ -292,6 +316,8 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     
     # get colormap from cpt file
     cptfile = 'cw1-013_mod.cpt'
+    cptfile = 'ch05m151008.cpt'
+    
     #ncols = 9
     
     # get T from period
@@ -312,33 +338,34 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     
     elif probability == '3.3%':
         ncolours = 13
+    
     try:
-        cmap, zvals = cpt2colormap(cptfile, ncolours, rev=True)
+        cmap, suffix = set_cmap(cptfile)
     except:
         try:
             if pltGSHAP == 'True':
                 nascptfile = '/nas/active/ops/community_safety/ehp/georisk_earthquake/hazard/DATA/cpt/gshap_mpl.cpt'
-                capfile = '/nas/active/ops/community_safety/ehp/georisk_earthquake/modelling/sandpits/tallen/NSHA2018/shared/capitals_names.csv'
+                capfile = '/nas/active/ops/community_safety/ehp/georisk_earthquake/modelling/sandpits/tallen/NSHA2023/shared/capitals_names.csv'
                 ncolours = 10
                 cmap, zvals = cpt2colormap(nascptfile, ncolours, rev=False)
                 cmap = remove_last_cmap_colour(cmap)
                 
             else:
-                nascptfile = '/nas/active/ops/community_safety/ehp/georisk_earthquake/modelling/sandpits/tallen/NSHA2018/postprocessing/maps/'+ cptfile
-                capfile = '/nas/active/ops/community_safety/ehp/georisk_earthquake/modelling/sandpits/tallen/NSHA2018/shared/capitals_names.csv'
+                nascptfile = '/nas/active/ops/community_safety/ehp/georisk_earthquake/modelling/sandpits/tallen/NSHA2023/postprocessing/maps/'+ cptfile
+                capfile = '/nas/active/ops/community_safety/ehp/georisk_earthquake/modelling/sandpits/tallen/NSHA2023/shared/capitals_names.csv'
                 cmap, zvals = cpt2colormap(nascptfile, ncolours, rev=True)
                 #cmap = remove_last_cmap_colour(cmap)
             
-            #cptfile = '/nas/gemd/ehp/georisk_earthquake/modelling/sandpits/tallen/NSHA2018/postprocessing/maps/GMT_no_green.cpt'
+            #cptfile = '/nas/gemd/ehp/georisk_earthquake/modelling/sandpits/tallen/NSHA2023/postprocessing/maps/GMT_no_green.cpt'
             
         except:
             try:
-                ncicptfile = '/short/w84/NSHA18/sandpit/tia547/NSHA2018/postprocessing/maps/'+ cptfile
-                capfile = '/short/w84/NSHA18/sandpit/tia547/NSHA2018/shared/capitals_names.csv'
+                ncicptfile = '/short/w84/NSHA18/sandpit/tia547/NSHA2023/postprocessing/maps/'+ cptfile
+                capfile = '/short/w84/NSHA18/sandpit/tia547/NSHA2023/shared/capitals_names.csv'
                 cmap, zvals = cpt2colormap(ncicptfile, ncolours, rev=True)
 
             except:
-                ncicptfile = '/Users/tallen/Documents/Geoscience_Australia/NSHA2018/postprocessing/maps/'+ cptfile
+                ncicptfile = '/Users/trev/Documents/Geoscience_Australia/NSHA2023/postprocessing/maps/'+ cptfile
                 capfile = '/Users/trev/Documents/Geoscience_Australia/NSHA2023/shared/capitals_names.csv'
                 cmap, zvals = cpt2colormap(ncicptfile, ncolours, rev=True)
     
@@ -502,23 +529,23 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     
     # plot locs on map
     x, y = m(array(llon), array(llat))
-    plt.plot(x, y, 's', markerfacecolor='None', markeredgecolor='k', markeredgewidth=0.5, markersize=8)
+    plt.plot(x, y, 's', markerfacecolor='None', markeredgecolor='k', markeredgewidth=0.75, markersize=8)
     
     # label cities
     for i, loc in enumerate(locs):
         if textoffset[i] == 0.:
             x, y = m(llon[i]-0.35, llat[i]+0.12)
-            plt.text(x, y, loc, size=15, ha='right', va='bottom', weight='light')
+            plt.text(x, y, loc, size=15, ha='right', va='bottom', weight='normal', path_effects=path_effects)
         elif textoffset[i] == 1.:
             x, y = m(llon[i]+0.35, llat[i]+0.12)
             #plt.text(x, y, loc, size=15, ha='left', va='bottom', weight='light', path_effects=pe)
-            plt.text(x, y, loc, size=15, ha='left', va='bottom', weight='light')
+            plt.text(x, y, loc, size=15, ha='left', va='bottom', weight='normal', path_effects=path_effects)
         elif textoffset[i] == 2.:
             x, y = m(llon[i]+0.3, llat[i]-0.3)
-            plt.text(x, y, loc, size=15, ha='left', va='top', weight='light')
+            plt.text(x, y, loc, size=15, ha='left', va='top', weight='normal', path_effects=path_effects)
         elif textoffset[i] == 3.:
             x, y = m(llon[i]-0.3, llat[i]-0.2)
-            plt.text(x, y, loc, size=15, ha='right', va='top', weight='light')
+            plt.text(x, y, loc, size=15, ha='right', va='top', weight='normal', path_effects=path_effects)
     
     ##########################################################################################
     # add GA logo
@@ -530,12 +557,12 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
         except:
             # cover all bases
             try:
-                im = plt.imread('/nas/active/ops/community_safety/ehp/georisk_earthquake/modelling/sandpits/tallen/NSHA2018/postprocessing/GAlogo.png')
+                im = plt.imread('/nas/active/ops/community_safety/ehp/georisk_earthquake/modelling/sandpits/tallen/NSHA2023/postprocessing/GAlogo.png')
             except:
                 try:
-                    im = plt.imread('/short/w84/NSHA18/sandpit/tia547/NSHA2018/postprocessing/GAlogo.png')
+                    im = plt.imread('/short/w84/NSHA18/sandpit/tia547/NSHA2023/postprocessing/GAlogo.png')
                 except:
-                    im = plt.imread('/Users/tallen/Documents/Geoscience_Australia/NSHA2018/postprocessing/GAlogo.png')
+                    im = plt.imread('/Users/tallen/Documents/Geoscience_Australia/NSHA2023/postprocessing/GAlogo.png')
         
         # set bbox for logo
         imoff = 0.02
@@ -556,14 +583,14 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
         except:
             # covering all bases again
             try:
-                im = plt.imread('/nas/active/ops/community_safety/ehp/georisk_earthquake/modelling/sandpits/tallen/NSHA2018/postprocessing/ccby_narrow.png')
+                im = plt.imread('/nas/active/ops/community_safety/ehp/georisk_earthquake/modelling/sandpits/tallen/NSHA2023/postprocessing/ccby_narrow.png')
                 
             except:
                 try:
-                    im = plt.imread('/short/w84/NSHA18/sandpit/tia547/NSHA2018/postprocessing/ccby_narrow.png')
+                    im = plt.imread('/short/w84/NSHA18/sandpit/tia547/NSHA2023/postprocessing/ccby_narrow.png')
                     
                 except:
-                    im = plt.imread('/Users/tallen/Documents/Geoscience_Australia/NSHA2018/postprocessing/ccby_narrow.png')
+                    im = plt.imread('/Users/tallen/Documents/Geoscience_Australia/NSHA2023/postprocessing/ccby_narrow.png')
                     
     
         # set bbox for logo
@@ -635,7 +662,7 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     siteClass = path.split(gridfile)[0][-4:]
         
     # now save png file
-    plt.savefig(path.join('maps', 'hazard_map_'+modelName.replace(' ','_')+'.'+period+'.'+probFraction+'.'+siteClass+'.png'), \
+    plt.savefig(path.join('maps', 'hazard_map_'+modelName.replace(' ','_')+'.'+period+'.'+probFraction+'.'+siteClass+suffix+'.png'), \
                 dpi=300, format='png', bbox_inches='tight')
     
     # save pdf file
@@ -652,7 +679,7 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     
     print('Masking maritime boundaries...')
     if getcwd().startswith('/nas'):
-        inshape = '/nas/active/ops/community_safety/ehp/georisk_earthquake/modelling/sandpits/tallen/NSHA2018/postprocessing/maps/shapefiles//au_maritime_boundary_digitised.shp'
+        inshape = '/nas/active/ops/community_safety/ehp/georisk_earthquake/modelling/sandpits/tallen/NSHA2023/postprocessing/maps/shapefiles//au_maritime_boundary_digitised.shp'
     else:
         inshape = '/Users/trev/Documents/Geoscience_Australia/NSHA2023/postprocessing/maps/shapefiles/au_maritime_boundary_digitised.shp'
     
@@ -732,6 +759,22 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
         f.write('GEOGCS["GCS_WGS_1984",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]]')
         f.close()
         
+    ##############################################################################    
+    # make netcdf files hile here
+    ##############################################################################
+    print('Making NetCDF file...')
+    
+    grdname = path.join('netcdf', modelName.replace(' ','_')+'.'+period+'.'+probFraction+'.'+siteClass+'.grd')
+    
+    '''
+    - gmt5 surface hazard_map-mean_PGA_0.02.csv -Gnsha18_0.02_interp.0.05.grd -R110/156/-46/-9 -I0.05
+    - gmt5 grdmath nsha18_0.02_interp.0.05.grd 0.002 MAX = nsha18_0.02_interp.0.05.grd
+    '''
+    # make grid surface
+    system(' '.join(('gmt5 surface grid.csv -G' + grdname, '-R110/156/-46/-9 -I0.05')))
+    
+    # add floor to stop poor interp
+    system(' '.join(('gmt5 grdmath', grdname, '0.001 MAX =', grdname)))
 
     
 

@@ -389,7 +389,6 @@ f = open(classfile, 'w')
 f.write(classtxt)
 f.close()	
 
-crash
 
 ###############################################################################
 # now, assign sub-class rates with super-class b-values

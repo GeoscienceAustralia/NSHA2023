@@ -13,7 +13,7 @@ modelType = int(argv[2]) # 0=Final; 1=Background; 2=Regional; 3=Seismotectonic
 sourceModel = sourcePath.split(sep)[1]
 sourceModelSimple = sourceModel.split('_')[0]
 
-imts = ['PGA', 'SA(0.05)', 'SA(0.1)', 'SA(0.2)', 'SA(0.3)', 'SA(0.5)', 'SA(0.7)', 'SA(1.0)', 'SA(1.5)', 'SA(2.0)', 'SA(4.0)']
+imts = ['PGA', 'SA(0.05)', 'SA(0.1)', 'SA(0.2)', 'SA(0.3)', 'SA(0.5)', 'SA(0.7)', 'SA(1.0)', 'SA(1.5)', 'SA(2.0)', 'SA(3.0)']
 
 #print '\nMAKE OPTION FOR mean_hazard_curves= TRUE OR FALSE\n'
 
