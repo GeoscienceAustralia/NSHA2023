@@ -2,28 +2,28 @@
 <nrml xmlns:gml="http://www.opengis.net/gml"
       xmlns="http://openquake.org/xmlns/nrml/0.4">
 
-    <sourceModel name="collapsed_collapsed">
+    <sourceModel name="best_collapsed">
 
-        <areaSource id="ZN1a" name="Zone 1a" tectonicRegion="Cratonic">
+        <areaSource id="ZN5" name="Southeastern Basins" tectonicRegion="Non_cratonic">
             <areaGeometry>
                 <gml:Polygon>
                     <gml:exterior>
                         <gml:LinearRing>
                             <gml:posList>
-                                137.5107 -34.7515
-                                137.6891 -35.6081
-                                136.2577 -35.5637
-                                134.7170 -35.0180
-                                132.6894 -34.2150
-                                130.7955 -33.2828
-                                130.9934 -32.0969
-                                131.1860 -31.0698
-                                132.0527 -30.2031
-                                133.8182 -29.0796
-                                135.8083 -28.9191
-                                136.7255 -29.1550
-                                137.5077 -31.4104
-                                137.9747 -33.4665
+                                139.2123 -37.5135
+                                143.3393 -37.6277
+                                146.2021 -37.5901
+                                149.7237 -37.7234
+                                149.6839 -39.0622
+                                148.0962 -39.6860
+                                147.5883 -40.8798
+                                145.5896 -40.6656
+                                144.0905 -39.0952
+                                143.2339 -39.0952
+                                144.1058 -41.1054
+                                146.6603 -44.8059
+                                145.3040 -45.0200
+                                139.5219 -39.4740
                             </gml:posList>
                         </gml:LinearRing>
                     </gml:exterior>
@@ -34,15 +34,57 @@
             <magScaleRel>Leonard2014_SCR</magScaleRel>
             <ruptAspectRatio>1.5</ruptAspectRatio>
             <incrementalMFD minMag="4.55" binWidth="0.1">
-                <occurRates>4.17925e-03 3.02784e-03 2.19376e-03 1.58953e-03 1.15178e-03 8.34625e-04 6.04834e-04 4.38332e-04 3.17682e-04 2.30252e-04 1.66893e-04 1.20974e-04 8.76936e-05 6.35721e-05 4.60878e-05 3.34139e-05 2.42265e-05 1.75661e-05 1.27374e-05 9.23650e-06 6.69816e-06 4.85764e-06 3.52302e-06 2.55521e-06 1.85336e-06 1.34435e-06 9.75184e-07 7.07427e-07 4.38283e-07 1.96220e-07 8.18526e-08 2.64607e-08</occurRates>
+                <occurRates>1.52718e-02 1.11813e-02 8.18636e-03 5.99364e-03 4.38825e-03 3.21285e-03 2.35229e-03 1.72223e-03 1.26093e-03 9.23190e-04 6.75913e-04 4.94870e-04 3.62319e-04 2.65272e-04 1.94219e-04 1.42197e-04 1.04110e-04 7.62239e-05 5.58073e-05 4.08593e-05 2.99151e-05 2.19024e-05 1.60358e-05 1.17406e-05 8.59589e-06 6.29348e-06 4.60777e-06 3.37358e-06 2.46997e-06 1.80839e-06 1.32401e-06 9.69373e-07 0.00000e+00 0.00000e+00</occurRates>
             </incrementalMFD>
             <nodalPlaneDist>
-                <nodalPlane probability="0.34" strike="190" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.34" strike="10.0" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="205" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="175" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="25" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="355" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.34" strike="225" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.34" strike="45.0" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="240" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="210" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="60" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="30" dip="35.0" rake="90.0" />
+            </nodalPlaneDist>
+            <hypoDepthDist>
+                <hypoDepth probability="0.50" depth="10.0"/>
+                <hypoDepth probability="0.25" depth="5.0"/>
+                <hypoDepth probability="0.25" depth="15.0"/>
+            </hypoDepthDist>
+        </areaSource>
+
+        <areaSource id="ZN6a" name="Northwest Australia" tectonicRegion="Cratonic">
+            <areaGeometry>
+                <gml:Polygon>
+                    <gml:exterior>
+                        <gml:LinearRing>
+                            <gml:posList>
+                                127.5235 -19.0286
+                                127.5235 -20.6466
+                                120.6820 -19.7146
+                                119.8730 -19.2863
+                                120.7455 -16.9382
+                                123.2387 -14.9119
+                                124.2458 -13.6825
+                                131.4359 -10.0177
+                                130.0933 -15.6021
+                            </gml:posList>
+                        </gml:LinearRing>
+                    </gml:exterior>
+                </gml:Polygon>
+                <upperSeismoDepth>0.0</upperSeismoDepth>
+                <lowerSeismoDepth>20.0</lowerSeismoDepth>
+            </areaGeometry>
+            <magScaleRel>Leonard2014_SCR</magScaleRel>
+            <ruptAspectRatio>1.5</ruptAspectRatio>
+            <incrementalMFD minMag="4.55" binWidth="0.1">
+                <occurRates>4.33586e-02 3.40076e-02 2.66732e-02 2.09207e-02 1.64087e-02 1.28699e-02 1.00943e-02 7.91727e-03 6.20977e-03 4.87052e-03 3.82011e-03 2.99623e-03 2.35004e-03 1.84321e-03 1.44569e-03 1.13390e-03 8.89355e-04 6.97550e-04 5.47111e-04 4.29117e-04 3.36570e-04 2.63983e-04 2.07050e-04 1.62396e-04 1.27372e-04 9.99023e-05 7.83566e-05 6.14576e-05 4.82031e-05 4.53478e-18 0.00000e+00 0.00000e+00</occurRates>
+            </incrementalMFD>
+            <nodalPlaneDist>
+                <nodalPlane probability="0.34" strike="149" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.34" strike="329" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="164" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="134" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="344" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="314" dip="35.0" rake="90.0" />
             </nodalPlaneDist>
             <hypoDepthDist>
                 <hypoDepth probability="0.50" depth="5.0"/>
@@ -51,7 +93,7 @@
             </hypoDepthDist>
         </areaSource>
 
-        <areaSource id="ZN1b" name="Zone 1b" tectonicRegion="Cratonic">
+        <areaSource id="ZN1a" name="Northern Territory" tectonicRegion="Cratonic">
             <areaGeometry>
                 <gml:Polygon>
                     <gml:exterior>
@@ -81,11 +123,12 @@
                                 141.1469 -5.6635
                                 143.4480 -6.9960
                                 144.4489 -7.6439
-                                145.4991 -8.4870
+                                145.4948 -8.4812
                                 145.6987 -8.6849
                                 144.9406 -9.4540
                                 144.8198 -9.8166
                                 144.4494 -10.8177
+                                144.2232 -11.3099
                                 144.2312 -11.4242
                                 144.8315 -13.8938
                                 146.9492 -17.5106
@@ -100,7 +143,7 @@
             <magScaleRel>Leonard2014_SCR</magScaleRel>
             <ruptAspectRatio>1.5</ruptAspectRatio>
             <incrementalMFD minMag="4.55" binWidth="0.1">
-                <occurRates>1.91191e-02 1.50685e-02 1.18765e-02 9.36108e-03 7.37871e-03 5.81638e-03 4.58503e-03 3.61451e-03 2.84954e-03 2.24655e-03 1.77123e-03 1.39654e-03 1.10115e-03 8.68277e-04 6.84679e-04 5.39925e-04 4.25791e-04 3.35797e-04 2.64834e-04 2.08876e-04 1.64748e-04 1.29947e-04 1.02502e-04 8.08563e-05 6.37841e-05 5.03185e-05 3.96972e-05 3.13191e-05 2.11024e-05 1.02746e-05 4.66119e-06 1.63871e-06</occurRates>
+                <occurRates>1.79611e-02 1.40874e-02 1.10492e-02 8.66627e-03 6.79724e-03 5.33129e-03 4.18150e-03 3.27969e-03 2.57236e-03 2.01759e-03 1.58246e-03 1.24117e-03 9.73492e-04 7.63541e-04 5.98870e-04 4.69713e-04 3.68411e-04 2.88956e-04 2.26638e-04 1.77759e-04 1.39422e-04 1.09353e-04 8.57694e-05 6.72717e-05 5.27633e-05 4.13840e-05 3.24588e-05 2.54585e-05 1.99679e-05 1.87851e-18 0.00000e+00 0.00000e+00</occurRates>
             </incrementalMFD>
             <nodalPlaneDist>
                 <nodalPlane probability="0.34" strike="118" dip="35.0" rake="90.0" />
@@ -117,25 +160,22 @@
             </hypoDepthDist>
         </areaSource>
 
-        <areaSource id="ZN2" name="Zone 2" tectonicRegion="Non_cratonic">
+        <areaSource id="ZN2a" name="Flinders Ranges" tectonicRegion="Non_cratonic">
             <areaGeometry>
                 <gml:Polygon>
                     <gml:exterior>
                         <gml:LinearRing>
                             <gml:posList>
-                                139.8704 -35.4925
-                                138.2453 -35.8247
-                                137.6838 -35.6063
-                                137.5053 -34.7497
-                                137.9693 -33.4648
-                                137.5023 -31.4086
-                                136.7201 -29.1532
+                                139.5971 -34.2163
+                                138.2453 -35.8259
+                                137.6891 -35.6081
+                                137.5107 -34.7515
+                                137.9747 -33.4665
+                                137.5077 -31.4104
+                                136.7255 -29.1550
                                 139.0573 -29.1157
                                 139.5700 -28.6613
-                                140.9994 -28.7632
-                                142.6334 -30.9172
-                                142.8117 -31.7639
-                                140.7765 -33.6357
+                                140.0397 -32.8314
                             </gml:posList>
                         </gml:LinearRing>
                     </gml:exterior>
@@ -146,7 +186,53 @@
             <magScaleRel>Leonard2014_SCR</magScaleRel>
             <ruptAspectRatio>1.5</ruptAspectRatio>
             <incrementalMFD minMag="4.55" binWidth="0.1">
-                <occurRates>2.03060e-02 1.47079e-02 1.06537e-02 7.71744e-03 5.59072e-03 4.05027e-03 2.93443e-03 2.12611e-03 1.54053e-03 1.11629e-03 8.08917e-04 5.86212e-04 4.24841e-04 3.07908e-04 2.23171e-04 1.61762e-04 1.17256e-04 8.49999e-05 6.16200e-05 4.46732e-05 3.23887e-05 2.34835e-05 1.70276e-05 1.23471e-05 8.95356e-06 6.49306e-06 4.70895e-06 3.41523e-06 2.47706e-06 1.51641e-06 6.89430e-07 2.60929e-07 6.03527e-08</occurRates>
+                <occurRates>2.16896e-02 1.58874e-02 1.16373e-02 8.52417e-03 6.24384e-03 4.57353e-03 3.35005e-03 2.45387e-03 1.79743e-03 1.31659e-03 9.64388e-04 7.06402e-04 5.17430e-04 3.79011e-04 2.77621e-04 2.03354e-04 1.48954e-04 1.09107e-04 7.99193e-05 5.85399e-05 4.28797e-05 3.14088e-05 2.30066e-05 1.68520e-05 1.23439e-05 9.04174e-06 6.62296e-06 4.85123e-06 3.55346e-06 2.60287e-06 0.00000e+00 0.00000e+00 0.00000e+00</occurRates>
+            </incrementalMFD>
+            <nodalPlaneDist>
+                <nodalPlane probability="0.34" strike="192" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.34" strike="12.0" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="207" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="177" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="27" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="357" dip="35.0" rake="90.0" />
+            </nodalPlaneDist>
+            <hypoDepthDist>
+                <hypoDepth probability="0.50" depth="10.0"/>
+                <hypoDepth probability="0.25" depth="5.0"/>
+                <hypoDepth probability="0.25" depth="15.0"/>
+            </hypoDepthDist>
+        </areaSource>
+
+        <areaSource id="ZN1b" name="Southern South Australia" tectonicRegion="Cratonic">
+            <areaGeometry>
+                <gml:Polygon>
+                    <gml:exterior>
+                        <gml:LinearRing>
+                            <gml:posList>
+                                136.7255 -29.1550
+                                137.5077 -31.4104
+                                137.9747 -33.4665
+                                137.5107 -34.7515
+                                137.6891 -35.6081
+                                136.2577 -35.5637
+                                134.7170 -35.0180
+                                132.6894 -34.2150
+                                130.7955 -33.2828
+                                131.1860 -31.0698
+                                132.0527 -30.2031
+                                133.8182 -29.0796
+                                135.8083 -28.9191
+                            </gml:posList>
+                        </gml:LinearRing>
+                    </gml:exterior>
+                </gml:Polygon>
+                <upperSeismoDepth>0.0</upperSeismoDepth>
+                <lowerSeismoDepth>20.0</lowerSeismoDepth>
+            </areaGeometry>
+            <magScaleRel>Leonard2014_SCR</magScaleRel>
+            <ruptAspectRatio>1.5</ruptAspectRatio>
+            <incrementalMFD minMag="4.55" binWidth="0.1">
+                <occurRates>4.80080e-03 3.51652e-03 2.57581e-03 1.88675e-03 1.38202e-03 1.01231e-03 7.41504e-04 5.43142e-04 3.97844e-04 2.91416e-04 2.13458e-04 1.56356e-04 1.14528e-04 8.38906e-05 6.14488e-05 4.50104e-05 3.29696e-05 2.41498e-05 1.76894e-05 1.29573e-05 9.49103e-06 6.95206e-06 5.09229e-06 3.73004e-06 2.73220e-06 2.00130e-06 1.46593e-06 1.07377e-06 7.86526e-07 7.14908e-20 0.00000e+00 0.00000e+00</occurRates>
             </incrementalMFD>
             <nodalPlaneDist>
                 <nodalPlane probability="0.34" strike="190" dip="35.0" rake="90.0" />
@@ -157,13 +243,300 @@
                 <nodalPlane probability="0.08" strike="355" dip="35.0" rake="90.0" />
             </nodalPlaneDist>
             <hypoDepthDist>
+                <hypoDepth probability="0.50" depth="5.0"/>
+                <hypoDepth probability="0.25" depth="2.5"/>
+                <hypoDepth probability="0.25" depth="10.0"/>
+            </hypoDepthDist>
+        </areaSource>
+
+        <areaSource id="ZN3a" name="South-Central Australia" tectonicRegion="Cratonic">
+            <areaGeometry>
+                <gml:Polygon>
+                    <gml:exterior>
+                        <gml:LinearRing>
+                            <gml:posList>
+                                130.7955 -33.2828
+                                121.3226 -34.9160
+                                125.6378 -27.7630
+                                129.3041 -28.0102
+                                133.8128 -29.0778
+                                132.0474 -30.2013
+                                131.1807 -31.0680
+                            </gml:posList>
+                        </gml:LinearRing>
+                    </gml:exterior>
+                </gml:Polygon>
+                <upperSeismoDepth>0.0</upperSeismoDepth>
+                <lowerSeismoDepth>20.0</lowerSeismoDepth>
+            </areaGeometry>
+            <magScaleRel>Leonard2014_SCR</magScaleRel>
+            <ruptAspectRatio>1.5</ruptAspectRatio>
+            <incrementalMFD minMag="4.55" binWidth="0.1">
+                <occurRates>7.34655e-03 5.73830e-03 4.48212e-03 3.50093e-03 2.73453e-03 2.13591e-03 1.66834e-03 1.30312e-03 1.01785e-03 7.95030e-04 6.20988e-04 4.85046e-04 3.78864e-04 2.95926e-04 2.31144e-04 1.80544e-04 1.41021e-04 1.10150e-04 8.60366e-05 6.72022e-05 5.24908e-05 4.09999e-05 3.20246e-05 2.50140e-05 1.95381e-05 1.52610e-05 1.19202e-05 9.31072e-06 7.27249e-06 6.82767e-19 0.00000e+00 0.00000e+00</occurRates>
+            </incrementalMFD>
+            <nodalPlaneDist>
+                <nodalPlane probability="0.34" strike="182" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.34" strike="2.0" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="197" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="167" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="17" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="347" dip="35.0" rake="90.0" />
+            </nodalPlaneDist>
+            <hypoDepthDist>
+                <hypoDepth probability="0.50" depth="5.0"/>
+                <hypoDepth probability="0.25" depth="2.5"/>
+                <hypoDepth probability="0.25" depth="10.0"/>
+            </hypoDepthDist>
+        </areaSource>
+
+        <areaSource id="ZN8b" name="Western Australia" tectonicRegion="Cratonic">
+            <areaGeometry>
+                <gml:Polygon>
+                    <gml:exterior>
+                        <gml:LinearRing>
+                            <gml:posList>
+                                125.6378 -27.7630
+                                121.3226 -34.9160
+                                118.4673 -34.6097
+                                116.0101 -34.2481
+                                115.9635 -29.7310
+                                116.2709 -29.9815
+                                116.1606 -30.7702
+                                116.1790 -31.3297
+                                116.6193 -33.1552
+                                117.3348 -32.9625
+                                118.0411 -32.2012
+                                118.2704 -31.2747
+                                118.5823 -30.8160
+                                118.4743 -30.2173
+                                117.0432 -29.6969
+                                116.2716 -29.9812
+                                115.9634 -29.7308
+                                115.5658 -28.7616
+                                115.4326 -26.6867
+                                115.5658 -25.3605
+                                114.7283 -22.3339
+                                115.7640 -20.7959
+                                117.9694 -19.4766
+                                119.8730 -19.2863
+                                120.6820 -19.7146
+                                121.7766 -23.0458
+                                123.3654 -24.9060
+                            </gml:posList>
+                        </gml:LinearRing>
+                    </gml:exterior>
+                </gml:Polygon>
+                <upperSeismoDepth>0.0</upperSeismoDepth>
+                <lowerSeismoDepth>20.0</lowerSeismoDepth>
+            </areaGeometry>
+            <magScaleRel>Leonard2014_SCR</magScaleRel>
+            <ruptAspectRatio>1.5</ruptAspectRatio>
+            <incrementalMFD minMag="4.55" binWidth="0.1">
+                <occurRates>6.14315e-02 4.81827e-02 3.77913e-02 2.96409e-02 2.32483e-02 1.82344e-02 1.43018e-02 1.12174e-02 8.79815e-03 6.90067e-03 5.41242e-03 4.24513e-03 3.32959e-03 2.61151e-03 2.04829e-03 1.60654e-03 1.26006e-03 9.88306e-04 7.75160e-04 6.07983e-04 4.76861e-04 3.74017e-04 2.93354e-04 2.30087e-04 1.80464e-04 1.41544e-04 1.11017e-04 8.70746e-05 6.82954e-05 6.42498e-18 0.00000e+00 0.00000e+00</occurRates>
+            </incrementalMFD>
+            <nodalPlaneDist>
+                <nodalPlane probability="0.34" strike="179" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.34" strike="359" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="194" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="164" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="14.0" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="344" dip="35.0" rake="90.0" />
+            </nodalPlaneDist>
+            <hypoDepthDist>
+                <hypoDepth probability="0.50" depth="5.0"/>
+                <hypoDepth probability="0.25" depth="2.5"/>
+                <hypoDepth probability="0.25" depth="10.0"/>
+            </hypoDepthDist>
+        </areaSource>
+
+        <areaSource id="ZN4a" name="Eastern Australia Inner Zone" tectonicRegion="Non_cratonic">
+            <areaGeometry>
+                <gml:Polygon>
+                    <gml:exterior>
+                        <gml:LinearRing>
+                            <gml:posList>
+                                144.8205 -34.7202
+                                139.8704 -35.4925
+                                140.7765 -33.6357
+                                142.8117 -31.7639
+                                142.6334 -30.9172
+                                140.9994 -28.7632
+                                139.5700 -28.6613
+                                137.8573 -26.5408
+                                139.8015 -24.6441
+                                145.2499 -18.7170
+                                146.9053 -22.9737
+                                150.3888 -25.9005
+                                148.6277 -30.7049
+                                146.7836 -33.6792
+                            </gml:posList>
+                        </gml:LinearRing>
+                    </gml:exterior>
+                </gml:Polygon>
+                <upperSeismoDepth>0.0</upperSeismoDepth>
+                <lowerSeismoDepth>20.0</lowerSeismoDepth>
+            </areaGeometry>
+            <magScaleRel>Leonard2014_SCR</magScaleRel>
+            <ruptAspectRatio>1.5</ruptAspectRatio>
+            <incrementalMFD minMag="4.55" binWidth="0.1">
+                <occurRates>9.75863e-03 7.32975e-03 5.50540e-03 4.13513e-03 3.10591e-03 2.33286e-03 1.75222e-03 1.31610e-03 9.88528e-04 7.42487e-04 5.57685e-04 4.18879e-04 3.14622e-04 2.36314e-04 1.77496e-04 1.33318e-04 1.00136e-04 7.52123e-05 5.64923e-05 4.24316e-05 3.18705e-05 2.39381e-05 1.79800e-05 1.35048e-05 1.01435e-05 7.61884e-06 5.72254e-06 4.29822e-06 3.22841e-06 2.42487e-06 0.00000e+00 0.00000e+00 0.00000e+00</occurRates>
+            </incrementalMFD>
+            <nodalPlaneDist>
+                <nodalPlane probability="0.34" strike="175" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.34" strike="355" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="197" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="153" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="17.0" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="333" dip="35.0" rake="90.0" />
+            </nodalPlaneDist>
+            <hypoDepthDist>
                 <hypoDepth probability="0.50" depth="10.0"/>
                 <hypoDepth probability="0.25" depth="5.0"/>
                 <hypoDepth probability="0.25" depth="15.0"/>
             </hypoDepthDist>
         </areaSource>
 
-        <areaSource id="ZN3a" name="Zone 3a" tectonicRegion="Non_cratonic">
+        <areaSource id="ZN4b" name="Eastern Australia" tectonicRegion="Non_cratonic">
+            <areaGeometry>
+                <gml:Polygon>
+                    <gml:exterior>
+                        <gml:LinearRing>
+                            <gml:posList>
+                                152.0175 -34.0716
+                                149.7237 -37.7234
+                                146.2021 -37.5901
+                                143.3393 -37.6277
+                                139.2123 -37.5135
+                                139.1175 -36.9410
+                                138.2453 -35.8259
+                                139.8704 -35.4925
+                                144.8205 -34.7202
+                                146.7836 -33.6792
+                                148.6277 -30.7049
+                                150.3888 -25.9005
+                                146.9053 -22.9737
+                                145.2499 -18.7170
+                                146.0688 -17.9865
+                                146.9492 -17.5106
+                                152.2316 -21.7936
+                                154.2457 -25.2656
+                            </gml:posList>
+                        </gml:LinearRing>
+                    </gml:exterior>
+                </gml:Polygon>
+                <upperSeismoDepth>0.0</upperSeismoDepth>
+                <lowerSeismoDepth>20.0</lowerSeismoDepth>
+            </areaGeometry>
+            <magScaleRel>Leonard2014_SCR</magScaleRel>
+            <ruptAspectRatio>1.5</ruptAspectRatio>
+            <incrementalMFD minMag="4.55" binWidth="0.1">
+                <occurRates>5.38087e-02 4.04159e-02 3.03565e-02 2.28009e-02 1.71258e-02 1.28633e-02 9.66167e-03 7.25692e-03 5.45070e-03 4.09404e-03 3.07505e-03 2.30968e-03 1.73481e-03 1.30302e-03 9.78706e-04 7.35110e-04 5.52144e-04 4.14717e-04 3.11496e-04 2.33966e-04 1.75733e-04 1.31993e-04 9.91407e-05 7.44650e-05 5.59309e-05 4.20099e-05 3.15538e-05 2.37002e-05 1.78013e-05 1.33706e-05 0.00000e+00 0.00000e+00 0.00000e+00</occurRates>
+            </incrementalMFD>
+            <nodalPlaneDist>
+                <nodalPlane probability="0.34" strike="151" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.34" strike="331" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="186" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="116" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="6.0" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="296" dip="35.0" rake="90.0" />
+            </nodalPlaneDist>
+            <hypoDepthDist>
+                <hypoDepth probability="0.50" depth="10.0"/>
+                <hypoDepth probability="0.25" depth="5.0"/>
+                <hypoDepth probability="0.25" depth="15.0"/>
+            </hypoDepthDist>
+        </areaSource>
+
+        <areaSource id="ZN3b" name="Central Australia" tectonicRegion="Cratonic">
+            <areaGeometry>
+                <gml:Polygon>
+                    <gml:exterior>
+                        <gml:LinearRing>
+                            <gml:posList>
+                                139.5700 -28.6613
+                                139.0573 -29.1157
+                                136.7255 -29.1550
+                                135.8030 -28.9173
+                                133.8128 -29.0778
+                                129.3041 -28.0102
+                                125.6378 -27.7630
+                                123.3654 -24.9060
+                                121.7766 -23.0458
+                                120.6820 -19.7146
+                                127.5235 -20.6466
+                                129.5222 -21.5032
+                                132.7583 -21.6936
+                                136.3433 -22.7029
+                                138.1835 -23.9778
+                                139.8015 -24.6441
+                                137.8573 -26.5408
+                            </gml:posList>
+                        </gml:LinearRing>
+                    </gml:exterior>
+                </gml:Polygon>
+                <upperSeismoDepth>0.0</upperSeismoDepth>
+                <lowerSeismoDepth>20.0</lowerSeismoDepth>
+            </areaGeometry>
+            <magScaleRel>Leonard2014_SCR</magScaleRel>
+            <ruptAspectRatio>1.5</ruptAspectRatio>
+            <incrementalMFD minMag="4.55" binWidth="0.1">
+                <occurRates>5.13009e-02 4.00705e-02 3.12986e-02 2.44470e-02 1.90952e-02 1.49151e-02 1.16500e-02 9.09966e-03 7.10764e-03 5.55169e-03 4.33636e-03 3.38708e-03 2.64561e-03 2.06645e-03 1.61408e-03 1.26074e-03 9.84748e-04 7.69175e-04 6.00793e-04 4.69273e-04 3.66543e-04 2.86303e-04 2.23627e-04 1.74673e-04 1.36435e-04 1.06568e-04 8.32387e-05 6.50167e-05 5.07838e-05 4.76776e-18 0.00000e+00 0.00000e+00</occurRates>
+            </incrementalMFD>
+            <nodalPlaneDist>
+                <nodalPlane probability="0.34" strike="154" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.34" strike="334" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="176" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="132" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="356" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="312" dip="35.0" rake="90.0" />
+            </nodalPlaneDist>
+            <hypoDepthDist>
+                <hypoDepth probability="0.50" depth="5.0"/>
+                <hypoDepth probability="0.25" depth="2.5"/>
+                <hypoDepth probability="0.25" depth="10.0"/>
+            </hypoDepthDist>
+        </areaSource>
+
+        <areaSource id="ZN7a" name="Offshore Northeast" tectonicRegion="Non_cratonic">
+            <areaGeometry>
+                <gml:Polygon>
+                    <gml:exterior>
+                        <gml:LinearRing>
+                            <gml:posList>
+                                154.4305 -22.4147
+                                154.2457 -25.2656
+                                152.2316 -21.7936
+                                146.9492 -17.5106
+                                144.8315 -13.8938
+                                154.8406 -16.0891
+                            </gml:posList>
+                        </gml:LinearRing>
+                    </gml:exterior>
+                </gml:Polygon>
+                <upperSeismoDepth>0.0</upperSeismoDepth>
+                <lowerSeismoDepth>20.0</lowerSeismoDepth>
+            </areaGeometry>
+            <magScaleRel>Leonard2014_SCR</magScaleRel>
+            <ruptAspectRatio>1.5</ruptAspectRatio>
+            <incrementalMFD minMag="4.55" binWidth="0.1">
+                <occurRates>5.02455e-03 4.00956e-03 3.19961e-03 2.55327e-03 2.03750e-03 1.62591e-03 1.29747e-03 1.03537e-03 8.26222e-04 6.59321e-04 5.26134e-04 4.19853e-04 3.35040e-04 2.67360e-04 2.13352e-04 1.70254e-04 1.35862e-04 1.08417e-04 8.65161e-05 6.90394e-05 5.50930e-05 4.39640e-05 3.50830e-05 2.79960e-05 2.23407e-05 1.78278e-05 1.42265e-05 1.13526e-05 9.05934e-06 7.22931e-06 5.76895e-06 4.60359e-06 0.00000e+00 0.00000e+00</occurRates>
+            </incrementalMFD>
+            <nodalPlaneDist>
+                <nodalPlane probability="0.34" strike="119" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.34" strike="299" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="134" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="104" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="314" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="284" dip="35.0" rake="90.0" />
+            </nodalPlaneDist>
+            <hypoDepthDist>
+                <hypoDepth probability="0.50" depth="10.0"/>
+                <hypoDepth probability="0.25" depth="5.0"/>
+                <hypoDepth probability="0.25" depth="15.0"/>
+            </hypoDepthDist>
+        </areaSource>
+
+        <areaSource id="ZN3c" name="Tasmania" tectonicRegion="Non_cratonic">
             <areaGeometry>
                 <gml:Polygon>
                     <gml:exterior>
@@ -189,7 +562,7 @@
             <magScaleRel>Leonard2014_SCR</magScaleRel>
             <ruptAspectRatio>1.5</ruptAspectRatio>
             <incrementalMFD minMag="4.55" binWidth="0.1">
-                <occurRates>4.37889e-03 3.17267e-03 2.29883e-03 1.66576e-03 1.20709e-03 8.74760e-04 6.33958e-04 4.59466e-04 3.33019e-04 2.41382e-04 1.74970e-04 1.26837e-04 9.19490e-05 6.66609e-05 4.83299e-05 3.50415e-05 2.54080e-05 1.84239e-05 1.33602e-05 9.68866e-06 7.02646e-06 5.09602e-06 3.69612e-06 2.68091e-06 1.94464e-06 1.41064e-06 1.02333e-06 7.42395e-07 5.38610e-07 3.29820e-07 1.49993e-07 5.67840e-08 1.31377e-08</occurRates>
+                <occurRates>5.01985e-03 3.67697e-03 2.69333e-03 1.97283e-03 1.44507e-03 1.05850e-03 7.75337e-04 5.67924e-04 4.15997e-04 3.04713e-04 2.23198e-04 1.63490e-04 1.19754e-04 8.77183e-05 6.42525e-05 4.70642e-05 3.44739e-05 2.52517e-05 1.84965e-05 1.35485e-05 9.92408e-06 7.26926e-06 5.32464e-06 3.90023e-06 2.85687e-06 2.09262e-06 1.53282e-06 1.12277e-06 8.22414e-07 6.02407e-07 0.00000e+00 0.00000e+00 0.00000e+00</occurRates>
             </incrementalMFD>
             <nodalPlaneDist>
                 <nodalPlane probability="0.34" strike="229" dip="35.0" rake="90.0" />
@@ -206,220 +579,7 @@
             </hypoDepthDist>
         </areaSource>
 
-        <areaSource id="ZN3b" name="Zone 3b" tectonicRegion="Cratonic">
-            <areaGeometry>
-                <gml:Polygon>
-                    <gml:exterior>
-                        <gml:LinearRing>
-                            <gml:posList>
-                                139.5700 -28.6613
-                                139.0573 -29.1157
-                                136.7201 -29.1532
-                                135.8030 -28.9173
-                                133.8128 -29.0778
-                                132.0474 -30.2013
-                                131.1807 -31.0680
-                                130.7955 -33.2828
-                                121.3226 -34.9160
-                                125.6378 -27.7630
-                                123.3654 -24.9060
-                                121.7766 -23.0458
-                                120.6820 -19.7146
-                                127.5235 -20.6466
-                                129.5222 -21.5032
-                                132.7583 -21.6936
-                                136.3433 -22.7029
-                                138.1835 -23.9778
-                                139.8015 -24.6441
-                                137.8573 -26.5408
-                            </gml:posList>
-                        </gml:LinearRing>
-                    </gml:exterior>
-                </gml:Polygon>
-                <upperSeismoDepth>0.0</upperSeismoDepth>
-                <lowerSeismoDepth>20.0</lowerSeismoDepth>
-            </areaGeometry>
-            <magScaleRel>Leonard2014_SCR</magScaleRel>
-            <ruptAspectRatio>1.5</ruptAspectRatio>
-            <incrementalMFD minMag="4.55" binWidth="0.1">
-                <occurRates>6.17029e-02 4.83091e-02 3.78255e-02 2.96192e-02 2.31949e-02 1.81654e-02 1.42275e-02 1.11441e-02 8.72959e-03 6.83870e-03 5.35778e-03 4.19785e-03 3.28929e-03 2.57755e-03 2.01996e-03 1.58311e-03 1.24082e-03 9.72611e-04 7.62429e-04 5.97710e-04 4.68610e-04 3.67421e-04 2.88102e-04 2.25922e-04 1.77174e-04 1.38954e-04 1.08987e-04 8.54882e-05 5.72697e-05 2.77248e-05 1.25061e-05 4.37180e-06</occurRates>
-            </incrementalMFD>
-            <nodalPlaneDist>
-                <nodalPlane probability="0.34" strike="167" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.34" strike="347" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="190" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="144" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="10.0" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="324" dip="35.0" rake="90.0" />
-            </nodalPlaneDist>
-            <hypoDepthDist>
-                <hypoDepth probability="0.50" depth="5.0"/>
-                <hypoDepth probability="0.25" depth="2.5"/>
-                <hypoDepth probability="0.25" depth="10.0"/>
-            </hypoDepthDist>
-        </areaSource>
-
-        <areaSource id="ZN4" name="Zone 4" tectonicRegion="Non_cratonic">
-            <areaGeometry>
-                <gml:Polygon>
-                    <gml:exterior>
-                        <gml:LinearRing>
-                            <gml:posList>
-                                152.0175 -34.0716
-                                149.7237 -37.7234
-                                146.2021 -37.5901
-                                143.3393 -37.6277
-                                139.2123 -37.5135
-                                139.1175 -36.9410
-                                138.2453 -35.8247
-                                139.8704 -35.4925
-                                140.7765 -33.6357
-                                142.8117 -31.7639
-                                142.6334 -30.9172
-                                140.9994 -28.7632
-                                139.5700 -28.6613
-                                137.8573 -26.5408
-                                139.8015 -24.6441
-                                145.2499 -18.7170
-                                146.0688 -17.9865
-                                146.9492 -17.5106
-                                152.2316 -21.7936
-                                154.2457 -25.2656
-                            </gml:posList>
-                        </gml:LinearRing>
-                    </gml:exterior>
-                </gml:Polygon>
-                <upperSeismoDepth>0.0</upperSeismoDepth>
-                <lowerSeismoDepth>20.0</lowerSeismoDepth>
-            </areaGeometry>
-            <magScaleRel>Leonard2014_SCR</magScaleRel>
-            <ruptAspectRatio>1.5</ruptAspectRatio>
-            <incrementalMFD minMag="4.55" binWidth="0.1">
-                <occurRates>6.49427e-02 4.88697e-02 3.67766e-02 2.76774e-02 2.08306e-02 1.56784e-02 1.18011e-02 8.88310e-03 6.68697e-03 5.03403e-03 3.78987e-03 2.85335e-03 2.14836e-03 1.61764e-03 1.21809e-03 9.17267e-04 6.90772e-04 5.20230e-04 3.91812e-04 2.95109e-04 2.22283e-04 1.67438e-04 1.26131e-04 9.50190e-05 7.15848e-05 5.39327e-05 4.06354e-05 3.06180e-05 2.30713e-05 1.46733e-05 6.93071e-06 2.72513e-06 6.54845e-07</occurRates>
-            </incrementalMFD>
-            <nodalPlaneDist>
-                <nodalPlane probability="0.34" strike="165" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.34" strike="345" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="195" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="135" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="15.0" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="315" dip="35.0" rake="90.0" />
-            </nodalPlaneDist>
-            <hypoDepthDist>
-                <hypoDepth probability="0.50" depth="10.0"/>
-                <hypoDepth probability="0.25" depth="5.0"/>
-                <hypoDepth probability="0.25" depth="15.0"/>
-            </hypoDepthDist>
-        </areaSource>
-
-        <areaSource id="ZN5" name="Zone 5" tectonicRegion="Non_cratonic">
-            <areaGeometry>
-                <gml:Polygon>
-                    <gml:exterior>
-                        <gml:LinearRing>
-                            <gml:posList>
-                                139.2123 -37.5135
-                                143.3393 -37.6277
-                                146.2021 -37.5901
-                                149.7237 -37.7234
-                                149.6839 -39.0622
-                                148.0962 -39.6860
-                                147.5883 -40.8798
-                                145.5896 -40.6656
-                                144.0905 -39.0952
-                                143.2339 -39.0952
-                                144.1058 -41.1054
-                                146.6603 -44.8059
-                                145.3040 -45.0200
-                                139.5329 -39.4626
-                                139.5231 -39.4595
-                                139.5219 -39.4521
-                            </gml:posList>
-                        </gml:LinearRing>
-                    </gml:exterior>
-                </gml:Polygon>
-                <upperSeismoDepth>0.0</upperSeismoDepth>
-                <lowerSeismoDepth>20.0</lowerSeismoDepth>
-            </areaGeometry>
-            <magScaleRel>Leonard2014_SCR</magScaleRel>
-            <ruptAspectRatio>1.5</ruptAspectRatio>
-            <incrementalMFD minMag="4.55" binWidth="0.1">
-                <occurRates>1.60215e-02 1.17804e-02 8.66322e-03 6.37176e-03 4.68707e-03 3.44829e-03 2.53727e-03 1.86719e-03 1.37427e-03 1.01161e-03 7.44761e-04 5.48376e-04 4.03829e-04 2.97424e-04 2.19085e-04 1.61401e-04 1.18921e-04 8.76327e-05 6.45849e-05 4.76049e-05 3.50937e-05 2.58739e-05 1.90787e-05 1.40699e-05 1.03774e-05 7.65491e-06 5.64735e-06 4.16679e-06 3.07477e-06 2.26921e-06 1.44209e-06 7.69037e-07 2.33676e-07 5.93096e-08</occurRates>
-            </incrementalMFD>
-            <nodalPlaneDist>
-                <nodalPlane probability="0.34" strike="225" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.34" strike="45.0" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="240" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="210" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="60" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="30" dip="35.0" rake="90.0" />
-            </nodalPlaneDist>
-            <hypoDepthDist>
-                <hypoDepth probability="0.50" depth="10.0"/>
-                <hypoDepth probability="0.25" depth="5.0"/>
-                <hypoDepth probability="0.25" depth="15.0"/>
-            </hypoDepthDist>
-        </areaSource>
-
-        <areaSource id="ZN6" name="Zone 6" tectonicRegion="Non_cratonic">
-            <areaGeometry>
-                <gml:Polygon>
-                    <gml:exterior>
-                        <gml:LinearRing>
-                            <gml:posList>
-                                131.4359 -10.0177
-                                130.0933 -15.6021
-                                127.5235 -19.0286
-                                127.5235 -20.6466
-                                120.6820 -19.7146
-                                119.8730 -19.2863
-                                117.9694 -19.4766
-                                115.7640 -20.7959
-                                114.7283 -22.3339
-                                115.5658 -25.3605
-                                115.4326 -26.6867
-                                115.5658 -28.7616
-                                115.9635 -29.7310
-                                116.0101 -34.2481
-                                113.4222 -34.5714
-                                114.7969 -31.5481
-                                112.5602 -27.5982
-                                111.5608 -25.4091
-                                111.5608 -23.7911
-                                113.4168 -21.7447
-                                115.7486 -19.0322
-                                119.4606 -16.2720
-                                121.5545 -14.5112
-                                121.6497 -12.4648
-                                124.2458 -13.6825
-                            </gml:posList>
-                        </gml:LinearRing>
-                    </gml:exterior>
-                </gml:Polygon>
-                <upperSeismoDepth>0.0</upperSeismoDepth>
-                <lowerSeismoDepth>20.0</lowerSeismoDepth>
-            </areaGeometry>
-            <magScaleRel>Leonard2014_SCR</magScaleRel>
-            <ruptAspectRatio>1.5</ruptAspectRatio>
-            <incrementalMFD minMag="4.55" binWidth="0.1">
-                <occurRates>1.11211e-01 8.96643e-02 7.23024e-02 5.83107e-02 4.70333e-02 3.79425e-02 3.06131e-02 2.47031e-02 1.99368e-02 1.60924e-02 1.29911e-02 1.04890e-02 8.46996e-03 6.84050e-03 5.52528e-03 4.46354e-03 3.60632e-03 2.91412e-03 2.35510e-03 1.90357e-03 1.53881e-03 1.24411e-03 1.00598e-03 8.13535e-04 6.57991e-04 5.32254e-04 4.30599e-04 3.48404e-04 2.81934e-04 2.28174e-04 1.59016e-04 9.29936e-05 3.09871e-05 8.62492e-06</occurRates>
-            </incrementalMFD>
-            <nodalPlaneDist>
-                <nodalPlane probability="0.34" strike="160" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.34" strike="340" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="180" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="140" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="0.0" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="320" dip="35.0" rake="90.0" />
-            </nodalPlaneDist>
-            <hypoDepthDist>
-                <hypoDepth probability="0.50" depth="10.0"/>
-                <hypoDepth probability="0.25" depth="5.0"/>
-                <hypoDepth probability="0.25" depth="15.0"/>
-            </hypoDepthDist>
-        </areaSource>
-
-        <areaSource id="ZN7a" name="Zone 7a" tectonicRegion="Non_cratonic">
+        <areaSource id="ZN7b" name="Offshore South" tectonicRegion="Non_cratonic">
             <areaGeometry>
                 <gml:Polygon>
                     <gml:exterior>
@@ -428,24 +588,18 @@
                                 132.6894 -34.2150
                                 134.7116 -35.0174
                                 136.2577 -35.5637
-                                137.6838 -35.6075
+                                137.6891 -35.6081
                                 138.2453 -35.8259
                                 139.1175 -36.9422
-                                139.1698 -37.2569
-                                139.2159 -37.5363
-                                139.3191 -38.1822
-                                139.5231 -39.4595
-                                139.3834 -39.4145
+                                139.2123 -37.5135
+                                139.5219 -39.4740
                                 134.9154 -37.4930
                                 127.8365 -37.0171
                                 119.0325 -38.0284
                                 116.6530 -37.7905
                                 114.9874 -36.8982
                                 111.3587 -37.4930
-                                110.1793 -35.5879
-                                109.9705 -35.2505
-                                109.9369 -35.1962
-                                109.8121 -34.9934
+                                109.8121 -34.9946
                                 113.4222 -34.5726
                                 116.0101 -34.2494
                                 118.4673 -34.6110
@@ -461,7 +615,7 @@
             <magScaleRel>Leonard2014_SCR</magScaleRel>
             <ruptAspectRatio>1.5</ruptAspectRatio>
             <incrementalMFD minMag="4.55" binWidth="0.1">
-                <occurRates>1.34681e-02 1.08132e-02 8.68357e-03 6.97487e-03 5.60360e-03 4.50290e-03 3.61917e-03 2.90950e-03 2.33948e-03 1.88153e-03 1.51353e-03 1.21776e-03 9.79992e-04 7.88806e-04 6.35047e-04 5.11361e-04 4.11847e-04 3.31764e-04 2.67305e-04 2.15412e-04 1.73626e-04 1.39972e-04 1.12863e-04 9.10208e-05 7.34193e-05 5.92323e-05 4.77954e-05 3.85737e-05 3.11367e-05 2.51380e-05 1.74770e-05 1.01967e-05 3.38993e-06 9.41426e-07</occurRates>
+                <occurRates>1.27900e-02 1.02064e-02 8.14461e-03 6.49936e-03 5.18645e-03 4.13876e-03 3.30271e-03 2.63555e-03 2.10315e-03 1.67830e-03 1.33928e-03 1.06874e-03 8.52846e-04 6.80566e-04 5.43088e-04 4.33382e-04 3.45836e-04 2.75975e-04 2.20227e-04 1.75740e-04 1.40240e-04 1.11910e-04 8.93039e-05 7.12640e-05 5.68683e-05 4.53806e-05 3.62135e-05 2.88982e-05 2.30606e-05 1.84022e-05 1.46849e-05 1.17185e-05 0.00000e+00 0.00000e+00</occurRates>
             </incrementalMFD>
             <nodalPlaneDist>
                 <nodalPlane probability="0.34" strike="189" dip="35.0" rake="90.0" />
@@ -478,7 +632,7 @@
             </hypoDepthDist>
         </areaSource>
 
-        <areaSource id="ZN7b" name="Zone 7b" tectonicRegion="Non_cratonic">
+        <areaSource id="ZN7c" name="Offshore East" tectonicRegion="Non_cratonic">
             <areaGeometry>
                 <gml:Polygon>
                     <gml:exterior>
@@ -486,13 +640,10 @@
                             <gml:posList>
                                 151.4563 -39.1093
                                 149.6238 -41.0879
+                                149.6839 -39.0622
                                 149.7237 -37.7234
                                 152.0175 -34.0716
                                 154.2457 -25.2656
-                                152.2316 -21.7936
-                                146.9492 -17.5106
-                                144.8315 -13.8938
-                                154.8406 -16.0891
                                 154.4305 -22.4147
                                 156.0929 -22.4782
                                 156.5212 -30.1876
@@ -506,15 +657,15 @@
             <magScaleRel>Leonard2014_SCR</magScaleRel>
             <ruptAspectRatio>1.5</ruptAspectRatio>
             <incrementalMFD minMag="4.55" binWidth="0.1">
-                <occurRates>1.03192e-02 8.28677e-03 6.65610e-03 5.34746e-03 4.29703e-03 3.45368e-03 2.77644e-03 2.23246e-03 1.79544e-03 1.44427e-03 1.16202e-03 9.35127e-04 7.52686e-04 6.05960e-04 4.87935e-04 3.92975e-04 3.16558e-04 2.55050e-04 2.05533e-04 1.65662e-04 1.33550e-04 1.07683e-04 8.68422e-05 7.00479e-05 5.65116e-05 4.55994e-05 3.68009e-05 2.97053e-05 2.39820e-05 1.93647e-05 1.34653e-05 7.85736e-06 2.61260e-06 7.25663e-07</occurRates>
+                <occurRates>6.03856e-03 4.81874e-03 3.84533e-03 3.06855e-03 2.44869e-03 1.95404e-03 1.55931e-03 1.24432e-03 9.92963e-04 7.92379e-04 6.32315e-04 5.04584e-04 4.02655e-04 3.21317e-04 2.56409e-04 2.04613e-04 1.63280e-04 1.30297e-04 1.03976e-04 8.29723e-05 6.62115e-05 5.28364e-05 4.21632e-05 3.36460e-05 2.68493e-05 2.14256e-05 1.70975e-05 1.36437e-05 1.08876e-05 8.68827e-06 6.93319e-06 5.53265e-06 0.00000e+00 0.00000e+00</occurRates>
             </incrementalMFD>
             <nodalPlaneDist>
-                <nodalPlane probability="0.34" strike="140" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.34" strike="320" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="168" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="112" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="348" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="292" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.34" strike="150" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.34" strike="330" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="174" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="126" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="354" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="306" dip="35.0" rake="90.0" />
             </nodalPlaneDist>
             <hypoDepthDist>
                 <hypoDepth probability="0.50" depth="10.0"/>
@@ -523,7 +674,63 @@
             </hypoDepthDist>
         </areaSource>
 
-        <areaSource id="ZN7c" name="Zone 7c" tectonicRegion="Non_cratonic">
+        <areaSource id="ZN6b" name="West Coast" tectonicRegion="Non_cratonic">
+            <areaGeometry>
+                <gml:Polygon>
+                    <gml:exterior>
+                        <gml:LinearRing>
+                            <gml:posList>
+                                116.0101 -34.2481
+                                113.4222 -34.5714
+                                114.7969 -31.5481
+                                112.5602 -27.5982
+                                111.5608 -25.4091
+                                111.5608 -23.7911
+                                113.4168 -21.7447
+                                115.7486 -19.0322
+                                119.4606 -16.2720
+                                121.5545 -14.5112
+                                121.6497 -12.4648
+                                124.2458 -13.6825
+                                123.2387 -14.9119
+                                120.7455 -16.9382
+                                119.8730 -19.2863
+                                117.9694 -19.4766
+                                115.7640 -20.7959
+                                114.7283 -22.3339
+                                115.5658 -25.3605
+                                115.4326 -26.6867
+                                115.5658 -28.7616
+                                115.9634 -29.7308
+                                115.9635 -29.7310
+                            </gml:posList>
+                        </gml:LinearRing>
+                    </gml:exterior>
+                </gml:Polygon>
+                <upperSeismoDepth>0.0</upperSeismoDepth>
+                <lowerSeismoDepth>20.0</lowerSeismoDepth>
+            </areaGeometry>
+            <magScaleRel>Leonard2014_SCR</magScaleRel>
+            <ruptAspectRatio>1.5</ruptAspectRatio>
+            <incrementalMFD minMag="4.55" binWidth="0.1">
+                <occurRates>5.71165e-02 4.61702e-02 3.73217e-02 3.01691e-02 2.43872e-02 1.97134e-02 1.59354e-02 1.28814e-02 1.04127e-02 8.41709e-03 6.80396e-03 5.49999e-03 4.44592e-03 3.59387e-03 2.90510e-03 2.34834e-03 1.89829e-03 1.53448e-03 1.24040e-03 1.00268e-03 8.10516e-04 6.55182e-04 5.29617e-04 4.28116e-04 3.46068e-04 2.79745e-04 2.26132e-04 1.82794e-04 1.47762e-04 1.19443e-04 9.65521e-05 7.80480e-05 0.00000e+00 0.00000e+00</occurRates>
+            </incrementalMFD>
+            <nodalPlaneDist>
+                <nodalPlane probability="0.34" strike="185" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.34" strike="5.0" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="200" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="170" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="20" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="350" dip="35.0" rake="90.0" />
+            </nodalPlaneDist>
+            <hypoDepthDist>
+                <hypoDepth probability="0.50" depth="10.0"/>
+                <hypoDepth probability="0.25" depth="5.0"/>
+                <hypoDepth probability="0.25" depth="15.0"/>
+            </hypoDepthDist>
+        </areaSource>
+
+        <areaSource id="ZN7d" name="Offshore West" tectonicRegion="Non_cratonic">
             <areaGeometry>
                 <gml:Polygon>
                     <gml:exterior>
@@ -558,7 +765,7 @@
             <magScaleRel>Leonard2014_SCR</magScaleRel>
             <ruptAspectRatio>1.5</ruptAspectRatio>
             <incrementalMFD minMag="4.55" binWidth="0.1">
-                <occurRates>1.92091e-02 1.54179e-02 1.23777e-02 9.93919e-03 7.98281e-03 6.41290e-03 5.15285e-03 4.14127e-03 3.32898e-03 2.67659e-03 2.15250e-03 1.73139e-03 1.39295e-03 1.12090e-03 9.02166e-04 7.26262e-04 5.84774e-04 4.70944e-04 3.79346e-04 3.05624e-04 2.46277e-04 1.98492e-04 1.60009e-04 1.29012e-04 1.04039e-04 8.39151e-05 6.76964e-05 5.46222e-05 4.40810e-05 3.55804e-05 2.47314e-05 1.44261e-05 4.79494e-06 1.33133e-06</occurRates>
+                <occurRates>1.83298e-02 1.46271e-02 1.16723e-02 9.31445e-03 7.43288e-03 5.93140e-03 4.73323e-03 3.77709e-03 3.01410e-03 2.40523e-03 1.91936e-03 1.53164e-03 1.22224e-03 9.75343e-04 7.78318e-04 6.21094e-04 4.95630e-04 3.95510e-04 3.15615e-04 2.51859e-04 2.00982e-04 1.60383e-04 1.27984e-04 1.02131e-04 8.14999e-05 6.50365e-05 5.18988e-05 4.14150e-05 3.30489e-05 2.63729e-05 2.10454e-05 1.67941e-05 0.00000e+00 0.00000e+00</occurRates>
             </incrementalMFD>
             <nodalPlaneDist>
                 <nodalPlane probability="0.34" strike="193" dip="35.0" rake="90.0" />
@@ -575,27 +782,23 @@
             </hypoDepthDist>
         </areaSource>
 
-        <areaSource id="ZN8" name="Zone 8" tectonicRegion="Cratonic">
+        <areaSource id="ZN8a" name="Southwest Seismic Zone" tectonicRegion="Cratonic">
             <areaGeometry>
                 <gml:Polygon>
                     <gml:exterior>
                         <gml:LinearRing>
                             <gml:posList>
-                                125.6378 -27.7630
-                                121.3226 -34.9160
-                                118.4673 -34.6097
-                                116.0101 -34.2481
-                                115.9635 -29.7310
-                                115.5658 -28.7616
-                                115.4326 -26.6867
-                                115.5658 -25.3605
-                                114.7283 -22.3339
-                                115.7640 -20.7959
-                                117.9694 -19.4766
-                                119.8730 -19.2863
-                                120.6820 -19.7146
-                                121.7766 -23.0458
-                                123.7277 -25.3301
+                                116.6193 -33.1552
+                                116.1790 -31.3297
+                                116.1606 -30.7702
+                                116.2709 -29.9815
+                                116.2716 -29.9812
+                                117.0432 -29.6969
+                                118.4743 -30.2173
+                                118.5823 -30.8160
+                                118.2704 -31.2747
+                                118.0411 -32.2012
+                                117.3348 -32.9625
                             </gml:posList>
                         </gml:LinearRing>
                     </gml:exterior>
@@ -606,20 +809,62 @@
             <magScaleRel>Leonard2014_SCR</magScaleRel>
             <ruptAspectRatio>1.5</ruptAspectRatio>
             <incrementalMFD minMag="4.55" binWidth="0.1">
-                <occurRates>8.77867e-02 6.91655e-02 5.44965e-02 4.29403e-02 3.38360e-02 2.66632e-02 2.10118e-02 1.65589e-02 1.30502e-02 1.02854e-02 8.10666e-03 6.38971e-03 5.03661e-03 3.97020e-03 3.12972e-03 2.46726e-03 1.94510e-03 1.53351e-03 1.20906e-03 9.53297e-04 7.51666e-04 5.92706e-04 4.67381e-04 3.68569e-04 2.90660e-04 2.29228e-04 1.80787e-04 1.42589e-04 9.60455e-05 4.67499e-05 2.12022e-05 7.45172e-06</occurRates>
+                <occurRates>2.26291e-02 1.77487e-02 1.39209e-02 1.09186e-02 8.56381e-03 6.71687e-03 5.26826e-03 4.13206e-03 3.24091e-03 2.54195e-03 1.99373e-03 1.56375e-03 1.22650e-03 9.61982e-04 7.54514e-04 5.91789e-04 4.64159e-04 3.64055e-04 2.85540e-04 2.23958e-04 1.75658e-04 1.37774e-04 1.08061e-04 8.47554e-05 6.64763e-05 5.21395e-05 4.08947e-05 3.20750e-05 2.51575e-05 2.36673e-18 0.00000e+00 0.00000e+00</occurRates>
             </incrementalMFD>
             <nodalPlaneDist>
-                <nodalPlane probability="0.34" strike="179" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.34" strike="359" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="194" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="164" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="14.0" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="344" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.34" strike="178" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.34" strike="358" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="193" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="163" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="13.0" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="343" dip="35.0" rake="90.0" />
             </nodalPlaneDist>
             <hypoDepthDist>
                 <hypoDepth probability="0.50" depth="5.0"/>
                 <hypoDepth probability="0.25" depth="2.5"/>
                 <hypoDepth probability="0.25" depth="10.0"/>
+            </hypoDepthDist>
+        </areaSource>
+
+        <areaSource id="ZN2b" name="Eastern Sprigg Orogen" tectonicRegion="Non_cratonic">
+            <areaGeometry>
+                <gml:Polygon>
+                    <gml:exterior>
+                        <gml:LinearRing>
+                            <gml:posList>
+                                139.8704 -35.4925
+                                138.2453 -35.8259
+                                139.5971 -34.2163
+                                140.0397 -32.8314
+                                139.5700 -28.6613
+                                140.9994 -28.7632
+                                142.6334 -30.9172
+                                142.8117 -31.7639
+                                140.7765 -33.6357
+                            </gml:posList>
+                        </gml:LinearRing>
+                    </gml:exterior>
+                </gml:Polygon>
+                <upperSeismoDepth>0.0</upperSeismoDepth>
+                <lowerSeismoDepth>20.0</lowerSeismoDepth>
+            </areaGeometry>
+            <magScaleRel>Leonard2014_SCR</magScaleRel>
+            <ruptAspectRatio>1.5</ruptAspectRatio>
+            <incrementalMFD minMag="4.55" binWidth="0.1">
+                <occurRates>1.93604e-03 1.41813e-03 1.03876e-03 7.60878e-04 5.57334e-04 4.08240e-04 2.99030e-04 2.19036e-04 1.60441e-04 1.17521e-04 8.60826e-05 6.30544e-05 4.61865e-05 3.38310e-05 2.47808e-05 1.81516e-05 1.32958e-05 9.73902e-06 7.13371e-06 5.22535e-06 3.82750e-06 2.80360e-06 2.05360e-06 1.50423e-06 1.10183e-06 8.07078e-07 5.91174e-07 4.33027e-07 3.17187e-07 2.32335e-07 0.00000e+00 0.00000e+00 0.00000e+00</occurRates>
+            </incrementalMFD>
+            <nodalPlaneDist>
+                <nodalPlane probability="0.34" strike="188" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.34" strike="8.0" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="203" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="173" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="23" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="353" dip="35.0" rake="90.0" />
+            </nodalPlaneDist>
+            <hypoDepthDist>
+                <hypoDepth probability="0.50" depth="10.0"/>
+                <hypoDepth probability="0.25" depth="5.0"/>
+                <hypoDepth probability="0.25" depth="15.0"/>
             </hypoDepthDist>
         </areaSource>
 
@@ -629,16 +874,15 @@
                     <gml:exterior>
                         <gml:LinearRing>
                             <gml:posList>
-                                110.2984 -22.8160
-                                110.2298 -23.6849
+                                110.3180 -22.5678
+                                110.2679 -23.2025
                                 110.1818 -24.2927
                                 110.5625 -27.7192
                                 112.5613 -31.0504
                                 112.3709 -32.8588
-                                109.8121 -34.9934
-                                109.9369 -35.1962
-                                109.9705 -35.2505
-                                110.1793 -35.5879
+                                110.3761 -34.5228
+                                109.8122 -34.9946
+                                109.8121 -34.9946
                                 111.3587 -37.4930
                                 114.9874 -36.8982
                                 116.6530 -37.7905
@@ -927,7 +1171,7 @@
             <magScaleRel>WC1994</magScaleRel>
             <ruptAspectRatio>1.5</ruptAspectRatio>
             <incrementalMFD minMag="5.55" binWidth="0.1">
-                <occurRates>4.94158e-04 3.96601e-04 3.18369e-04 2.55622e-04 2.05283e-04 1.64891e-04 1.32473e-04 1.06449e-04 8.55540e-05 6.87739e-05 5.52954e-05 4.44669e-05 3.57655e-05 2.87721e-05 2.31504e-05 1.86304e-05 1.49956e-05 1.20720e-05 9.52573e-06 6.57532e-06 1.00878e-06 1.01582e-07</occurRates>
+                <occurRates>3.72863e-04 2.96176e-04 2.35261e-04 1.86874e-04 1.48439e-04 1.17910e-04 9.36590e-05 7.43960e-05 5.90948e-05 4.69407e-05 3.72863e-05 2.96176e-05 2.35261e-05 1.86874e-05 1.48439e-05 1.17910e-05 9.36590e-06 7.43960e-06 5.90948e-06 4.69407e-06 0.00000e+00 0.00000e+00</occurRates>
             </incrementalMFD>
             <nodalPlaneDist>
                 <nodalPlane probability="0.34" strike="184" dip="35.0" rake="90.0" />
@@ -938,7 +1182,9 @@
                 <nodalPlane probability="0.08" strike="349" dip="35.0" rake="90.0" />
             </nodalPlaneDist>
             <hypoDepthDist>
-                <hypoDepth probability="1.0" depth="10.0"/>
+                <hypoDepth probability="0.50" depth="10.0"/>
+                <hypoDepth probability="0.25" depth="5.0"/>
+                <hypoDepth probability="0.25" depth="15.0"/>
             </hypoDepthDist>
         </areaSource>
 
@@ -948,6 +1194,10 @@
                     <gml:exterior>
                         <gml:LinearRing>
                             <gml:posList>
+                                132.8166 -38.8132
+                                132.7122 -38.7587
+                                132.6096 -38.7024
+                                132.5087 -38.6442
                                 132.4096 -38.5843
                                 132.3123 -38.5226
                                 132.2170 -38.4592
@@ -965,10 +1215,8 @@
                                 130.8552 -37.2201
                                 134.9154 -37.4930
                                 139.1126 -39.2980
-                                139.3834 -39.4145
-                                139.5231 -39.4595
-                                139.5329 -39.4626
-                                143.5842 -43.3639
+                                139.5219 -39.4740
+                                143.5776 -43.3641
                                 145.3040 -45.0200
                                 146.6603 -44.8059
                                 148.0295 -44.1812
@@ -976,6 +1224,7 @@
                                 149.6238 -41.0879
                                 151.4563 -39.1093
                                 152.2784 -37.6613
+                                155.1775 -32.5546
                                 156.5212 -30.1876
                                 156.1243 -23.0424
                                 156.9280 -22.8751
@@ -1340,10 +1589,6 @@
                                 133.1392 -38.9651
                                 133.0301 -38.9164
                                 132.9225 -38.8657
-                                132.8166 -38.8132
-                                132.7122 -38.7587
-                                132.6096 -38.7024
-                                132.5087 -38.6442
                             </gml:posList>
                         </gml:LinearRing>
                     </gml:exterior>
@@ -1354,7 +1599,7 @@
             <magScaleRel>WC1994</magScaleRel>
             <ruptAspectRatio>1.5</ruptAspectRatio>
             <incrementalMFD minMag="5.55" binWidth="0.1">
-                <occurRates>2.79951e-04 2.24974e-04 1.80829e-04 1.45373e-04 1.16892e-04 9.40079e-05 7.56179e-05 6.08364e-05 4.89531e-05 3.93980e-05 3.17135e-05 2.55323e-05 2.05593e-05 1.65577e-05 1.33372e-05 1.07449e-05 8.65778e-06 6.97721e-06 5.51126e-06 3.80816e-06 5.84834e-07 5.89501e-08</occurRates>
+                <occurRates>2.13592e-04 1.69662e-04 1.34767e-04 1.07050e-04 8.50325e-05 6.75437e-05 5.36519e-05 4.26172e-05 3.38520e-05 2.68896e-05 2.13592e-05 1.69662e-05 1.34767e-05 1.07050e-05 8.50325e-06 6.75437e-06 5.36519e-06 4.26172e-06 3.38520e-06 2.68896e-06 0.00000e+00 0.00000e+00</occurRates>
             </incrementalMFD>
             <nodalPlaneDist>
                 <nodalPlane probability="0.34" strike="222" dip="35.0" rake="90.0" />
@@ -1365,7 +1610,9 @@
                 <nodalPlane probability="0.08" strike="356" dip="35.0" rake="90.0" />
             </nodalPlaneDist>
             <hypoDepthDist>
-                <hypoDepth probability="1.0" depth="10.0"/>
+                <hypoDepth probability="0.50" depth="10.0"/>
+                <hypoDepth probability="0.25" depth="5.0"/>
+                <hypoDepth probability="0.25" depth="15.0"/>
             </hypoDepthDist>
         </areaSource>
 
@@ -1401,7 +1648,7 @@
             <magScaleRel>Leonard2014_SCR</magScaleRel>
             <ruptAspectRatio>1.5</ruptAspectRatio>
             <incrementalMFD minMag="4.55" binWidth="0.1">
-                <occurRates>1.26308e-02 1.01942e-02 8.22872e-03 6.64312e-03 5.36378e-03 4.33140e-03 3.49820e-03 2.82565e-03 2.28271e-03 1.84434e-03 1.49035e-03 1.20446e-03 9.73539e-04 7.86993e-04 6.36274e-04 5.14486e-04 4.16062e-04 3.36510e-04 2.72202e-04 2.20212e-04 1.78173e-04 1.44178e-04 1.16683e-04 9.44432e-05 7.64514e-05 6.18945e-05 5.01154e-05 4.05827e-05 3.28671e-05 2.66216e-05 1.85677e-05 1.08672e-05 3.62400e-06 1.00949e-06</occurRates>
+                <occurRates>1.22693e-02 9.91794e-03 8.01718e-03 6.48069e-03 5.23867e-03 4.23469e-03 3.42311e-03 2.76708e-03 2.23677e-03 1.80810e-03 1.46158e-03 1.18147e-03 9.55040e-04 7.72007e-04 6.24053e-04 5.04454e-04 4.07776e-04 3.29626e-04 2.66454e-04 2.15388e-04 1.74109e-04 1.40741e-04 1.13768e-04 9.19648e-05 7.43398e-05 6.00927e-05 4.85760e-05 3.92664e-05 3.17411e-05 2.56579e-05 2.07406e-05 1.67657e-05 0.00000e+00 0.00000e+00</occurRates>
             </incrementalMFD>
             <nodalPlaneDist>
                 <nodalPlane probability="0.34" strike="141" dip="35.0" rake="90.0" />
@@ -1456,10 +1703,10 @@
                 <upperSeismoDepth>0.0</upperSeismoDepth>
                 <lowerSeismoDepth>20.0</lowerSeismoDepth>
             </areaGeometry>
-            <magScaleRel>Leonard2014_SCR</magScaleRel>
+            <magScaleRel>WC1994</magScaleRel>
             <ruptAspectRatio>1.5</ruptAspectRatio>
-            <incrementalMFD minMag="4.55" binWidth="0.1">
-                <occurRates>1.38637e-02 1.11899e-02 9.03346e-03 7.29384e-03 5.89024e-03 4.75756e-03 3.84335e-03 3.10532e-03 2.50944e-03 2.02823e-03 1.63956e-03 1.32558e-03 1.07190e-03 8.66899e-04 7.01214e-04 5.67281e-04 4.58998e-04 3.71439e-04 3.00626e-04 2.43349e-04 1.97012e-04 1.59521e-04 1.29182e-04 1.04627e-04 8.47513e-05 6.86602e-05 5.56315e-05 4.50808e-05 3.65357e-05 2.96141e-05 2.06697e-05 1.21062e-05 4.04013e-06 1.12623e-06</occurRates>
+            <incrementalMFD minMag="5.55" binWidth="0.1">
+                <occurRates>1.95260e-04 1.55100e-04 1.23201e-04 9.78617e-05 7.77343e-05 6.17466e-05 4.90470e-05 3.89595e-05 3.09466e-05 2.45818e-05 1.95260e-05 1.55100e-05 1.23201e-05 9.78617e-06 7.77343e-06 6.17466e-06 4.90470e-06 3.89595e-06 3.09466e-06 2.45818e-06 0.00000e+00 0.00000e+00</occurRates>
             </incrementalMFD>
             <nodalPlaneDist>
                 <nodalPlane probability="0.34" strike="152" dip="35.0" rake="90.0" />
@@ -1504,7 +1751,7 @@
             <magScaleRel>WC1994</magScaleRel>
             <ruptAspectRatio>1.5</ruptAspectRatio>
             <incrementalMFD minMag="5.55" binWidth="0.1">
-                <occurRates>1.63594e-04 1.31745e-04 1.06115e-04 8.54847e-05 6.88766e-05 5.55041e-05 4.47350e-05 3.60610e-05 2.90734e-05 2.34434e-05 1.89064e-05 1.52497e-05 1.23021e-05 9.92562e-06 8.00936e-06 6.46395e-06 5.21745e-06 4.21189e-06 3.40058e-06 2.74590e-06 2.17320e-06 1.50451e-06 2.31491e-07 2.33773e-08 1.86419e-21</occurRates>
+                <occurRates>1.35408e-04 1.07559e-04 8.54368e-05 6.78648e-05 5.39070e-05 4.28198e-05 3.40130e-05 2.70175e-05 2.14607e-05 1.70469e-05 1.35408e-05 1.07559e-05 8.54368e-06 6.78648e-06 5.39070e-06 4.28198e-06 3.40130e-06 2.70175e-06 2.14607e-06 1.70469e-06 1.35408e-06 1.07559e-06 0.00000e+00 0.00000e+00 0.00000e+00</occurRates>
             </incrementalMFD>
             <nodalPlaneDist>
                 <nodalPlane probability="0.34" strike="188" dip="35.0" rake="90.0" />
@@ -1515,7 +1762,55 @@
                 <nodalPlane probability="0.08" strike="353" dip="35.0" rake="90.0" />
             </nodalPlaneDist>
             <hypoDepthDist>
-                <hypoDepth probability="1.0" depth="10.0"/>
+                <hypoDepth probability="0.50" depth="10.0"/>
+                <hypoDepth probability="0.25" depth="5.0"/>
+                <hypoDepth probability="0.25" depth="15.0"/>
+            </hypoDepthDist>
+        </areaSource>
+
+        <areaSource id="NWMB2" name="Northwest Margin - Buffer2" tectonicRegion="Non_cratonic">
+            <areaGeometry>
+                <gml:Polygon>
+                    <gml:exterior>
+                        <gml:LinearRing>
+                            <gml:posList>
+                                111.5701 -15.4716
+                                112.5443 -13.4575
+                                113.6211 -13.5234
+                                114.4781 -14.7759
+                                113.6650 -16.1603
+                                116.4821 -16.3615
+                                116.2732 -16.4881
+                                110.6577 -19.6290
+                                110.5211 -20.3801
+                                109.7887 -19.9368
+                                109.3581 -19.6762
+                                110.5886 -17.5007
+                                111.4864 -15.6446
+                            </gml:posList>
+                        </gml:LinearRing>
+                    </gml:exterior>
+                </gml:Polygon>
+                <upperSeismoDepth>0.0</upperSeismoDepth>
+                <lowerSeismoDepth>20.0</lowerSeismoDepth>
+            </areaGeometry>
+            <magScaleRel>Leonard2014_SCR</magScaleRel>
+            <ruptAspectRatio>1.5</ruptAspectRatio>
+            <incrementalMFD minMag="4.55" binWidth="0.1">
+                <occurRates>3.31571e-03 2.64592e-03 2.11143e-03 1.68491e-03 1.34455e-03 1.07294e-03 8.56203e-04 6.83246e-04 5.45226e-04 4.35088e-04 3.47198e-04 2.77062e-04 2.21094e-04 1.76432e-04 1.40792e-04 1.12351e-04 8.96555e-05 7.15446e-05 5.70922e-05 4.55593e-05 3.63561e-05 2.90119e-05 2.31514e-05 1.84747e-05 1.47427e-05 1.17646e-05 9.38808e-06 7.49164e-06 5.97829e-06 4.77064e-06 3.80695e-06 3.03792e-06 0.00000e+00 0.00000e+00</occurRates>
+            </incrementalMFD>
+            <nodalPlaneDist>
+                <nodalPlane probability="0.34" strike="197" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.34" strike="17.0" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="212" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="182" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="32" dip="35.0" rake="90.0" />
+                <nodalPlane probability="0.08" strike="2" dip="35.0" rake="90.0" />
+            </nodalPlaneDist>
+            <hypoDepthDist>
+                <hypoDepth probability="0.50" depth="10.0"/>
+                <hypoDepth probability="0.25" depth="5.0"/>
+                <hypoDepth probability="0.25" depth="15.0"/>
             </hypoDepthDist>
         </areaSource>
 
@@ -1525,8 +1820,8 @@
                     <gml:exterior>
                         <gml:LinearRing>
                             <gml:posList>
-                                119.2125 -12.5213
-                                119.2442 -12.3603
+                                119.3364 -11.8923
+                                119.3733 -11.7045
                                 119.4003 -11.5677
                                 122.2940 -11.9124
                                 122.3193 -12.7789
@@ -1543,7 +1838,7 @@
             <magScaleRel>Leonard2014_SCR</magScaleRel>
             <ruptAspectRatio>1.5</ruptAspectRatio>
             <incrementalMFD minMag="4.55" binWidth="0.1">
-                <occurRates>3.49708e-03 2.82310e-03 2.27940e-03 1.84071e-03 1.48670e-03 1.20097e-03 9.70314e-04 7.84082e-04 6.33694e-04 5.12230e-04 4.14113e-04 3.34841e-04 2.70785e-04 2.19015e-04 1.77170e-04 1.43340e-04 1.15987e-04 9.38665e-05 7.59756e-05 6.15033e-05 4.97946e-05 4.03203e-05 3.26531e-05 2.64474e-05 2.14238e-05 1.73567e-05 1.40634e-05 1.13965e-05 9.23641e-06 7.48666e-06 5.22551e-06 3.06059e-06 1.02139e-06 2.84724e-07</occurRates>
+                <occurRates>2.71814e-03 2.16906e-03 1.73090e-03 1.38125e-03 1.10223e-03 8.79574e-04 7.01895e-04 5.60109e-04 4.46964e-04 3.56675e-04 2.84624e-04 2.27129e-04 1.81248e-04 1.44635e-04 1.15418e-04 9.21027e-05 7.34974e-05 5.86506e-05 4.68028e-05 3.73484e-05 2.98038e-05 2.37833e-05 1.89790e-05 1.51451e-05 1.20857e-05 9.64433e-06 7.69613e-06 6.14147e-06 4.90086e-06 3.91086e-06 3.12084e-06 2.49042e-06 0.00000e+00 0.00000e+00</occurRates>
             </incrementalMFD>
             <nodalPlaneDist>
                 <nodalPlane probability="0.34" strike="175" dip="35.0" rake="90.0" />
@@ -1552,52 +1847,6 @@
                 <nodalPlane probability="0.08" strike="160" dip="35.0" rake="90.0" />
                 <nodalPlane probability="0.08" strike="10.0" dip="35.0" rake="90.0" />
                 <nodalPlane probability="0.08" strike="340" dip="35.0" rake="90.0" />
-            </nodalPlaneDist>
-            <hypoDepthDist>
-                <hypoDepth probability="0.50" depth="10.0"/>
-                <hypoDepth probability="0.25" depth="5.0"/>
-                <hypoDepth probability="0.25" depth="15.0"/>
-            </hypoDepthDist>
-        </areaSource>
-
-        <areaSource id="NWMB2" name="Northwest Margin - Buffer2" tectonicRegion="Non_cratonic">
-            <areaGeometry>
-                <gml:Polygon>
-                    <gml:exterior>
-                        <gml:LinearRing>
-                            <gml:posList>
-                                111.7321 -15.1366
-                                112.0917 -14.3932
-                                112.5443 -13.4575
-                                113.6211 -13.5234
-                                114.4781 -14.7759
-                                113.6650 -16.1603
-                                116.4821 -16.3615
-                                116.2732 -16.4881
-                                110.6577 -19.6290
-                                110.5211 -20.3801
-                                109.7887 -19.9368
-                                109.3581 -19.6762
-                                110.5886 -17.5007
-                            </gml:posList>
-                        </gml:LinearRing>
-                    </gml:exterior>
-                </gml:Polygon>
-                <upperSeismoDepth>0.0</upperSeismoDepth>
-                <lowerSeismoDepth>20.0</lowerSeismoDepth>
-            </areaGeometry>
-            <magScaleRel>Leonard2014_SCR</magScaleRel>
-            <ruptAspectRatio>1.5</ruptAspectRatio>
-            <incrementalMFD minMag="4.55" binWidth="0.1">
-                <occurRates>3.29502e-03 2.65955e-03 2.14701e-03 1.73355e-03 1.39995e-03 1.13074e-03 9.13460e-04 7.38052e-04 5.96426e-04 4.82055e-04 3.89679e-04 3.15055e-04 2.54761e-04 2.06039e-04 1.66660e-04 1.34827e-04 1.09091e-04 8.82810e-05 7.14508e-05 5.78374e-05 4.68245e-05 3.79138e-05 3.07030e-05 2.48671e-05 2.01431e-05 1.63187e-05 1.32221e-05 1.07145e-05 8.68356e-06 7.03846e-06 4.91264e-06 2.87732e-06 9.60229e-07 2.67674e-07</occurRates>
-            </incrementalMFD>
-            <nodalPlaneDist>
-                <nodalPlane probability="0.34" strike="197" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.34" strike="17.0" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="212" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="182" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="32" dip="35.0" rake="90.0" />
-                <nodalPlane probability="0.08" strike="2" dip="35.0" rake="90.0" />
             </nodalPlaneDist>
             <hypoDepthDist>
                 <hypoDepth probability="0.50" depth="10.0"/>
