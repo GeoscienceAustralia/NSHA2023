@@ -1,7 +1,7 @@
 NSHA23 Licence -- !!!! USES NSHA18 LINKS - TO BE UPDATED !!!!
 =============================================================
 
-The code accessible through the NSHA2023 Geoscience Australia github repository was developed to host working files during the development of the NSHA23. This code is initially developed based on development of NHSA18. Detail on the development of the NSHA23 and the supporting product suite, is freely available for download [here](http://www.ga.gov.au/about/projects/safety/nsha).
+The code accessible through the NSHA2023 Geoscience Australia github repository was developed to host working files during the development of the NSHA23. This code is initially developed based on development of NHSA18. Detail on the development of the NSHA23 and the supporting product suite, is freely available for download [here](https://www.community-safety.ga.gov.au/data-and-products/nsha).
  
 **This repository is not intentioned as the authoritative model files for the NSHA23 product.**
 
