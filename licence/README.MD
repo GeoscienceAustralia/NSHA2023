@@ -5,7 +5,7 @@ The code accessible through the NSHA2023 Geoscience Australia github repository 
  
 **This repository is not intentioned as the authoritative model files for the NSHA23 product.**
 
-The model files that underpinned the final version of the NSHA23 are available in [Geoscience Australia Record 20224/XX](http://pid.geoscience.gov.au/dataset/ga/123049). The NSHA23 model files contain third party models (referenced in [GA Record 2023/53](http://pid.geoscience.gov.au/dataset/ga/123049)) and authors of these models have agreed and acknowledged that their models form part of the NSHA23 product and therefore subject to the copyright and licencing conditions of the NSHA23 product suite.
+The model files that underpinned the final version of the NSHA23 are available in [Geoscience Australia Record 2024/XX](http://pid.geoscience.gov.au/dataset/ga/123049). The NSHA23 model files contain third party models (referenced in [GA Record 2023/53](http://pid.geoscience.gov.au/dataset/ga/123049)) and authors of these models have agreed and acknowledged that their models form part of the NSHA23 product and therefore subject to the copyright and licencing conditions of the NSHA23 product suite.
  
 The copyright and licencing conditions of the NSHA23 product suite are detailed below. For users of the NSHA23 product suite, including the model files, users are free to share, copy, and redistribute it in any medium or format and users must always provide credit to the original author. The process for providing attribution is detailed [here](https://creativecommons.org.au/learn/howto/).
  
