@@ -1,0 +1,11 @@
+ncpus = 4320 
+mem = 17100GB
+walltime = 5:00:00
+jobfs = 10000GB
+sandpit_path = /home/547/
+model_rel_path = NSHA2023/source_models/complete_model/2023_final
+shared_rel_path = NSHA2023/shared
+gsim_lt_filename = NSHA23_Aus_GMM_logic_tree_class_b.xml
+model_output_base = /scratch/w84/NSHA23/2023_final/maps
+job_file = job_maps_SA07_SC_B.ini
+job_type = B_07_maps
