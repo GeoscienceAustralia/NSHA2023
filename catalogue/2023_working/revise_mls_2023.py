@@ -125,7 +125,7 @@ for i, mc in enumerate(mcdat):
                  add_W_A_correction = True
                  
         
-        if mc['PREFMLSRC'] == 'AUST':
+        elif mc['PREFMLSRC'] == 'AUST':
             # fix MagCalc bugs where SA ML was used for WA
             if mc['DATETIME'] >= UTCDateTime(2000,1,1) \
                and mc['DATETIME'] < UTCDateTime(2008,7,1):

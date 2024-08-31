@@ -141,7 +141,7 @@ for i, mc in enumerate(mcdat_old):
 # set pref ML logic
 ###############################################################################
 ignore_phils_mags = ['ga2013lgzaru', 'ga2021ptpeur', 'ga2021ptxjrd']
-
+cnt = 0
 for i, mc in enumerate(mcdat):
     ignore = False
     
@@ -183,6 +183,12 @@ for i, mc in enumerate(mcdat):
         elif mc['MLa01_nob'] >= 3 and ignore == False:
             mcdat[i]['PREFML_2023'] = mc['MLa01_net']
             mcdat[i]['PREFMLSRC_2023'] = 'Cummins (recalc)'
+            
+        # this was missed in the initial NSHA23 catalogue
+        elif isnan(mc['REVML_2023']) == False:
+            mcdat[i]['PREFML_2023'] = mc['REVML_2023']
+            mcdat[i]['PREFMLSRC_2023'] = 'REV_ML'
+            cnt += 1
             
         # take GA mag - some weirdness in phils results
         else:
@@ -299,7 +305,7 @@ for i, mc in enumerate(mcdat):
 # now dump all data to pkl
 #####################################################################        
 
-pklfile = open('merged_cat_pref_mags.pkl', 'wb')
+pklfile = open('merged_cat_pref_mags_post_publication.pkl', 'wb')
 pickle.dump(mcdat, pklfile, protocol=-1)
 pklfile.close()
 
@@ -309,7 +315,10 @@ pklfile.close()
 
 # convert dicts back to dataframe
 mcdf = pd.DataFrame(mcdat)
-mcdf.to_csv('merged_cat_pref_mags.csv', sep=',')
+mcdf.to_csv('merged_cat_pref_mags_post_publication.csv', sep=',')
+
+# number of bad MLs
+print(cnt)
 
 
 
