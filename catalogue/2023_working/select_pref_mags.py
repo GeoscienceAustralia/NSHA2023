@@ -169,6 +169,7 @@ for i, mc in enumerate(mcdat):
         
     # if available - use recalculated/filtered ML
     elif isnan(mc['MLa05_net']) == False or isnan(mc['MLa075_net']) == False:
+        add_GG91_HV_corr = True
         # use corner filter of 0.75 Hz less than ML 4.0
         if mc['MLa075_net'] < 4.0 and mc['MLa075_nob'] >= 3 and ignore == False:
             mcdat[i]['PREFML_2023'] = mc['MLa075_net']
@@ -188,6 +189,7 @@ for i, mc in enumerate(mcdat):
         elif isnan(mc['REVML_2023']) == False:
             mcdat[i]['PREFML_2023'] = mc['REVML_2023']
             mcdat[i]['PREFMLSRC_2023'] = 'REV_ML'
+            add_GG91_HV_corr = False
             cnt += 1
             
         # take GA mag - some weirdness in phils results
@@ -197,7 +199,8 @@ for i, mc in enumerate(mcdat):
             
         # add V-H correction to WA records - this is not double counting - Phil does not do this
         if mcdat[i]['MLREGION'] == 'WA' or mcdat[i]['MLREGION'] == 'WCA':
-            mcdat[i]['PREFML_2023'] += 0.13
+            if add_GG91_HV_corr == True:
+                mcdat[i]['PREFML_2023'] += 0.13
         
                 
     # now get next preferred ML
