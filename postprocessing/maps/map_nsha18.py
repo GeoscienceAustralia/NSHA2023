@@ -68,15 +68,15 @@ pltGSHAP = argv[5]  # True or False
 
 def set_cmap(cptfile):
     if cptfile == 'ch05m151008.cpt':
-        ncolours = 13
+        ncolours = 15
         suffix = '.colour-vision_friendly'
         cmap, zvals = cpt2colormap(cptfile, ncolours, rev=False)
-        #cmap = remove_first_cmap_colour(remove_first_cmap_colour(cmap))
+        cmap = remove_first_cmap_colour(remove_first_cmap_colour(cmap))
         
     else:
         ncolours = 13
         suffix = ''
-        cmap, zvals = cpt2colormap(cptfile, ncolours, rev=False)
+        cmap, zvals = cpt2colormap(cptfile, ncolours, rev=True)
         
     return cmap, suffix
     
@@ -138,7 +138,7 @@ for i, key in enumerate(keys):
 ##############################################################################    
 # now make maps
 ##############################################################################
-
+#mapidx = [0,2]
 #keys = ['PGA_10', 'PGA_02', 'SA02_10', 'SA02_02', 'SA10_10', 'SA10_02']
 for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     if i > 0:
@@ -316,7 +316,7 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     
     # get colormap from cpt file
     cptfile = 'cw1-013_mod.cpt'
-    cptfile = 'ch05m151008.cpt'
+    #cptfile = 'ch05m151008.cpt'
     
     #ncols = 9
     
@@ -373,43 +373,38 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     cmap.set_bad('w', 1.0)
     
     if probability == '10%' or probability == '3.3%': # or probability == '2%':
-        if pltGSHAP == 'True':
-            bounds = array([0., 0.2, 0.4, 0.8, 1.6, 2.4, 3.2, 4.0, 4.8, 6.0])
-            #ncolours = 9
-            #norm = colors.Normalize(vmin=0,vmax=10)
-        else:
-            if period == 'PGA':
-                if probability == '3.3%':
-                    bounds = array([0, 0.01, 0.02, 0.03, 0.04, 0.06, 0.08, 0.10, 0.14, 0.20, 0.26, 0.32, 0.4])
-                else:
-                    bounds = array([0, 0.005, 0.01, 0.015, 0.02, 0.03, 0.04, 0.05, 0.06, 0.08, 0.12, 0.16, 0.24])
-            elif period == 'SA005' or period == 'SA01'  \
-               or period == 'SA03' or period == 'SA05':
-                bounds = array([0, 0.005, 0.01, 0.015, 0.02, 0.03, 0.04, 0.05, 0.06, 0.08, 0.12, 0.16, 0.24])
-            elif  period == 'SA07'  or period == 'SA10':
-                bounds = array([0, 0.002, 0.004, 0.007, 0.01, 0.015, 0.02, 0.025, 0.03, 0.04, 0.05, 0.06, 0.08])
-            elif period == 'SA02':
-                if probability == '3.3%':
-                    bounds = array([0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.16, 0.20, 0.26, 0.36, 0.48, 0.6])
-                else:
-                    bounds = array([0, 0.005, 0.01, 0.015, 0.02, 0.03, 0.04, 0.05, 0.06, 0.08, 0.12, 0.16, 0.24])
+        if period == 'PGA':
+            if probability == '3.3%':
+                bounds = array([0, 0.01, 0.02, 0.03, 0.04, 0.06, 0.08, 0.10, 0.14, 0.20, 0.26, 0.32, 0.4])
             else:
-                bounds = array([0, 0.001, 0.002, 0.004, 0.007, 0.01, 0.015, 0.02, 0.025, 0.03, 0.035, 0.045, 0.06])
-            
-                
-            
-            ncolours = 12
-            norm = colors.BoundaryNorm(boundaries=bounds, ncolors=ncolours)
-    else:
-        if period == 'PGA' or period == 'SA005' or period == 'SA01'  \
-           or period == 'SA03' or period == 'SA05':
-            bounds = array([0, 0.01, 0.02, 0.03, 0.04, 0.06, 0.08, 0.12, 0.16, 0.22, 0.30, 0.40, 0.5])
+                bounds = array([0, 0.005, 0.01, 0.015, 0.02, 0.03, 0.04, 0.05, 0.06, 0.08, 0.12, 0.16, 0.24])
+        elif period == 'SA005' or period == 'SA01' or period == 'SA015' or period == 'SA02'  \
+           or period == 'SA03' or period == 'SA04' or period == 'SA05':
+            bounds = array([0, 0.01, 0.02, 0.03, 0.04, 0.06, 0.08, 0.10, 0.14, 0.20, 0.26, 0.32, 0.4])
+        elif period == 'SA07' or period == 'SA10' or period == 'SA15' or period == 'SA20' or period == 'SA30':
+            bounds = array([0, 0.002, 0.004, 0.006, 0.01, 0.016, 0.024, 0.03, 0.04, 0.05, 0.06, 0.08, 0.1])
         elif period == 'SA02':
-            bounds = array([0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.16, 0.20, 0.26, 0.36, 0.48, 0.6])
-        elif period == 'SA07':
-            bounds = array([0, 0.01, 0.015, 0.02, 0.03, 0.04, 0.05, 0.06, 0.08, 0.12, 0.16, 0.24, 0.36])
-        elif period == 'SA15' or period == 'SA10':
-            bounds = array([0, 0.01, 0.015, 0.02, 0.025, 0.03, 0.04, 0.05, 0.06, 0.08, 0.12, 0.16, 0.2, 0.3])
+            if probability == '3.3%':
+                bounds = array([0, 0.02, 0.04, 0.06, 0.08, 0.10, 0.12, 0.16, 0.20, 0.26, 0.36, 0.48, 0.6])
+            else:
+                bounds = array([0, 0.005, 0.01, 0.015, 0.02, 0.03, 0.04, 0.05, 0.06, 0.08, 0.12, 0.16, 0.24])
+        else:
+            bounds = array([0, 0.001, 0.002, 0.004, 0.007, 0.01, 0.015, 0.02, 0.025, 0.03, 0.035, 0.045, 0.06])
+        
+        ncolours = 12
+        norm = colors.BoundaryNorm(boundaries=bounds, ncolors=ncolours)
+    else:
+        if period == 'PGA':
+            bounds = array([0, 0.02, 0.03, 0.04, 0.05, 0.06, 0.08, 0.12, 0.16, 0.24, 0.34, 0.46, 0.6])
+        elif period == 'SA02' or period == 'SA03' or period == 'SA04' or period == 'SA05' \
+             or period == 'SA01' or period == 'SA015':
+            bounds = array([0, 0.04, 0.06, 0.08, 0.10, 0.14, 0.20, 0.28, 0.38, 0.50, 0.64, 0.8, 1.])
+            '''
+            elif period == 'SA07':
+                bounds = array([0, 0.01, 0.015, 0.02, 0.03, 0.04, 0.05, 0.06, 0.08, 0.12, 0.16, 0.24, 0.36])
+            '''
+        elif period == 'SA15' or period == 'SA10' or period == 'SA20' or period == 'SA30' or period == 'SA07':
+            bounds = array([0, 0.01, 0.015, 0.02, 0.025, 0.03, 0.04, 0.06, 0.08, 0.10, 0.14, 0.20, 0.26, 0.34])
         else:
             bounds = array([0, 0.001, 0.002, 0.003, 0.004, 0.005, 0.007, 0.015, 0.03, 0.04, 0.05, 0.06, 0.1, 0.16])
         #ncolours = 12
@@ -762,6 +757,7 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     ##############################################################################    
     # make netcdf files hile here
     ##############################################################################
+    """
     print('Making NetCDF file...')
     
     grdname = path.join('netcdf', modelName.replace(' ','_')+'.'+period+'.'+probFraction+'.'+siteClass+'.grd')
@@ -772,9 +768,10 @@ for i, key in enumerate([keys[mapidx]]): # just plot 1 for now!
     '''
     # make grid surface
     system(' '.join(('gmt5 surface grid.csv -G' + grdname, '-R110/156/-46/-9 -I0.05')))
-    
+    keys[mapidx]
     # add floor to stop poor interp
     system(' '.join(('gmt5 grdmath', grdname, '0.001 MAX =', grdname)))
+    """
 
     
 

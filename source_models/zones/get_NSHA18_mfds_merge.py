@@ -1290,7 +1290,7 @@ for i in srcidx:
                         free_dep.append(ev['dep'])
             
             # first plt all data
-            plt.hist(array(all_dep), bins=deprng, facecolor='seagreen')
+            plt.hist(array(all_dep), bins=deprng, facecolor='#00718b')
             
             # plt data with free depths
             #plt.hist(array(free_dep), bins=deprng, facecolor='seagreen', label='Free Depths')
@@ -1298,7 +1298,7 @@ for i in srcidx:
             # make pretty
             plt.xlabel('Hypocentral Depth (km)')
             plt.ylabel('Count')
-            plt.legend()        
+            #plt.legend()        
             
             ###############################################################################
             # make cummulative M >= 3 plot of non filtered events

@@ -134,7 +134,7 @@ keys = ['P0.0021', 'P0.000671', 'P0.000404'] # probabilities
 pc50 = ['0.1', '0.033', '0.02']
 for key, p50 in zip(keys, pc50):
     print('Making', key, 'grid mesh...')
-    
+    """
     # first make z data array
     ahaz = []
     for grdval in grddict:
@@ -180,6 +180,7 @@ for key, p50 in zip(keys, pc50):
     '''
     write mesh
     '''
+    
     print('Writing', key, 'geoTIFF...')
     #output_file = path.join('geotiff', '_'.join(('nsha18',period, p50+'.tiff')))
     output_file = path.join('geotiff', '_'.join(('nsha23',period, siteClass, p50+'.tiff')))
@@ -205,7 +206,7 @@ for key, p50 in zip(keys, pc50):
 
     # testing
     #src_ds = gdal.Open(path.join('geotiff', '_'.join(('nsha18',period, p50+'.tiff'))))
-    
+    """
     ##############################################################################
     # make gdal cpt file and recolour
     ##############################################################################
@@ -267,10 +268,15 @@ for key, p50 in zip(keys, pc50):
     f.write(cpttxt)
     f.close()
     
+    ##############################################################################
+    # write geotiff
+    ##############################################################################
+    
     # recolour geoTiff
     intiff = path.join('geotiff', '_'.join(('nsha23',period, siteClass, p50+'.tiff')))
     outtiff = intiff[0:-5]+'_colour.tiff'
-    	
+    		
+    '''
     # set nan values to no data
     gdaledit_cmd = ' '.join(('/Users/trev/opt/miniconda3/envs/py37/bin/gdal_edit.py -a_nodata -nan',intiff))
     system(gdaledit_cmd)
@@ -278,5 +284,43 @@ for key, p50 in zip(keys, pc50):
     gdaldem_cmd = ' '.join(('gdaldem color-relief', intiff, 'gdal_cpt.dat', outtiff))
     #gdaldem color-relief jotunheimen.tif color_relief.txt jotunheimen_colour_relief.tif
     system(gdaldem_cmd)
-
+    '''
+    
+    ##############################################################################
+    # write qml
+    ##############################################################################
+    
+    qmlfile = 'template.qml'
+    qlines = open(qmlfile).readlines()
+    
+    newqml = ''
+    for ql in qlines:
+       if ql.strip().startswith('classificationMin='):
+           newline = '"'.join(('<rasterrenderer classificationMin=', str(bounds[1]),' classificationMax=',str(bounds[-1]),' alphaBand="-1" nodataColor="" band="1" opacity="1" type="singlebandpseudocolor">'))+'\n'
+           newqml += newline
+       elif ql.strip().startswith('<colorrampshader minimumValue='):
+           newline = '"'.join(('<colorrampshader minimumValue=', str(bounds[1]+1E-19),' labelPrecision="4" maximumValue=',str(bounds[-1]-1E-19),' classificationMode="1" clip="0" colorRampType="INTERPOLATED">'))+'\n'
+           newqml += newline
+       elif ql.strip().startswith('</colorramp>'):
+           newqml += '</colorramp>\n'
+           newqml += '"'.join(('<item color="#a9c8e4" alpha="255" value=', str(bounds[1]), ' label=', str('%0.4f' % bounds[1]), '/>'))+'\n'
+           newqml += '"'.join(('<item color="#8daac6" alpha="255" value=', str(bounds[2]), ' label=', str('%0.4f' % bounds[2]), '/>'))+'\n'
+           newqml += '"'.join(('<item color="#728caa" alpha="255" value=', str(bounds[3]), ' label=', str('%0.4f' % bounds[3]), '/>'))+'\n'
+           newqml += '"'.join(('<item color="#4f6581" alpha="255" value=', str(bounds[4]), ' label=', str('%0.4f' % bounds[4]), '/>'))+'\n'
+           newqml += '"'.join(('<item color="#8d9971" alpha="255" value=', str(bounds[5]), ' label=', str('%0.4f' % bounds[5]), '/>'))+'\n'
+           newqml += '"'.join(('<item color="#c5c356" alpha="255" value=', str(bounds[6]), ' label=', str('%0.4f' % bounds[6]), '/>'))+'\n'
+           newqml += '"'.join(('<item color="#fbee3b" alpha="255" value=', str(bounds[7]), ' label=', str('%0.4f' % bounds[7]), '/>'))+'\n'
+           newqml += '"'.join(('<item color="#f1ba3b" alpha="255" value=', str(bounds[8]), ' label=', str('%0.4f' % bounds[8]), '/>'))+'\n'
+           newqml += '"'.join(('<item color="#e8853c" alpha="255" value=', str(bounds[9]), ' label=', str('%0.4f' % bounds[9]), '/>'))+'\n'
+           newqml += '"'.join(('<item color="#de513c" alpha="255" value=', str(bounds[10]), ' label=', str('%0.4f' % bounds[10]), '/>'))+'\n'
+           newqml += '"'.join(('<item color="#b44b3f" alpha="255" value=', str(bounds[11]), ' label=', str('%0.4f' % bounds[11]), '/>'))+'\n'
+           newqml += '"'.join(('<item color="#8a4343" alpha="255" value=', str(bounds[12]), ' label=', str('%0.4f' % bounds[12]), '/>'))+'\n'
+       else:
+           newqml += ql
+           
+    # now write to file
+    newqmlfile = intiff[:-4] + 'qml'
+    f = open(newqmlfile, 'w')
+    f.write(newqml)
+    f.close()
 

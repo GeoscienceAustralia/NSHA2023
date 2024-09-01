@@ -110,8 +110,15 @@ mwref = hstack((mwref, newref))
 ###############################################################################
 # regress all corrections
 ###############################################################################
+def prepare_data(x, y):
+    data = odrpack.RealData(mb[idx], mw[idx])
+
+    bilin_reg = odrpack.Model(ortho_lin_reg)
+
+
 def ortho_lin_reg(c, x):
     return c[0] * x + c[1]
+    
 
 def ortho_quad_reg(c, x):
     return c[0] * x**2 + c[1] * x + c[2]

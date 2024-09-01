@@ -242,6 +242,8 @@ c1 = 0.481
 c2 = 1.395
 yplt = c0 * xplt**2 + c1 * xplt + c2
 plt.plot(xplt, yplt, '-', lw=2, c='#cb6c37', label='NSHA18 (W-A 2080)')
+for x,y in zip(xplt,yplt):
+    print(','.join((str(x),str(y))))
 
 plt.grid(which='both')
 plt.xlabel(r'$\mathregular{M_{L(2800)}}$', fontsize=20)
