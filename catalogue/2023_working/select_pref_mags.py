@@ -185,11 +185,11 @@ for i, mc in enumerate(mcdat):
             mcdat[i]['PREFML_2023'] = mc['MLa01_net']
             mcdat[i]['PREFMLSRC_2023'] = 'Cummins (recalc)'
             
-        # this was missed in the initial NSHA23 catalogue
+        # this elif was missed in the initial NSHA23 catalogue
         elif isnan(mc['REVML_2023']) == False:
             mcdat[i]['PREFML_2023'] = mc['REVML_2023']
             mcdat[i]['PREFMLSRC_2023'] = 'REV_ML'
-            add_GG91_HV_corr = False
+            add_GG91_HV_corr = False # this already added to REVML_2023
             cnt += 1
             
         # take GA mag - some weirdness in phils results
