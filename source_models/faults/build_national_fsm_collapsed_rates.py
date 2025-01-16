@@ -107,13 +107,26 @@ b_values = shp2nrml.b_value_from_region(fault_traces,
 output_xml_add = []
 output_xml_mb = []
 output_xml_geom = []
+output_xml_gr = []
+output_xml_ce = []
+output_xml_mm = []
+output_xml_gr_w = [] # Scaled by total GR weight
+output_xml_ce_w = [] # Scaled by total CE weight
+output_xml_mm_w = [] # Scaled by total MM weight
 output_xml_all_methods = []
 output_xml_all_methods_inc_cluster = []
-output_xmls = [output_xml_add, output_xml_mb, output_xml_geom, output_xml_all_methods, output_xml_all_methods_inc_cluster]
+output_xmls = [output_xml_add, output_xml_mb, output_xml_geom, output_xml_all_methods, output_xml_all_methods_inc_cluster,\
+               output_xml_gr, output_xml_ce, output_xml_mm, output_xml_gr_w, output_xml_ce_w, output_xml_mm_w]
 # Append nrml headers
 shp2nrml.append_xml_header(output_xml_add, ('%s_additive' % source_model_name))
 shp2nrml.append_xml_header(output_xml_mb, ('%s_moment_balanced' % source_model_name))
 shp2nrml.append_xml_header(output_xml_geom, ('%s_geom_filtered' % source_model_name))
+shp2nrml.append_xml_header(output_xml_gr, ('%s_gutenberg_richter' % source_model_name))
+shp2nrml.append_xml_header(output_xml_ce, ('%s_characteristic' % source_model_name))
+shp2nrml.append_xml_header(output_xml_mm, ('%s_maximum_magnitude' % source_model_name))
+shp2nrml.append_xml_header(output_xml_gr_w, ('%s_gutenberg_richter_weighted' % source_model_name))
+shp2nrml.append_xml_header(output_xml_ce_w, ('%s_characteristic_weighted' % source_model_name))
+shp2nrml.append_xml_header(output_xml_mm_w, ('%s_maximum_magnitude_weighted' % source_model_name))
 shp2nrml.append_xml_header(output_xml_all_methods, ('%s_all_methods_collapsed' % source_model_name))
 shp2nrml.append_xml_header(output_xml_all_methods_inc_cluster, ('%s_all_methods_collapsed_inc_cluster' % source_model_name))
 
@@ -124,8 +137,6 @@ clustered_fault_rate_dict = {'Cadell Fault':1.399683e-05,
                              'Lake George Scarp': 1.413462e-06,
                              'Hyden Scarp': 1.167942e-05, 
                              'Lake Edgar Fault': 1.40078e-05}
-
-
 
 for i, fault_trace in enumerate(fault_traces):
      # Get basic parameters
@@ -253,6 +264,11 @@ for i, fault_trace in enumerate(fault_traces):
      geom_rates = []
      all_method_rates = []
      all_method_inc_cluster_rates = []
+     # Also calculate combined weights for each MFD type
+     gr_rates_w = []
+     ce_rates_w = []
+     mm_rates_w = []
+     mm_rates_complete = [] # For testing add zero rates for smaller magnitudes
      for mag_bin in gr_mags:
           additive_rate = np.sum(gr_add_weight*gr_rates[np.where(gr_mags == mag_bin)]) + \
               np.sum(ce_add_weight*ce_rates[np.where(ce_mags == mag_bin)]) + \
@@ -266,6 +282,22 @@ for i, fault_trace in enumerate(fault_traces):
               np.sum(ce_geom_weight*ce_rates[np.where(ce_mags == mag_bin)]) + \
               np.sum(mm_geom_weight*mm_rates[np.where(mm_mags == mag_bin)])
           geom_rates.append(geom_rate)
+          # Now do for each MFD type to produce individual weighted files
+          gr_rate_w = np.sum(gr_add_weight*gr_rates[np.where(gr_mags == mag_bin)]) + \
+               np.sum(gr_mb_weight*gr_rates[np.where(gr_mags == mag_bin)]) + \
+               np.sum(gr_geom_weight*gr_rates[np.where(gr_mags == mag_bin)])
+          gr_rates_w.append(gr_rate_w)
+          ce_rate_w = np.sum(ce_add_weight*ce_rates[np.where(ce_mags == mag_bin)]) + \
+               np.sum(ce_mb_weight*ce_rates[np.where(ce_mags == mag_bin)]) + \
+               np.sum(ce_geom_weight*ce_rates[np.where(ce_mags == mag_bin)])
+          ce_rates_w.append(ce_rate_w)
+          mm_rate_w = np.sum(mm_add_weight*mm_rates[np.where(mm_mags == mag_bin)]) + \
+               np.sum(mm_mb_weight*mm_rates[np.where(mm_mags == mag_bin)]) + \
+               np.sum(mm_geom_weight*mm_rates[np.where(mm_mags == mag_bin)])
+          mm_rates_w.append(mm_rate_w)
+          mm_rate_complete = np.sum(mm_rates[np.where(mm_mags == mag_bin)])
+          mm_rates_complete.append(mm_rate_complete)
+          
           all_method_rate = np.sum(gr_add_weight*gr_rates[np.where(gr_mags == mag_bin)]) + \
               np.sum(ce_add_weight*ce_rates[np.where(ce_mags == mag_bin)]) + \
               np.sum(mm_add_weight*mm_rates[np.where(mm_mags == mag_bin)]) + \
@@ -294,6 +326,24 @@ for i, fault_trace in enumerate(fault_traces):
      shp2nrml.append_incremental_mfd(output_xml_geom, magnitude_scaling_relation,
                                      rupture_aspect_ratio, rake,
                                      min(gr_mags), bin_width, geom_rates)
+     shp2nrml.append_incremental_mfd(output_xml_gr, magnitude_scaling_relation,
+                                     rupture_aspect_ratio, rake,
+                                     min(gr_mags), bin_width, gr_rates)
+     shp2nrml.append_incremental_mfd(output_xml_ce, magnitude_scaling_relation,
+                                     rupture_aspect_ratio, rake,
+                                     min(gr_mags), bin_width, ce_rates)
+     shp2nrml.append_incremental_mfd(output_xml_mm, magnitude_scaling_relation,
+                                     rupture_aspect_ratio, rake,
+                                     min(gr_mags), bin_width, mm_rates_complete)
+     shp2nrml.append_incremental_mfd(output_xml_gr_w, magnitude_scaling_relation,
+                                     rupture_aspect_ratio, rake,
+                                     min(gr_mags), bin_width, gr_rates_w)
+     shp2nrml.append_incremental_mfd(output_xml_ce_w, magnitude_scaling_relation,
+                                     rupture_aspect_ratio, rake,
+                                     min(gr_mags), bin_width, ce_rates_w)
+     shp2nrml.append_incremental_mfd(output_xml_mm_w, magnitude_scaling_relation,
+                                     rupture_aspect_ratio, rake,
+                                     min(gr_mags), bin_width, mm_rates_w)
      shp2nrml.append_incremental_mfd(output_xml_all_methods, magnitude_scaling_relation,
                                      rupture_aspect_ratio, rake,
                                      min(gr_mags), bin_width, all_method_rates)
@@ -308,6 +358,12 @@ for output_xml in output_xmls:
 output_xml_add = [oxml + '\n' for oxml in output_xml_add]
 output_xml_mb = [oxml + '\n' for oxml in output_xml_mb]
 output_xml_geom = [oxml + '\n' for oxml in output_xml_geom]
+output_xml_gr = [oxml + '\n' for oxml in output_xml_gr]
+output_xml_ce = [oxml + '\n' for oxml in output_xml_ce]
+output_xml_mm = [oxml + '\n' for oxml in output_xml_mm]
+output_xml_gr_w = [oxml + '\n' for oxml in output_xml_gr_w]
+output_xml_ce_w = [oxml + '\n' for oxml in output_xml_ce_w]
+output_xml_mm_w = [oxml + '\n' for oxml in output_xml_mm_w]
 output_xml_all_methods = [oxml + '\n' for oxml in output_xml_all_methods]
 output_xml_all_methods_inc_cluster = [oxml + '\n' for oxml in output_xml_all_methods_inc_cluster]
 # Write to file fault models on their own
@@ -327,7 +383,31 @@ f.close()
 f = open(os.path.join(source_model_name, source_model_name + '_geom_filtered.xml'),
          'w')
 f.writelines(output_xml_geom)
-f.close() 
+f.close()
+f = open(os.path.join(source_model_name, source_model_name + '_gr.xml'),
+        'w')
+f.writelines(output_xml_gr)
+f.close()
+f = open(os.path.join(source_model_name, source_model_name + '_ce.xml'),
+        'w')
+f.writelines(output_xml_ce)
+f.close()
+f = open(os.path.join(source_model_name, source_model_name + '_mm.xml'),
+        'w')
+f.writelines(output_xml_mm)
+f.close()
+f = open(os.path.join(source_model_name, source_model_name + '_gr_w.xml'),
+        'w')
+f.writelines(output_xml_gr_w)
+f.close()
+f = open(os.path.join(source_model_name, source_model_name + '_ce_w.xml'),
+        'w')
+f.writelines(output_xml_ce_w)
+f.close()
+f = open(os.path.join(source_model_name, source_model_name + '_mm_w.xml'),
+        'w')
+f.writelines(output_xml_mm_w)
+f.close()
 f = open(os.path.join(source_model_name, source_model_name + '_all_methods_collapsed.xml'),
          'w')
 f.writelines(output_xml_all_methods)
@@ -340,6 +420,12 @@ f.close()
 del output_xml_add
 del output_xml_mb
 del output_xml_geom
+del output_xml_gr
+del output_xml_ce
+del output_xml_mm
+del output_xml_gr_w
+del output_xml_ce_w
+del output_xml_mm_w
 del output_xml_all_methods
 del output_xml_all_methods_inc_cluster
 
