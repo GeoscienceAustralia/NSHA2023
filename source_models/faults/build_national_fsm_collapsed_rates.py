@@ -29,12 +29,13 @@ from openquake.hazardlib.sourceconverter import SourceConverter, \
     SourceGroup
 
 # Basic parameters
-shapefile = 'FSM/FSM22_simple_faults.shp'
+shapefile = 'FSM/FSM25_simple_faults.shp'
 shapefile_faultname_attribute = 'Name'
 shapefile_dip_attribute = 'Dip'
 shapefile_sliprate_attribute = 'SL_RT_LT'
+shapefile_shortterm_sliprate_attribute = 'SL_RT_ST'
 shapefile_uplift_attribute = 'UP_RT_LT'
-source_model_name = 'National_Fault_Source_Model_2023_Collapsed_NSHA13_2023'
+source_model_name = 'National_Fault_Source_Model_2025_Collapsed_NSHA13_2025'
 simple_fault_tectonic_region = None # Define based on neotectonic domains
 magnitude_scaling_relation = 'Leonard2014_SCR'
 rupture_aspect_ratio = 1.5
@@ -81,13 +82,32 @@ area_source_ids = ['NTS', 'TB', 'WBS', 'TAFS', 'WPG', 'PFTB', 'MTB',
 
 # Get logic tree information
 lt = logic_tree.LogicTree('../../shared/seismic_source_model_weights_rounded_p0.4.csv')
+branch_values, branch_weights = lt.get_weights('FSM_MFD', 'Non_cratonic')
+
+# Create special case of weights for Flinders - Mt Lofty Ranges
+# These have been redefined in January 2025 based on new information
+# from paleoseismology studies, particularly on the Willunga Fault
+print('Adding special cases to logic tree for Flinder-Mt Lofty Ranges fault sources')
+lt.sets['FSM_MFD'].add_class('Flinders - Mt Lofty Ranges')
+MFD_branches = branch_values
+# 0.1 weight for MM, 0.45 weigthting for GR and YC
+MFD_weights = [0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.034, 0.033, 0.033] 
+for i,bv in enumerate(branch_values):
+     lt.sets['FSM_MFD'].set_classes['Flinders - Mt Lofty Ranges'].add_branch(bv, MFD_weights[i])
+branch_values, branch_weights = lt.get_weights('FSM_MFD', 'Flinders - Mt Lofty Ranges')
+# Not used yet, but need to make sure we have weights for that TRT for clustering
+branch_values, branch_weights = lt.get_weights('FSM_clustering', 'Non_cratonic')
+lt.sets['FSM_clustering'].add_class('Flinders - Mt Lofty Ranges')
+for i,bv in enumerate(branch_values):
+     lt.sets['FSM_clustering'].set_classes['Flinders - Mt Lofty Ranges'].add_branch(bv, MFD_weights[i])
 
 # Get basic information from shapefile
-fault_traces, faultnames, dips, sliprates, fault_lengths = \
+fault_traces, faultnames, dips, sliprates, shortterm_sliprates, fault_lengths = \
     shp2nrml.parse_line_shapefile(shapefile, 
                                   shapefile_faultname_attribute,
                                   shapefile_dip_attribute, 
                                   shapefile_sliprate_attribute,
+                                  shapefile_shortterm_sliprate_attribute,
                                   shapefile_uplift_attribute=shapefile_uplift_attribute,
                                   slip_units = 'm/ma')
 for i,name in enumerate(faultnames):
@@ -98,7 +118,16 @@ trts = shp2nrml.trt_from_domains(fault_traces, domains_shapefile,
                                 default_trt = 'Non_cratonic')
 #print(trts)
 trt_list = list(set(trts)) # unique trt values
-#print(trt_list)
+
+# Get more resolve trts from b-value shapefile to deal
+# with Flinders Ranges
+trts_extra = shp2nrml.trt_from_domains(fault_traces, b_region_shapefile,
+                                       fieldname = 'SRC_NAME',
+                                       default_trt = 'Non_cratonic')
+for i, trt in enumerate(trts_extra):
+     if trt == 'Flinders and Mt Lofty Ranges':
+          trts[i] = 'Flinders - Mt Lofty Ranges'
+print(trts)
 
 b_values = shp2nrml.b_value_from_region(fault_traces, 
                                         b_region_shapefile, 
@@ -138,6 +167,12 @@ clustered_fault_rate_dict = {'Cadell Fault':1.399683e-05,
                              'Hyden Scarp': 1.167942e-05, 
                              'Lake Edgar Fault': 1.40078e-05}
 
+# List of faults for which the short-term slip rate should be
+# used instead of the long-term slip rate
+shortterm_sliprate_list = ["Roderick River Scarp", "Culcairn Scarp",
+                            "West Australian Shear Zone (Barrow Is Flt)",
+                            "Willunga Fault"]
+
 for i, fault_trace in enumerate(fault_traces):
      # Get basic parameters
      dip = dips[i]
@@ -160,12 +195,17 @@ for i, fault_trace in enumerate(fault_traces):
      print('lower_depth', lower_depth)
      fault_area = fault_lengths[i]*width #km^2
      #fault_area = fault_lengths[i]*(float(lower_depth)-float(upper_depth))
-     sliprate = sliprates[i]
+     #sliprate = sliprates[i]
      trt = trts[i]
      faultname = faultnames[i]
      b_value = b_values[i]
-     slip_rt = sliprates[i]
-     print('Calculating rates for %s in domain %s with sliprate %.8f mm/a' % (faultname, trt, slip_rt)) 
+     # Use long-term slip rate except for special cases
+     if faultname in shortterm_sliprate_list:
+          print('Using short term sliprate for %s' % faultname)
+          sliprate = shortterm_sliprates[i]
+     else:
+          sliprate = sliprates[i]
+     print('Calculating rates for %s in domain %s with sliprate %.8f mm/a' % (faultname, trt, sliprate)) 
      # Calculate M_max from scaling relations
      #scalrel = Leonard2014_SCR()
      max_mag = scalerel.get_median_mag(fault_area, float(rake))

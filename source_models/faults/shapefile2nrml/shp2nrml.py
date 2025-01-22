@@ -16,6 +16,7 @@ from openquake.hazardlib.mfd import YoungsCoppersmith1985MFD, TruncatedGRMFD
 def parse_line_shapefile(shapefile,shapefile_faultname_attribute,
                          shapefile_dip_attribute, 
                          shapefile_sliprate_attribute,
+                         shapefile_shortterm_sliprate_attribute,
                          shapefile_uplift_attribute=None,
                          slip_units = 'm/ma'):
     """Read the line shapefile with of fault surface traces and
@@ -26,11 +27,11 @@ def parse_line_shapefile(shapefile,shapefile_faultname_attribute,
     driver = ogr.GetDriverByName("ESRI Shapefile")
     data_source = driver.Open(shapefile, 0)
     layer = data_source.GetLayer()
-
     fault_traces = []
     faultnames = []
     dips = []
     sliprates = []
+    shortterm_sliprates = []
     fault_lengths = []
     distance.geodesic.ELLIPSOID = 'WGS_84'
     d = distance.distance
@@ -72,12 +73,22 @@ def parse_line_shapefile(shapefile,shapefile_faultname_attribute,
                 except ValueError:
                     sliprate = '""'
         sliprates.append(sliprate)
+        # Get short term sliprate
+        try:
+            shortterm_sliprate = float(feature.GetField(shapefile_shortterm_sliprate_attribute))
+            # Convert from m/ma to mm/a
+            if slip_units == 'm/ma':
+                shortterm_sliprate = shortterm_sliprate/1000
+            elif slip_units == 'mm/a':
+                shortterm_sliprate = shortterm_sliprate
+            else:
+                raise Exception('Unkown short term sliprate units of %s' % slip_units)
+        except ValueError:
+            shortterm_sliprate = '""'
+        shortterm_sliprates.append(shortterm_sliprate)
         line = [list([pts[1], pts[0]]) for pts in line] # Double checked and this is correct for now to be lat, lon
-#        line = [list([pts[0], pts[1]]) for pts in line] # Order appears to have changed
-#        print(line)
         fault_length = 0
         for i in range(len(line)):
-#            print(line[i])
             if i == len(line) -1:
                 break
             else:
@@ -89,7 +100,7 @@ def parse_line_shapefile(shapefile,shapefile_faultname_attribute,
     msg = 'Line shapefile must contain at least 1 fault'
     assert len(fault_traces) > 0, msg
 
-    return fault_traces, faultnames, dips, sliprates, fault_lengths
+    return fault_traces, faultnames, dips, sliprates, shortterm_sliprates, fault_lengths
 
 def b_value_from_region(fault_traces, region_shapefile, default_b = 1.0):
     """Get regional b-values for each fault
@@ -111,9 +122,6 @@ def b_value_from_region(fault_traces, region_shapefile, default_b = 1.0):
         # check if region centroid in domains poly
             for point in fault_trace:
                 pt = Point(point[1], point[0]) # Order appears to have been swapped
-       #         pt = Point(point[0], point[1])
-                #print(point[1], point[0])
-                #print('pt_within', pt.within(l_poly))
                 if pt.within(l_poly):
                     bval = float(zone_bval)
                     trace_b_list.append(bval)
@@ -126,7 +134,8 @@ def b_value_from_region(fault_traces, region_shapefile, default_b = 1.0):
             b_values.append(default_b) # Default value for undefined points
     return b_values
 
-def trt_from_domains(fault_traces, domains_shapefile, 
+def trt_from_domains(fault_traces, domains_shapefile,
+                     fieldname = 'TRT',
                      default_trt = 'Non_cratonic'):
     """Get tectonic region type from domains
     """
@@ -136,8 +145,8 @@ def trt_from_domains(fault_traces, domains_shapefile,
     dsf = data_source.GetLayer()
     trt_types = []
     for feature in dsf:
-        print('TRT read as :', feature.GetField('TRT'))
-        trt_types.append(feature.GetField('TRT'))
+        print('TRT read as :', feature.GetField(fieldname))
+        trt_types.append(feature.GetField(fieldname))
     dsf = shapefile.Reader(domains_shapefile)
     dom_shapes = dsf.shapes()
     trt_list = []
@@ -145,11 +154,8 @@ def trt_from_domains(fault_traces, domains_shapefile,
         trace_trt_list = []
         for zone_trt, dom_shape in zip(trt_types, dom_shapes):
             dom_poly = Polygon(dom_shape.points)
-            print('dom_poly', dom_poly)
             for point in fault_trace:
-                print('point', point)
                 pt = Point(point[1], point[0]) #Order appears to have been swapped to lat, long
-#                pt = Point(point[0], point[1]) 
                 if pt.within(dom_poly):
                     trt = zone_trt
                     trace_trt_list.append(trt)
