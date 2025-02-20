@@ -570,8 +570,8 @@ def write_oq_sourcefile(model, meta, mx_dict):
     # add 2023 Australian fault-source model
     ######################################################################
     if meta['doSeisTec'] == True:
-        aust_fault_file = path.join('..', 'faults', 'NFSM', \
-                                    'National_Fault_Source_Model_2023_Collapsed_all_methods_collapsed_inc_cluster.xml')
+        aust_fault_file = path.join('..', 'faults', 'NFSM_R1', \
+                                    'National_Fault_Source_Model_2025_all_methods_collapsed_inc_cluster.xml')
         lines = open(aust_fault_file).readlines()[3:-2]
         for line in lines:
             newxml += '    ' + line

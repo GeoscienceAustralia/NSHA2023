@@ -103,7 +103,7 @@ if outputType == '0':
     if doSeismotectonic == True:
         splitpath.append('seismo_best')
         # get output filename
-        xmlfile = path.split(shpfile)[-1].strip('shp')[:-11] + 'best_NFSM.xml'
+        xmlfile = path.split(shpfile)[-1].strip('shp')[:-11] + 'best_NFSM_R1.xml'
     
     else:
         splitpath.append('best')
@@ -147,10 +147,10 @@ elif outputType == '1':
         splitpath.append('seismo_collapsed')
         # get output filename
         if shpfile.endswith('b_MFD.shp'):
-            xmlfile = path.split(shpfile)[-1].strip('shp')[:-6] + 'collapsed_NFSM.xml'
+            xmlfile = path.split(shpfile)[-1].strip('shp')[:-6] + 'collapsed_NFSM_R1.xml'
         else:
-            #xmlfile = path.split(shpfile)[-1].strip('shp')[:-11] + 'collapsed_NFSM_alt_mmin.xml'
-            xmlfile = path.split(shpfile)[-1].strip('shp')[:-11] + 'collapsed_NFSM.xml'
+            #xmlfile = path.split(shpfile)[-1].strip('shp')[:-11] + 'collapsed_NFSM_R1_alt_mmin.xml'
+            xmlfile = path.split(shpfile)[-1].strip('shp')[:-11] + 'collapsed_NFSM_R1.xml'
     
     else:
         splitpath.append('collapsed')
@@ -160,7 +160,7 @@ elif outputType == '1':
         elif shpfile.endswith('Gridded_b_MFD.shp'):
             xmlfile = path.split(shpfile)[-1].strip('shp')[:-6] + 'collapsed_gridded_b.xml'
         elif shpfile.endswith('b_MFD.shp'):
-            xmlfile = path.split(shpfile)[-1].strip('shp')[:-6] + 'collapsed_NFSM.xml'
+            xmlfile = path.split(shpfile)[-1].strip('shp')[:-6] + 'collapsed_NFSM_R1.xml'
         else:
             #xmlfile = path.split(shpfile)[-1].strip('shp')[:-11] + 'collapsed_alt_mmin.xml'
             xmlfile = path.split(shpfile)[-1].strip('shp')[:-11] + 'collapsed.xml'
