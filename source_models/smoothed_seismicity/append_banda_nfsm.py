@@ -41,8 +41,8 @@ for line in lines:
         ######################################################################
         if appendNFSM == True:
  
-            aust_fault_file = path.join('..', 'faults', 'National_Fault_Source_Model_2023_Collapsed_NSHA13_2023', \
-                                        'National_Fault_Source_Model_2023_Collapsed_NSHA13_2023_all_methods_collapsed_inc_cluster.xml')
+            aust_fault_file = path.join('..', 'faults', 'NFSM_R1', \
+                                        'National_Fault_Source_Model_2025_all_methods_collapsed_inc_cluster.xml')
 
             flines = open(aust_fault_file).readlines()[3:-2]
             for fline in flines:
@@ -65,7 +65,7 @@ for line in lines:
         newxml += line
 
 if appendNFSM == True:
-    newFile = xmlFile[:-4]+'_banda_nfsm.xml'
+    newFile = xmlFile[:-4]+'_banda_nfsm_r1.xml'
 else:
     newFile = xmlFile[:-4]+'_banda.xml'    	
 f = open(newFile, 'w')
