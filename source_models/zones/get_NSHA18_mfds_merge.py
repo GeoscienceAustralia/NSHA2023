@@ -1628,7 +1628,7 @@ cmap = plt.get_cmap('YlOrRd', ncolours)
 drawshapepoly(m2, plt, sf, cindex=cindex, cmap=cmap, ncolours=ncolours, fillshape=True)
 
 # label polygons
-labelpolygon(m2, plt, sf, 'CODE')
+xcentroids, ycentroids = labelpolygon(m2, plt, sf, 'CODE')
 
 # set colorbar
 plt.gcf().subplots_adjust(bottom=0.1)
@@ -1723,7 +1723,7 @@ cmap = plt.get_cmap('rainbow', ncolours)
 drawshapepoly(m2, plt, sf, cindex=cindex, cmap=cmap, ncolours=ncolours, fillshape=True)
 
 # label polygons
-labelpolygon(m2, plt, sf, 'CODE')
+xcentroids, ycentroids = labelpolygon(m2, plt, sf, 'CODE')
 
 # set colorbar
 plt.gcf().subplots_adjust(bottom=0.1)
@@ -2001,9 +2001,14 @@ fields = sf.fields[1:]
 simpleFields = [x[0] for x in fields]
 header = ','.join(simpleFields)
 
-csvtxt = header + '\n'
-for rec in records:
+csvtxt = header + ',XCENTROID, YCENTROID\n'
+for i, rec in enumerate(records):
     rec = [str(x) for x in rec]
+    
+    # add centroid
+    rec.append(str('%0.3f' % xcentroids[i]))
+    rec.append(str('%0.3f' % ycentroids[i]))
+    
     newline = ','.join(rec) + '\n'
     csvtxt += newline
 
